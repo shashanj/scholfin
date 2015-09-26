@@ -63,11 +63,11 @@ def signup_complete(request):
         #print username
         password = request.POST.get('password')
         cp = request.POST.get('cp')
-
+        print cp
         #checking username 
 
         #sl = User.objects.filter(username__iexact=username)
-        if User.objects.filter(username__iexact=username).exists() :
+        if User.objects.filter(email__iexact=username).exists() :
             error = '* This Email-id already exits'
             context={
                 'error' : error,
