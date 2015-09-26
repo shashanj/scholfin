@@ -18,6 +18,11 @@ from django.contrib import admin
 from scholarships import views
 from scholarships import sorting
 from scholarships import gov_pri_comp
+from scholarships.sitemaps import ScholarshipSitemap
+
+sitemaps = {
+    'scholarships' : ScholarshipSitemap()
+}
 
 urlpatterns = [
     url(r'^$', views.index , name='index' ),
@@ -41,4 +46,5 @@ urlpatterns = [
     url(r'^scholarships/religion/$', sorting.religion_only , name='religion'),
     url(r'^profile/$', views.profilepage , name='profile'),
     url(r'^profilechange/$', views.profilechange , name='profilechange'),
+    url(r'^sitemap\.xml$','django.contrib.sitemaps.views.sitemap',{'sitemaps':sitemaps}),
 ]

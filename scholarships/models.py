@@ -117,6 +117,9 @@ class scholarship(models.Model):
 	def __unicode__ (self):
 		return self.name;
 
+	def get_absolute_url(self):
+		return "/scholarship-details/"+self.name ;
+
 class UserProfile(models.Model):
 	# linking user profile to a user
 	user = models.OneToOneField(User)
