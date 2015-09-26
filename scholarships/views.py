@@ -58,10 +58,31 @@ def signup(request):
 @csrf_exempt
 def signup_complete(request):
     if request.POST:
-        username = request.POST.get('username')
-        print username
+        username = request.POST.get('email')
+        email = username
+        #print username
         password = request.POST.get('password')
-        email = request.POST.get('email')
+        cp = request.POST.get('cp')
+
+        #checking username 
+
+        #sl = User.objects.filter(username__iexact=username)
+        if User.objects.filter(username__iexact=username).exists() :
+            error = '* This Email-id already exits'
+            context={
+                'error' : error,
+            }
+            return render_to_response('scholarship/signup.html',context)
+        #confirming password
+        if cp != password :
+            error = "* Password didn't match"
+            email = username
+            context={
+                'error': error,
+                'email': email,   
+            }
+            return render_to_response('scholarship/signup.html',context)
+            
         option_caste = caste.objects.all
         option_state = state.objects.all
         option_level = level.objects.all
