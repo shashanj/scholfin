@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+
+<html lang="en" class=" js no-touch csstransforms csstransitions"><!--<![endif]-->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- Basic Page Needs -->
+<meta charset="utf-8">
+<title>ScholFin | Scholarships in 3 Clicks!</title>
+<meta name="title" content="ScholFin | Scholarships in 3 Clicks">
+<meta name="description" content="Personalized matching to over 10 crores of scholarships from government,trusts & NGOs 
+                                  worth ₹9,500 crores. Notifications so that you never miss a deadline">
+
+<!-- Alexa  -->
+<meta name="alexaVerifyID" content="OkWxoMEY_BwPr1zKOoYPt2yww6U"/>
+
+<!-- Google Webmaster  -->
+<meta name="google-site-verification" content="Fc6Dimm2HopJyqKjgXQMvlNSO6fKZ7iqZZX-LN4YXBI" />
+
+<!-- Google Analytics  -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-66862116-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+{% load staticfiles %}								  
+<!-- Schema.org markup for Google+ -->
+<meta itemprop="name" content="ScholFin | Scholarships in 3 Clicks!">
+<meta itemprop="description" content="Personalized matching to over 10 crores of scholarships from government,trusts & NGOs 
+                                  worth ₹9,500 crores. Notifications so that you never miss a deadline">
+<meta itemprop="image" content="{% static "scholarship/images/comp.png" %}">
+
+<!-- Twitter Card data -->
+
+<meta name="twitter:card" content="summary">
+<!--<meta name="twitter:site" content="@publisher_handle">    -->
+<meta name="twitter:title" content="ScholFin | Scholarships in 3 Clicks">
+<meta name="twitter:description" content="Personalized matching to over 10 crores of scholarships from government,trusts & NGOs 
+                                  worth ₹9,500 crores. Notifications so that you never miss a deadline">
+<meta name="twitter:creator" content="@author_handle">
+
+<meta name="twitter:image" content="{% static "scholarship/images/scholfin.png" %}">
+
+<!-- Facebook Meta -->
+<meta property="og:title" content="ScholFin | Scholarships in 3 Clicks!" />
+<meta property="og:site_name" content="ScholFin"/>
+<meta property="og:url" content="http://www.scholfin.com" />
+<meta property="og:description" content="Personalized matching to over 10 crores of scholarships from government,trusts & NGOs 
+                                  worth ₹9,500 crores. Notifications so that you never miss a deadline" />
+<meta property="og:image" content="src="{% static "scholarship/images/scholfin.png" %}"" />
+
+<!-- Favicons-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- CSS -->
+    <link href="http://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet"/>
+    <link  rel="stylesheet" href="{% static "scholarship/css/bootstrap.css" %}"/>
+    <link href="{% static "scholarship/css/style.css" %}" rel="stylesheet">
+    <link href="{% static "scholarship/css/zigzag.css" %}" rel="stylesheet">
+    <link href="{% static "scholarship/css/font-awesome" %}" rel="stylesheet">
+    <link href="{% static "scholarship/css/socialize-bookmarks.css" %}" rel="stylesheet">
+    <link href="{% static "scholarship/css/all.css" %}" rel="stylesheet">
+
+<!-- Toggle Switch -->
+<script src="{% static "scholarship/js/jquery.js" %}"></script>
+<link rel="stylesheet" href="{% static "scholarship/css/jquery.switch.css" %}90
+
+
+
+
+
+
+.0">
+
+<!-- Google web font -->
+
+<link href="{% static "scholarship/css/css" rel="stylesheet" type="text/css"/>
+
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- Jquery -->
+<script src="{% static "scholarship/js/jquery.js" %}"></script>
+<style type="text/css"></style>
+<script src="{% static "scholarship/js/jquery-ui-1.8.22.min.js" %}"></script>
+
+<!-- Wizard-->
+<script src="{% static "scholarship/js/jquery.wizard.js" %}"></script>
+
+<!-- Radio and checkbox styles -->
+<script src="{% static "scholarship/js/icheck.min.js" %}"></script>
+<script src="{% static "scholarship/js/custom.min.html"></script>
+
+<!-- HTML5 and CSS3-in older browsers-->
+<script src={% static "scholarship/js/modernizr.custom.17475.html></script>
+
+<!-- Support media queries for IE8 -->
+<script src="{% static "scholarship/js/respond.min.js" %}" ></script>
+
+
+<style>
+	html , body{
+		height:100%;
+		width:100%;
+	}
+	.container-fluid{
+		margin:0px 30px 0px 30px ;
+	}
+  
+  .jtron .container{
+     margin-top: 80px;
+  }
+    .timeline-panel > .timeline-heading > h4 > span.subheading1 {
+    color: black;
+}
+    .timeline-panel .timeline-body .text-muted {
+        color:#3f3f3f;
+        margin-top:20px;
+    } 
+    .container-fluid .row .second-title{
+    	font-size: 36px;
+    	color:white;
+    	line-height:36px;
+    	text-align:left;
+    	font-weight:300;
+    	padding: 20px;
+    	margin-top:3%;
+    }
+	.container-fluid .row .second-title p.st1{
+    	font-size: 43px;
+    	line-height:56px;
+    }    
+    .second-title p span{
+    	color: #FFB300;
+    	font-weight: 700;
+    }
+    
+    .container-fluid .row .second-title p:nth-child(1){
+    	font-size:28px;
+    }
+    #top-area{
+    min-height:90%;
+    	height:auto;
+    	clear: both;
+    }
+
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+
+
+button.entypo-right-open-big:before {
+  font-family: 'entypo', sans-serif;
+  color: white;
+  position: absolute;
+  right: 40px;
+  font-size: 1em;
+  top: 25%;
+  z-index: 10;
+  border-radius:0;
+}
+
+
+body {
+  background-color: #f2f2f2;
+}
+
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a.entypo-right-open-big:before {
+  font-family: 'entypo', sans-serif;
+  color: black;
+  position: absolute;
+  right: 40px;
+  font-size: 2em;
+  top: 25%;
+  z-index: 10;
+  background: -webkit-linear-gradient(#fff, #eee, #fff); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#fff, #eee, #fff); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#fff, #eee, #fff); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#fff, #eee, #fff); /* Standard syntax */
+}
+
+body {
+  background-color: #fff;
+}
+
+.center{
+	text-align:center;
+}
+a.getstarted{
+	background: #FFC107;
+	color:#fff;
+	padding:10px 10px;
+	border-radius:0;
+	font-size: 52px;
+	width:683px;
+	margin-left: 25%;
+	margin-top: 300px !important;
+	font-weight:700;
+	border:2px solid white;
+	border-radius:10px;
+	text-align:center;
+}
+a.again{
+	margin-left:30vw;
+}
+.seperator{
+    padding:40px;
+}
+.seperator2{
+    padding:20px;
+}
+a.getstarted:hover{
+	background: rgb(255,200,20);
+}
+@media only screen and (max-width: 768px) {
+	a.getstarted{
+		font-size:30px;
+		border-radius:10px;
+		margin-left:10%;
+		font-size:42px;
+		font-weight:400;
+		padding: 5px 5px;
+        margin-left:20%;
+		margin-top:0px;
+		top:60px;
+	}
+	a.again{
+		margin-left:30vw;
+	}
+    .jtron .container{
+     margin-top: -20px;
+  }
+    .container-fluid .row .second-title p.st1{
+    	font-size: 36px;
+    	line-height:36px;
+    }
+    .seperator{
+        padding:20px;
+    }
+
+}
+@media only screen and (max-width: 600px){
+  
+  button.entypo-right-open-big:before {
+  font-family: 'entypo', sans-serif;
+  color: white;
+  position: absolute;
+  right: 40px;
+  font-size: 1em;
+  top: 10%;
+  z-index: 10;
+  border-radius:0;
+}
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<section id="top-area">
+	<header>
+         <div class="container">
+            <div class="row">
+        	<div class="col-md-4 col-xs-3 " id="logo"><a href="/">ScholFin</a></div>
+            
+            <div class="btn-responsive-menu"> <span class="bar"></span> <span class="bar"></span> <span class="bar"></span> </div>
+            <nav class="col-md-8 col-xs-9" id="top-nav">
+            	<ul>
+                    <li><a href="/login/">Login</a></li>
+                    <li><a href="/signup/" id="purchase">Sign Up</a></li>
+               </ul>
+            </nav><!-- End Nav -->
+
+            
+         </div><!-- End row -->
+         </div><!-- End container -->
+        </header> <!-- End header -->
+        	
+            <div class="container-fluid jtron">
+		         <div class="row">
+		             <div class="col-md-12 col-lg-12 main-title">
+				         <h1 ><strong>Scholarship Search Engine</strong></h1>
+					</div>
+				</div>
+				<div class="row">
+		            <div class="col-md-6 col-lg-6 second-title">
+		            	<p>
+				        	<p class="st1 center"><span>10,00,00,456</span> Scholarships </p>
+				        	<p class="st1 center">worth <span>₹ 9,458</span> crores</p>
+		            	</p>
+						<br>
+						<br>
+						
+						<a class="getstarted" href="/signup/">GET STARTED</a>
+					</div>
+					<div class="col-md-6 col-lg-6 second-title">
+						<img class="visible-lg visible-md" src="{% static "scholarship/images/comp.png" %}" width="80%" alt="ScholFin dashboard"/>
+		            </div>
+		        </div>
+				<br>
+				<div  style="seperator2"></div>
+		        </div>
+        <div  class="seperator"></div>
+		          </div>
+            </div>
+ </section>
+
+        <style>
+            #main{
+                margin-top:20px
+            }
+        </style>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               </style>
+
+<section class="container" id="main">
+<br>
+
+
+    <div class="row">
+	<div class="col-md-12">
+		<h2>Scholarship in 3 Clicks!
+		</h2>
+		<br><br>
+	</div>
+</div><!-- end row -->
+
+<div class="row">
+
+	<div class="col-md-4 col-sm-4 add_bottom_30 box">
+		<p><img src="{% static "scholarship/images/icon-1.png" %}" width="100%" alt="ScholFin Sign up"></p>
+		<h3>1. Sign up</h3>
+		<h4>
+			 Just provide the search engine with some basic information about you like academic qualifications, 
+			 interests etc. and get yourself registered on 1st click.   
+		</h4>
+		
+		
+	</div>
+    
+	<div class="col-md-4 col-sm-4 add_bottom_30 box">
+		<p><img src="{% static "scholarship/images/icon-2.jpg" %}" width="100%" alt="ScholFin Organise"></p>
+		<h3>2. Organise</h3>
+
+		<h4>
+			   The search engine analyses your data and displays only those scholarships in which you are eligible 
+			   providing a personalised dashboard on 2nd click.
+		</h4>
+		
+		
+	</div>
+    
+	<div class="col-md-4 col-sm-4 add_bottom_30 box">
+		<p><img src="{% static "scholarship/images/icon-3.jpg" %}" width="100%" alt="ScholFin Apply"></p>
+		<h3>3. Apply</h3>
+		<h4>
+				See complete and accurate details of the scholarship on your dashboard and apply directly to win a 
+				scholarship in simple 3 clicks.
+			
+		</h4>
+		
+	</div>
+    
+</div><!-- end row -->
+
+
+</section>
+<div style="background:#069">
+   <div class="container">
+    <div class="row" >
+      <div class="col-md-12">
+         <h3 style="margin-top:50px;font-size:45px;font-weignt:400;padding-top:20px;color:#fff;">How does ScholFin keep you Updated?</h3>
+      </div>
+      <div class="row">
+        <div class="col-lg-4">
+      			<img src="{% static "scholarship/images/emailphone.png" %}" width="100%" style="margin: 0 auto;" alt="ScholFin Notifications" >
+      	</div>
+      	<div class="col-lg-8">
+      		<h3 style="text-align:left;margin-top:50px;font-size:36px;line-height:36px;color:#fff">"Never miss a deadline"</h3>
+      	 <p style="text-align:left;font-size:25px;line-height:42px;padding:10px;color:#fff">The search engine will identify the scholarships in which you are eligible and notify them to you through E-mail and SMS.
+         </p>
+      	</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="background:#e1f3ff">
+  <div class="container" style="padding:100px 0 ;">
+    <h3 style="font-size:56px;line-height:70px;">Who wants a Scholarship?</h3>
+    <br>
+	<br>
+    <div class="row">
+				<a class="getstarted again" href="/signup/">GET STARTED</a>
+		</div>
+  </div>
+</div>
+<footer>
+	<section class="container">
+	<div class="row">
+    	<div class="col-md-4">
+        	<h3>Can you do us a favour?</h3>
+            <p>Dear User, your suggestions and reviews will be very helpful to ScholFin and we can use your feedback
+			to develop an amazing new change!<br>Please submit the feedback <a class="typeform-share link" href="https://scholfin.typeform.com/to/EgBAUf" data-mode="2" target="_blank"><b>Here!</b></a>
+<script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}})()</script>
+.</p>
+			<p>We will really really appreciate your time to help us improve ScholFin. Thanks for being an awesome user!</p>
+        </div>
+        
+        
+        
+        <div class="col-md-4" id="contact">
+        	<h3>Contact info</h3>
+            <p> Feel free to contact us for any query. We will be happy to help you. </p> 
+                <ul>
+                        <li><i class="icon-home"></i> Center of Incubation, VNIT, Nagpur, Maharashtra, India </li>
+                        <li><i class="icon-phone"></i> Mobile: +91-9503748792 </li>
+                        <li><i class="icon-envelope"></i> Email: <a href="http://">info@scholfin.com </a></li>
+                        
+                    </ul>    
+        </div>
+		 
+        
+    </div><!-- end row -->
+  	</section>
+    
+    <section id="footer_2">
+    <div class="container">
+    <div class="row">
+    	<div class="col-md-6">
+                <ul id="footer-nav">
+				   
+					
+					
+                	
+					<!--
+					<p>While we have made extensive efforts to ensure that the information included on the website is accurate, we make no guarantee as to the information's absolute correctness. 
+					We have tried to contact all the organizations listed, and consulted various reputable sources. We shall incur no liability for any errors or omissions in connection with this information.
+					We welcome being informed of any corrections or changes to be made to the information on this site. 
+
+                   ©2015 Scholaa. All rights reserved.
+				     -->
+					
+					<!--
+					<p>If you register on this website, you should provide us with some personal information which is important for a correct matching. Only you and Scholaa team may view that personal information.
+                    There is an exception to that rule. While we will make every effort to make sure your personal information remains private, we may be compelled by law to reveal your personal information 
+					if we are required to by a subpoena, court order, or legal process
+					-->
+				
+										
+                </ul>              
+        </div>
+            <div class="col-md-6" style="text-align:center">
+                <ul class="social-bookmarks clearfix">
+				     <a href="https://www.facebook.com/pages/Scholfin/665377073564505?fref=ts" target="_blank">
+                    <img src="{% static "scholarship/images/facebook.png" %}" width="40" style="margin: 0 auto;">
+					</a>
+                    
+                </ul>
+            </div>
+        </div>
+		</div>
+    </section>
+
+</footer> 
+ 
+ <div id="toTop">Back to Top</div>  
+
+<!-- Modal About -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">About us</h4>
+      </div>
+      <div class="modal-body">
+        <p></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Modal About -->
+<div class="modal fade" id="terms-txt" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="termsLabel">Terms and conditions</h4>
+      </div>
+      <div class="modal-body">
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- OTHER JS --> 
+<script src="{% static "scholarship/js/jquery.validate.js" %}"></script>
+<script src="{% static "scholarship/js/jquery.bxslider.min.js" %}"></script>
+<script src="{% static "scholarship/js/quantity-bt.js" %}"></script>
+<script src="{% static "scholarship/js/bootstrap.min.js" %}"></script>
+<script src="{% static "scholarship/js/retina.js" %}"></script>
+<script src="{% static "scholarship/js/functions.js" %}"></script>
+
+<!-- code for faq section -->
+
+</body>
+<!-- Mirrored from www.scholfin.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 22 Aug 2015 09:32:46 GMT -->
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    {% if scholarships %}
+        {% for scholarship in scholarships %}
+            <p>{{ scholarship.name }}</p><br>
+        {% endfor %}
+    {% endif %}
+<a href="\logout\">logout</a>
+</body>
+</html>
