@@ -28,21 +28,30 @@ def login_page(request):
         username = request.POST.get('username')
         print username
         password = request.POST.get('password')
+        try:
+            user = User.objects.get(username = username)
+        except User.DoesNotExist:
+            user = None
 
-        user = authenticate(username=username, password=password)
         if user is not None:
-            if user.is_active:
-                login(request, user)
-                request.session['userid']=user.id
-                state = "login successfull"
-                return HttpResponseRedirect('/dashboard/')
-            else:
-                state = "your account is not active"
+            if user.profile.auth_type == 'basic':
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    if user.is_active:
+                        login(request, user)
+                        request.session['userid']=user.id
+                        state = "login successfull"
+                        return HttpResponseRedirect('/dashboard/')
+                    else:
+                        state = "your account is not active"
+                else:
+                    state = 'your username and/or password was wrong'
+            else: 
+                state = 'No such user exists'
         else:
-            state = 'your username and/or password was wrong'
+            state = 'No such user exists'
     # t=loader.get_template('scholarship/login.html');
     return render_to_response('scholarship/login.html', {'state': state, 'username': username}, RequestContext(request))
-
 
 def forgot_password(request):
     if request.POST:
