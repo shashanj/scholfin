@@ -85,6 +85,7 @@
         <input type="hidden" name="username" value="{{ username }}"/>
         <input type="hidden" name="password" value="{{ password }}"/>
         <input type="hidden" name="email" value="{{ email }}"/>
+        <input type="hidden" name="auth_type" value="{{ auth_type }}"/>
 		<div id="middle-wizard">
 			<div class="step">
 				<div class="row">
@@ -224,10 +225,10 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="col-md-6">
-                    <input type="text" class="required form-control" placeholder="First Name" name="fname"/>
+                    <input type="text" class="required form-control" placeholder="First Name" name="fname" value="{{ firstname }}"/>
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="required form-control" placeholder="Last Name" name="lname"/>
+                    <input type="text" class="required form-control" placeholder="Last Name" name="lname" value="{{ lastname }}"/>
                 </div>
                 <div class="clearfix"></div>
                 <h3>Do you have any physical disability?</h3>
