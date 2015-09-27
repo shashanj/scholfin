@@ -63,6 +63,16 @@ def forgot_password(request):
 def signup(request):
     return render_to_response('scholarship/signup.html')
 
+def fbsignup(request):
+    # Settings for Facebook API call
+    client_id = '1675623895984487'
+    redirect_uri = 'http://localhost:8000/fbsignup_process/'
+    scope = 'email'
+    api_url = 'https://www.facebook.com/dialog/oauth?'
+
+    return HttpResponseRedirect(api_url + 'client_id=' + client_id + '&' + 'redirect_uri=' + redirect_uri + '&' 
+        + 'scope=' + scope)
+    
 
 def fbsignup_process(request):
     code = request.GET.get('code', False)
