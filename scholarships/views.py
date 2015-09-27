@@ -200,6 +200,7 @@ def signupprocess(request):
         u_username = request.POST.get('username')
         u_email = request.POST.get('email')
         u_password = request.POST.get('password')
+        u_auth_type = request.POST.get('auth_type')
         u_firstname = request.POST.get('fname')
         u_lastname = request.POST.get('lname')
         u_state = state.objects.filter(state_id=int(request.POST.get('state')))
@@ -233,6 +234,7 @@ def signupprocess(request):
         print new_user
         profile = UserProfile()
         profile.user = new_user
+        profile.auth_type = u_auth_type
         profile.user_state =u_state
         profile.user_religion = u_religion
         profile.user_caste = u_caste
@@ -244,12 +246,26 @@ def signupprocess(request):
         profile.save()
         for u in u_interest:
             profile.user_interest.add(u)
-        profile.save()
-        user=authenticate(username=u_username, password=u_password);
-        if user is not None:
-            login(request,user)
-            request.session['userid']=user.id
-            return HttpResponseRedirect('/dashboard/')
+
+        user = User.objects.get(username = u_username)
+        if user.profile.auth_type == 'basic':
+            user=authenticate(username=u_username, password=u_password);
+            if user is not None:
+                login(request,user)
+                request.session['userid']=user.id
+                return HttpResponseRedirect('/dashboard/')
+
+        elif user.profile.auth_type == 'facebook':
+            if user is not None:
+                login(request,user)
+                request.session['userid']=user.id
+                return HttpResponseRedirect('/dashboard/')
+
+        elif user.profile.auth_type == 'google':
+            if user is not None:
+                login(request,user)
+                request.session['userid']=user.id
+                return HttpResponseRedirect('/dashboard/')
     return HttpResponse("error in registration")
 
 
