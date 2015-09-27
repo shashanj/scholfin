@@ -64,6 +64,86 @@ def signup(request):
     return render_to_response('scholarship/signup.html')
 
 
+def fbsignup_process(request):
+    code = request.GET.get('code', False)
+    # Settings for Facebook API call
+    client_id = '1675623895984487'
+    redirect_uri = 'http://localhost:8000/fbsignup_process/'
+    api_url = 'https://graph.facebook.com/v2.3/oauth/access_token?'
+    client_secret = 'c3a7ba0d03e7ce5aecb4c755983d9166'
+
+    if code:
+        import json
+        import urllib2
+        data_url = api_url + 'client_id=' + client_id + '&' + 'redirect_uri=' + redirect_uri + '&' + 'client_secret=' + client_secret + '&' + 'code=' + str(code)
+        
+        try:
+            data = json.load(urllib2.urlopen(data_url))
+        except ValueError:
+            return HttpResponseRedirect('/')
+        except urllib2.URLError:
+            return HttpResponseRedirect('/')
+
+        ##Capture access_token from JSON response
+        access_token = data['access_token']
+
+        data_url = 'https://graph.facebook.com/v2.4/me?fields=first_name,last_name,email&access_token='+access_token
+        
+        try:
+            data = json.load(urllib2.urlopen(data_url))
+        except ValueError:
+            return HttpResponseRedirect('/')
+        except urllib2.URLError:
+            return HttpResponseRedirect('/')
+
+        username = data['email']
+        print username
+
+        try:
+            user = User.objects.get(username = username)
+        except User.DoesNotExist:
+            user = None
+
+        if user is not None:
+            login(request,user)
+            request.session['userid']=user.id
+            return HttpResponseRedirect('/dashboard/')
+
+        else:
+            password = access_token
+            email = data['email']
+            lastname = data['last_name']
+            firstname = data['first_name']
+            auth_type = 'facebook'
+            option_caste = caste.objects.all
+            option_state = state.objects.all
+            option_level = level.objects.all
+            option_religion = religion.objects.all
+            option_field = field.objects.all
+            option_interest = interest.objects.all
+            option_abroad = abroad.objects.all
+            context_list = {'castes': option_caste,
+                            'states': option_state,
+                            'levels': option_level,
+                            'religions': option_religion,
+                            'fields': option_field,
+                            'interests': option_interest,
+                            'abroads': option_abroad,
+                            'username': username,
+                            'password': password,
+                            'email': email,
+                            'auth_type' : auth_type,
+                            'lastname' : lastname,
+                            'firstname' : firstname
+                            }
+            return render_to_response('scholarship/signup_detail.html', context_list, RequestContext(request))
+        # response = HttpResponse(data.items())
+
+    else:
+        response = HttpResponseRedirect('/')
+
+    return response
+
 @csrf_exempt
 def signup_complete(request):
     if request.POST:
