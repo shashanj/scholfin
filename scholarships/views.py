@@ -172,6 +172,7 @@ def signup_complete(request):
             }
             return render_to_response('scholarship/signup.html',context)
             
+        auth_type = 'basic'
         option_caste = caste.objects.all
         option_state = state.objects.all
         option_level = level.objects.all
@@ -189,6 +190,7 @@ def signup_complete(request):
                         'username': username,
                         'password': password,
                         'email': email,
+                        'auth_type' : auth_type,
                         }
     return render_to_response('scholarship/signup_detail.html', context_list, RequestContext(request))
 
