@@ -122,7 +122,8 @@ class scholarship(models.Model):
 
 class UserProfile(models.Model):
 	# linking user profile to a user
-	user = models.OneToOneField(User)
+	user = models.OneToOneField(User, related_name='profile')
+	auth_type = models.CharField(max_length=200,blank=False,default=None)
 	#additional user information
 	user_state = models.ForeignKey(state)
 	user_level = models.ForeignKey(level)
