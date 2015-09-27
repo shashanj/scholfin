@@ -77,14 +77,21 @@ WSGI_APPLICATION = 'scholfin.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'scholfin',
+# 	'USER': 'root',
+# 	'PASSWORD': '9308513225',
+# 	'HOST': 'localhost',
+# 	'PORT': '',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'scholfin',
-	'USER': 'root',
-	'PASSWORD': '9308513225',
-	'HOST': 'localhost',
-	'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
     }
 }
 
@@ -106,6 +113,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'http://localhost:7777/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
