@@ -77,23 +77,23 @@ WSGI_APPLICATION = 'scholfin.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'scholfin',
-# 	'USER': 'root',
-# 	'PASSWORD': '9308513225',
-# 	'HOST': 'localhost',
-# 	'PORT': '',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'scholfin',
+	'USER': 'root',
+	'PASSWORD': '9308513225',
+	'HOST': 'localhost',
+	'PORT': '',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'mydatabase',
+#     }
+# }
 
 
 # Internationalization
