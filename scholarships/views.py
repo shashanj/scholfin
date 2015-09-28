@@ -10,9 +10,14 @@ from django.contrib.auth.models import User
 
 from functions import *
 from scholarships.models import *
+from django.contrib.auth.hashers import make_password
 
 
 # Create your views here.
+import random, string
+
+def randomword(length):
+   return ''.join(random.choice(string.lowercase) for i in range(length))
 
 def index(request):
 	if 'userid' not in request.session:
@@ -72,7 +77,7 @@ def fbsignup(request):
 
     return HttpResponseRedirect(api_url + 'client_id=' + client_id + '&' + 'redirect_uri=' + redirect_uri + '&' 
         + 'scope=' + scope)
-    
+
 
 def fbsignup_process(request):
     code = request.GET.get('code', False)
@@ -115,6 +120,12 @@ def fbsignup_process(request):
             user = None
 
         if user is not None:
+            password = randomword(30)
+            user.password = make_password(password=password,
+                                  salt=None,
+                                  hasher='unsalted_md5')
+            user.save()
+            user = authenticate(username=username, password=password)
             login(request,user)
             request.session['userid']=user.id
             return HttpResponseRedirect('/dashboard/')
@@ -266,12 +277,24 @@ def signupprocess(request):
                 return HttpResponseRedirect('/dashboard/')
 
         elif user.profile.auth_type == 'facebook':
+            password = randomword(30)
+            user.password = make_password(password=password,
+                                  salt=None,
+                                  hasher='unsalted_md5')
+            user.save()
+            user = authenticate(username=u_username, password=password)
             if user is not None:
                 login(request,user)
                 request.session['userid']=user.id
                 return HttpResponseRedirect('/dashboard/')
 
         elif user.profile.auth_type == 'google':
+            password = randomword(30)
+            user.password = make_password(password=password,
+                                  salt=None,
+                                  hasher='unsalted_md5')
+            user.save()
+            user = authenticate(username=u_username, password=password)
             if user is not None:
                 login(request,user)
                 request.session['userid']=user.id
