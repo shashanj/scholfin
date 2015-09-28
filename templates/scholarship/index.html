@@ -12,6 +12,8 @@
 
 <!-- Alexa  -->
 <meta name="alexaVerifyID" content="OkWxoMEY_BwPr1zKOoYPt2yww6U"/>
+<!-- Bing Site Submissions -->
+<meta name="msvalidate.01" content="C69E52700451FA5898B50F7969040AAB" />
 
 <!-- Google Webmaster  -->
 <meta name="google-site-verification" content="Fc6Dimm2HopJyqKjgXQMvlNSO6fKZ7iqZZX-LN4YXBI" />
@@ -51,9 +53,10 @@
 <meta property="og:title" content="ScholFin | Scholarships in 3 Clicks!" />
 <meta property="og:site_name" content="ScholFin"/>
 <meta property="og:url" content="http://www.scholfin.com" />
+<meta property="og:type"          content="website" />
 <meta property="og:description" content="Personalized matching to over 10 crores of scholarships from government,trusts & NGOs 
                                   worth ₹9,500 crores. Notifications so that you never miss a deadline" />
-<meta property="og:image" content="http://scholfin.com/static/scholarship/images/scholfin.png" />
+<meta property="og:image" content="{% static "scholarship/images/scholfin.png" %}" />
 
 <!-- Favicons-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,7 +102,7 @@
 <script src="{% static "scholarship/js/custom.min.html"></script>
 
 <!-- HTML5 and CSS3-in older browsers-->
-<script src={% static "scholarship/js/modernizr.custom.17475.html></script>
+<script src={% static "scholarship/js/modernizr.custom.17475.html"></script>
 
 <!-- Support media queries for IE8 -->
 <script src="{% static "scholarship/js/respond.min.js" %}" ></script>
@@ -205,12 +208,12 @@ a.getstarted{
 	border-radius:0;
 	font-size: 52px;
 	width:683px;
-	margin-left: 25%;
+	margin-left: 25%;*/
 	margin-top: 300px !important;
 	font-weight:700;
 	border:2px solid white;
 	border-radius:10px;
-	text-align:center;
+	text-align:center; 
 }
 a.again{
 	margin-left:30vw;
@@ -245,6 +248,33 @@ a.getstarted:hover{
     .container-fluid .row .second-title p.st1{
     	font-size: 36px;
     	line-height:36px;
+    }
+    .seperator{
+        padding:20px;
+    }
+
+}
+@media only screen and (max-width: 500px) {
+  a.getstarted{
+    font-size:30px;
+    border-radius:10px;
+    margin-left:10%;
+    font-size:30px;
+    font-weight:400;
+    padding: 5px 5px;
+    margin-left:-10%;
+    margin-top:0px;
+    top:60px;
+  }
+  a.again{
+    margin-left:8%;
+  }
+    .jtron .container{
+     margin-top: -20px;
+  }
+    .container-fluid .row .second-title p.st1{
+      font-size: 36px;
+      line-height:36px;
     }
     .seperator{
         padding:20px;
@@ -305,8 +335,11 @@ a.getstarted:hover{
 		            	</p>
 						<br>
 						<br>
-						
-						<a class="getstarted" href="/signup/">GET STARTED</a>
+					<div class="row ">
+            <div class="col-xs-12">
+            <a class="getstarted" href="/signup/">GET<span style="color:#ffc107">i</span>STARTED</a>
+          </div>
+          </div>
 					</div>
 					<div class="col-md-6 col-lg-6 second-title">
 						<img class="visible-lg visible-md" src="{% static "scholarship/images/comp.png" %}" width="80%" alt="ScholFin dashboard"/>
@@ -403,8 +436,10 @@ a.getstarted:hover{
     <h3 style="font-size:56px;line-height:70px;">Who wants a Scholarship?</h3>
     <br>
 	<br>
-    <div class="row">
-				<a class="getstarted again" href="/signup/">GET STARTED</a>
+    <div class="row ">
+      
+				<a class="getstarted again" href="/signup/">GET<span style="color:#ffc107">i</span>STARTED</a>
+      
 		</div>
   </div>
 </div>

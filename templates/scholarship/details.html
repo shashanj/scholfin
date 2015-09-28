@@ -81,10 +81,11 @@
             <i class="material-icons">more_vert</i>
           </button>
           <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-           <a href="/profile/" style="text-decoration:none"> <li class="mdl-menu__item">Profile</li></a>
-            <a class="typeform-share link" href="https://scholfin.typeform.com/to/EgBAUf" data-mode="2" target="_blank" style="text-decoration:none"><li class="mdl-menu__item">Feedback</li></a>
-            <a href="/logout/" style="text-decoration:none"><li class="mdl-menu__item">Logout</li>
-          </ul></a>
+            <a href="/profile/" style="text-decoration:none"><li class="mdl-menu__item" >Profile</li></a>
+            <a class="typeform-share link" href="https://scholfin.typeform.com/to/EgBAUf" data-mode="2" target="_blank" style="text-decoration:none"><li class="mdl-menu__item">Feedback
+			     </li></a>
+            <a href="/logout/" style="text-decoration:none"><li class="mdl-menu__item">Logout</li></a>
+          </ul>
           {% endif %}
         </div>
       </header>
@@ -118,7 +119,7 @@
             <div class="row">
 			{% if userid != -1 %}
              <a href="{{ scholarship.apply_link }}" target="_blank" style="color:white !important;text-decoration:none">
-                 <button style="margin-top:1%" type="button" class="btn btn-success col-md-offset-1 col-md-10 col-.sm-10 col-xs-9" aria-haspopup="true" aria-expanded="false"  >
+                 <button style="margin-top:1%" type="button" class="btn btn-success col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11" aria-haspopup="true" aria-expanded="false"  >
                   <h4> Let's Apply</h4>
                 </button>
               <div class="col-xs-12 col-md-12">
@@ -127,7 +128,7 @@
             </a>
             {% endif %}
             {% if userid == -1 %}
-            <button style="opacity:0.8;margin-top:1%" type="button" class="btn btn-success col-md-offset-1 col-md-10 col-.sm-12 col-xs-12" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#myModal">
+            <button style="opacity:0.8;margin-top:1%" type="button" class="btn btn-success col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#myModal">
                   <h4>Let's Apply</h4>
               </button>
              {% endif %}
@@ -355,10 +356,11 @@
     </div>
   </div>
 </div>
-
+    
 
     <script src="{% static 'scholarship/material.js' %}"></script>
     <script>
+
     function initialiseJS() {
          $('#check').hide();
 

@@ -170,15 +170,13 @@
                 </div>
                 <div class="clearfix"></div>
                 <h3>Choose your caste</h3>
-                <div class="col-md-12">
-                    <ul class="data-list caste clearfix">
+                    <ul class="data-list floated caste clearfix ">
                         {% if castes %}
                             {% for caste in castes %}
                                 <li><input name="caste" type="radio" class=" required check_radio" value="{{ caste.caste_id }}"><label class="label_gender">{{ caste.caste_name }}</label></li>
                             {% endfor %}
                         {% endif %}
                     </ul>
-                </div>
 			</div><!-- end step -->
 
 			<div class="step row">
@@ -201,7 +199,7 @@
                     <h3>Pick areas of your interest</h3>
                     <small>You may choose more than one entries</small>
                     <br>
-                    <ul class="data-list interest clearfix">
+                    <ul class="data-list interest floated clearfix">
                         {% if interests %}
                             {% for interest in interests %}
                                 <li><input class="icheck_checkbox" type="checkbox" name="interest" value="{{ interest.interest_id }}"/><label class="label_gender">{{ interest.interest_name }}</label></li>
@@ -232,7 +230,7 @@
                 <div class="clearfix"></div>
                 <h3>Do you have any physical disability?</h3>
                 <div class="col-md-12">
-                    <ul class="data-list disability clearfix">
+                    <ul class="data-list disability floated clearfix">
                         <li><input name="disability" type="radio" class="required check_radio" value="1" ><label class="label_gender">Yes</label></li>
                         <li><input name="disability" type="radio" class="required check_radio" value="0" checked><label class="label_gender">No</label></li>
                     </ul>
@@ -241,9 +239,20 @@
 			<div class="submit step" id="complete">
 			<h3>Like us on Facebook! </h3>
                 <br>
-			<div class="fb-page" data-href="https://www.facebook.com/SCHOLFIN" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true" data-show-posts="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/SCHOLFIN"><a href="https://www.facebook.com/SCHOLFIN">Scholfin</a></blockquote></div></div>
-                    	
-						<h3>Your profile is created! Thank you for your time.</h3>
+			<!-- <div class="fb-page" data-href="https://www.facebook.com/SCHOLFIN" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true" data-show-posts="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/SCHOLFIN"><a href="https://www.facebook.com/SCHOLFIN">Scholfin</a></blockquote></div></div> -->
+                <div class="fb-like" 
+                    data-href="https://www.facebook.com/scholfin?_rdr" 
+                    data-width="500" 
+                    data-layout="button" 
+                    data-action="like" 
+                    data-show-faces="false" 
+                    data-share="true">
+                </div>
+                <div class="fb-share-button" 
+                    data-href="https://scholfin.com" 
+                    data-layout="button">
+                </div>
+			 			<h3>Your profile is created! Thank you for your time.</h3>
 						<button type="submit" name="process" class="submit">Click here to see your scholarships</button>
 			</div><!-- end submit step -->
 
