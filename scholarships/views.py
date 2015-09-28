@@ -10,9 +10,14 @@ from django.contrib.auth.models import User
 
 from functions import *
 from scholarships.models import *
+from django.contrib.auth.hashers import make_password
 
 
 # Create your views here.
+import random, string
+
+def randomword(length):
+   return ''.join(random.choice(string.lowercase) for i in range(length))
 
 def index(request):
 	if 'userid' not in request.session:
@@ -28,21 +33,30 @@ def login_page(request):
         username = request.POST.get('username')
         print username
         password = request.POST.get('password')
+        try:
+            user = User.objects.get(username = username)
+        except User.DoesNotExist:
+            user = None
 
-        user = authenticate(username=username, password=password)
         if user is not None:
-            if user.is_active:
-                login(request, user)
-                request.session['userid']=user.id
-                state = "login successfull"
-                return HttpResponseRedirect('/dashboard/')
-            else:
-                state = "your account is not active"
+            if user.profile.auth_type == 'basic':
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    if user.is_active:
+                        login(request, user)
+                        request.session['userid']=user.id
+                        state = "login successfull"
+                        return HttpResponseRedirect('/dashboard/')
+                    else:
+                        state = "your account is not active"
+                else:
+                    state = 'your username and/or password was wrong'
+            else: 
+                state = 'No such user exists'
         else:
-            state = 'your username and/or password was wrong'
+            state = 'No such user exists'
     # t=loader.get_template('scholarship/login.html');
     return render_to_response('scholarship/login.html', {'state': state, 'username': username}, RequestContext(request))
-
 
 def forgot_password(request):
     if request.POST:
@@ -54,6 +68,102 @@ def forgot_password(request):
 def signup(request):
     return render_to_response('scholarship/signup.html')
 
+def fbsignup(request):
+    # Settings for Facebook API call
+    client_id = '1675623895984487'
+    redirect_uri = 'http://localhost:8000/fbsignup_process/'
+    scope = 'email'
+    api_url = 'https://www.facebook.com/dialog/oauth?'
+
+    return HttpResponseRedirect(api_url + 'client_id=' + client_id + '&' + 'redirect_uri=' + redirect_uri + '&' 
+        + 'scope=' + scope)
+
+
+def fbsignup_process(request):
+    code = request.GET.get('code', False)
+    # Settings for Facebook API call
+    client_id = '1675623895984487'
+    redirect_uri = 'http://localhost:8000/fbsignup_process/'
+    api_url = 'https://graph.facebook.com/v2.3/oauth/access_token?'
+    client_secret = 'c3a7ba0d03e7ce5aecb4c755983d9166'
+
+    if code:
+        import json
+        import urllib2
+        data_url = api_url + 'client_id=' + client_id + '&' + 'redirect_uri=' + redirect_uri + '&' + 'client_secret=' + client_secret + '&' + 'code=' + str(code)
+        
+        try:
+            data = json.load(urllib2.urlopen(data_url))
+        except ValueError:
+            return HttpResponseRedirect('/')
+        except urllib2.URLError:
+            return HttpResponseRedirect('/')
+
+        ##Capture access_token from JSON response
+        access_token = data['access_token']
+
+        data_url = 'https://graph.facebook.com/v2.4/me?fields=first_name,last_name,email&access_token='+access_token
+        
+        try:
+            data = json.load(urllib2.urlopen(data_url))
+        except ValueError:
+            return HttpResponseRedirect('/')
+        except urllib2.URLError:
+            return HttpResponseRedirect('/')
+
+        username = data['email']
+        print username
+
+        try:
+            user = User.objects.get(username = username)
+        except User.DoesNotExist:
+            user = None
+
+        if user is not None:
+            password = randomword(30)
+            user.password = make_password(password=password,
+                                  salt=None,
+                                  hasher='unsalted_md5')
+            user.save()
+            user = authenticate(username=username, password=password)
+            login(request,user)
+            request.session['userid']=user.id
+            return HttpResponseRedirect('/dashboard/')
+
+        else:
+            password = access_token
+            email = data['email']
+            lastname = data['last_name']
+            firstname = data['first_name']
+            auth_type = 'facebook'
+            option_caste = caste.objects.all
+            option_state = state.objects.all
+            option_level = level.objects.all
+            option_religion = religion.objects.all
+            option_field = field.objects.all
+            option_interest = interest.objects.all
+            option_abroad = abroad.objects.all
+            context_list = {'castes': option_caste,
+                            'states': option_state,
+                            'levels': option_level,
+                            'religions': option_religion,
+                            'fields': option_field,
+                            'interests': option_interest,
+                            'abroads': option_abroad,
+                            'username': username,
+                            'password': password,
+                            'email': email,
+                            'auth_type' : auth_type,
+                            'lastname' : lastname,
+                            'firstname' : firstname
+                            }
+            return render_to_response('scholarship/signup_detail.html', context_list, RequestContext(request))
+        # response = HttpResponse(data.items())
+
+    else:
+        response = HttpResponseRedirect('/')
+
+    return response
 
 @csrf_exempt
 def signup_complete(request):
@@ -83,6 +193,7 @@ def signup_complete(request):
             }
             return render_to_response('scholarship/signup.html',context)
             
+        auth_type = 'basic'
         option_caste = caste.objects.all
         option_state = state.objects.all
         option_level = level.objects.all
@@ -100,6 +211,7 @@ def signup_complete(request):
                         'username': username,
                         'password': password,
                         'email': email,
+                        'auth_type' : auth_type,
                         }
     return render_to_response('scholarship/signup_detail.html', context_list, RequestContext(request))
 
@@ -109,6 +221,7 @@ def signupprocess(request):
         u_username = request.POST.get('username')
         u_email = request.POST.get('email')
         u_password = request.POST.get('password')
+        u_auth_type = request.POST.get('auth_type')
         u_firstname = request.POST.get('fname')
         u_lastname = request.POST.get('lname')
         u_state = state.objects.filter(state_id=int(request.POST.get('state')))
@@ -142,6 +255,7 @@ def signupprocess(request):
         print new_user
         profile = UserProfile()
         profile.user = new_user
+        profile.auth_type = u_auth_type
         profile.user_state =u_state
         profile.user_religion = u_religion
         profile.user_caste = u_caste
@@ -153,12 +267,38 @@ def signupprocess(request):
         profile.save()
         for u in u_interest:
             profile.user_interest.add(u)
-        profile.save()
-        user=authenticate(username=u_username, password=u_password);
-        if user is not None:
-            login(request,user)
-            request.session['userid']=user.id
-            return HttpResponseRedirect('/dashboard/')
+
+        user = User.objects.get(username = u_username)
+        if user.profile.auth_type == 'basic':
+            user=authenticate(username=u_username, password=u_password);
+            if user is not None:
+                login(request,user)
+                request.session['userid']=user.id
+                return HttpResponseRedirect('/dashboard/')
+
+        elif user.profile.auth_type == 'facebook':
+            password = randomword(30)
+            user.password = make_password(password=password,
+                                  salt=None,
+                                  hasher='unsalted_md5')
+            user.save()
+            user = authenticate(username=u_username, password=password)
+            if user is not None:
+                login(request,user)
+                request.session['userid']=user.id
+                return HttpResponseRedirect('/dashboard/')
+
+        elif user.profile.auth_type == 'google':
+            password = randomword(30)
+            user.password = make_password(password=password,
+                                  salt=None,
+                                  hasher='unsalted_md5')
+            user.save()
+            user = authenticate(username=u_username, password=password)
+            if user is not None:
+                login(request,user)
+                request.session['userid']=user.id
+                return HttpResponseRedirect('/dashboard/')
     return HttpResponse("error in registration")
 
 
