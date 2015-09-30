@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Scholfin | Profile</title>
+    <title>Scholfin | Update Profile</title>
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -82,7 +82,7 @@
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
       <header class="demo-header mdl-layout__header mdl-color--white mdl-color--grey-100 mdl-color-text--grey-600">
         <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title"><a href="/dashboard/">ScholFin</a></span>
+          <span class="mdl-layout-title" ><a href="/dashboard/" style="color:white !important">ScholFin - Update Profile</a></span>
           <div class="mdl-layout-spacer"></div>
           <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
             <i class="material-icons">more_vert</i>
@@ -102,7 +102,7 @@
     
     <div id="survey_container">
 	<div id="top-wizard">
-		<strong>Update Profile <span id="location"></span></strong>
+		<strong style="font-size:250%">Update Profile <span id="location"></span></strong>
 		<div id="progressbar"></div>
 		<div class="shadow"></div>
 	</div><!-- end top-wizard -->
@@ -119,13 +119,17 @@
           </div>
 					<div class="row">
 					<div class="col-md-12">
+                    <h3>Choose your state</h3>
+
 						<ul class="data-list">
 							<li>
                                 <div class="styled-select">
                                     <select class="form-control required" name="state">
-                                        <option value="" selected="">Select your state</option>
                                         {% if states %}
                                             {% for state in states %}
+                                                {% if userdetail.user_state == state %}
+                                                    <option value="{{state.state_id}}" selected="">{{userdetail.user_state}}</option>
+                                                {% endif %}
                                                 <option value="{{ state.state_id }}">{{ state.state_name }}</option>
                                             {% endfor %}
                                         {% endif %}
@@ -135,16 +139,27 @@
 						</ul>
                         <h3>Choose your Gender</h3>
 						<ul class="data-list floated clearfix">
-							<li><input name="gender" type="radio" class="required check_radio" value="0" checked><label class="label_gender"> Male</label></li>
-							<li><input name="gender" type="radio" class="required check_radio" value="1"><label class="label_gender"> Female</label></li>
+                            {% if userdetail.user_gender == 1 %}
+    							<li><input name="gender" type="radio" class="required check_radio" value="0" ><label class="label_gender"> Male</label></li>
+    							<li><input name="gender" type="radio" class="required check_radio" value="1" checked><label class="label_gender" > Female</label></li>
+                            {% else %}
+                                <li><input name="gender" type="radio" class="required check_radio" value="0" checked><label class="label_gender"> Male</label></li>
+                                <li><input name="gender" type="radio" class="required check_radio" value="1"><label class="label_gender"> Female</label></li>
+                            {% endif %}
 						</ul>
                     <br>
                         <h3>Do you want to study abroad ?</h3>
-						<ul class="data-list floated clearfix">
-                            <li><input name="abroad" type="radio" class="required check_radio" value="2"><label class="label_gender">Yes</label></li>
-                            <li><input name="abroad" type="radio" class="required check_radio" value="1"><label class="label_gender">I'm not sure</label></li>
-						</ul>
-						<br>
+                        <ul class="data-list floated clearfix">
+                           {% if userdetail.user_abroad_id == 2 %}
+                                <li><input name="abroad" type="radio" class="required check_radio" value="1" checked><label class="label_gender">Yes</label></li>
+                                <li><input name="abroad" type="radio" class="required check_radio" value="2"><label class="label_gender">I'm<span style="color:white">-</span>not<span style="color:white">-</span>sure</label></li>
+                            {% else %}
+                                <li><input name="abroad" type="radio" class="required check_radio" value="1"><label class="label_gender">Yes</label></li>
+                                <li><input name="abroad" type="radio" class="required check_radio" value="2" checked><label class="label_gender">I'm<span style="color:white">-</span>not<span style="color:white">-</span>sure</label></li>
+                            {% endif %}
+                            
+                        </ul>
+                        <br>
 					</div><!-- end col-md-6 -->
 				</div><!-- end row -->
 				<div class="col-md-12">
@@ -153,9 +168,12 @@
 							<li>
 							<div class="styled-select">
 								<select class="form-control required" name="level">
-                                        <option value="" selected="">Select your current education level</option>
+                                        
                                         {% if levels %}
                                             {% for level in levels %}
+                                            {% if userdetail.user_level == level %}
+                                                <option value="{{level.level_id}}" selected="">{{userdetail.user_level}}</option>
+                                            {% endif %}
                                                 <option value="{{ level.level_id }}">{{ level.level_name }}</option>
                                             {% endfor %}
                                         {% endif %}
@@ -167,24 +185,32 @@
                 <div class="clearfix"></div>
                 <h3>Choose your caste</h3>
                 <div class="col-md-12">
-                    <ul class="data-list caste clearfix">
+                    <ul class="data-list floated caste clearfix">
                         {% if castes %}
                             {% for caste in castes %}
-                                <li><input name="caste" type="radio" class=" required check_radio" value="{{ caste.caste_id }}"><label class="label_gender">{{ caste.caste_name }}</label></li>
+                                {% if userdetail.user_caste == caste %}
+                                    <li><input name="caste" type="radio" class=" required check_radio" value="{{ caste.caste_id }}" checked><label class="label_gender">{{ caste.caste_name }}</label></li>
+                                {% else %}
+                                    <li><input name="caste" type="radio" class=" required check_radio" value="{{ caste.caste_id }}" ><label class="label_gender">{{ caste.caste_name }}</label></li>
+                                {% endif %}
                             {% endfor %}
                         {% endif %}
                     </ul>
                 </div>
 
 				<div class="col-md-12">
+                    <br></br>
 					<h3>Select the field which suits you best</h3>
 					<ul class="data-list">
                         <li>
                             <div class="styled-select">
                                 <select class="form-control required" name="field">
-                                    <option value="" selected="">Select your field of education </option>
+                                    
                                     {% if fields %}
                                         {% for field in fields %}
+                                        {% if userdetail.user_field == field%}
+                                            <option value="{{field.field_id}}" selected="">{{userdetail.user_field}} </option>
+                                        {% endif %}
                                             <option value="{{ field.field_id }}">{{ field.field_name }}</option>
                                         {% endfor %}
                                     {% endif %}
@@ -195,20 +221,28 @@
                     <h3>Pick areas of your interest</h3>
                     <small>You may choose more than one entries</small>
                     <br>
-                    <ul class="data-list interest clearfix">
+                    <ul class="data-list floated interest clearfix">
                         {% if interests %}
-                            {% for interest in interests %}
-                                <li><input class="icheck_checkbox" type="checkbox" name="interest" value="{{ interest.interest_id }}"/><label class="label_gender">{{ interest.interest_name }}</label></li>
+                                {% for interest in interests %}
+                                    {% if interest.bc == 1 %}
+                                        <li><input class="icheck_checkbox" type="checkbox" name="interest" value="{{ interest.interest_id }}" checked/><label class="label_gender">{{ interest.interest_name }}</label></li>
+                                    {% else %}
+                                        <li><input class="icheck_checkbox" type="checkbox" name="interest" value="{{ interest.interest_id }}" /><label class="label_gender">{{ interest.interest_name }}</label></li> 
+                                    {% endif %}                               
                             {% endfor %}
                         {% endif %}
                     </ul>
 				</div>
 
                 <div class="col-md-12">
+                    <br></br>
+                    <h3>Select your religion</h3>
                     <select class="form-control required" name="religion">
-                        <option value="" selected="">Select your religion</option>
                         {% if religions %}
                             {% for religion in religions %}
+                                {%if userdetail.user_religion == religion %}
+                                    <option value="{{ religion.religion_id }}" selected="">{{ userdetail.user_religion}}</option>                           
+                                {% endif %}
                                 <option value="{{ religion.religion_id }}">{{ religion.religion_name }}</option>
                             {% endfor %}
                         {% endif %}
@@ -218,14 +252,20 @@
                 <div class="clearfix"></div>
                 <h3>Do you have any physical disability?</h3>
                 <div class="col-md-12">
-                    <ul class="data-list disability clearfix">
-                        <li><input name="disability" type="radio" class="required check_radio" value="1" ><label class="label_gender">Yes</label></li>
-                        <li><input name="disability" type="radio" class="required check_radio" value="0" checked><label class="label_gender">No</label></li>
+                    <ul class="data-list floated disability clearfix">
+                        {% if userdetail.user_disability == 0 %}
+                            <li><input name="disability" type="radio" class="required check_radio" value="1" ><label class="label_gender">Yes</label></li>
+                            <li><input name="disability" type="radio" class="required check_radio" value="0" checked><label class="label_gender">No</label></li>
+                        {%else%}
+                            <li><input name="disability" type="radio" class="required check_radio" value="1" checked><label class="label_gender">Yes</label></li>
+                            <li><input name="disability" type="radio" class="required check_radio" value="0" ><label class="label_gender">No</label></li>
+                        {% endif %}
                     </ul>
                 </div>
 
 			</div><!-- end step -->
 			<div class="submit step" id="complete">
+                <br></br>
 						<button type="submit" name="process" class="submit">Update your profile</button>
 			</div><!-- end submit step -->
 

@@ -121,7 +121,7 @@
                         <h3>Do you want to study abroad ?</h3>
 						<ul class="data-list floated clearfix">
                             <li><input name="abroad" type="radio" class="required check_radio" value="2"><label class="label_gender">Yes</label></li>
-                            <li><input name="abroad" type="radio" class="required check_radio" value="1"><label class="label_gender">I'm not sure</label></li>
+                            <li><input name="abroad" type="radio" class="required check_radio" value="1"><label class="label_gender">I'm<span style="color:white">-</span>not<span style="color:white">-</span>sure</label></li>
 						</ul>
 						<br>
 					</div><!-- end col-md-6 -->
@@ -254,7 +254,11 @@
                     data-layout="button">
                 </div>
 			 			<h3>Your profile is created! Thank you for your time.</h3>
-						<button type="submit" name="process" class="submit">Click here to see your scholarships</button>
+						{% if next_url == "/dashboard/" %}
+                          <button type="submit" name="process" class="submit">Click here to see your scholarships</button>
+                        {% else %}
+                            <button type="submit" name="process" class="submit">Proceed To Your Search</button>
+                        {% endif %}
 			</div><!-- end submit step -->
 
 		</div><!-- end middle-wizard -->

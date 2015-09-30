@@ -4,7 +4,7 @@ from datetime import *
 from django.contrib import admin
 from django.forms import CheckboxSelectMultiple
 from django.contrib.auth.models import User
-
+import re
 # Create your models here.
 
 class field (models.Model):
@@ -118,7 +118,8 @@ class scholarship(models.Model):
 		return self.name;
 
 	def get_absolute_url(self):
-		return "/scholarship-details/"+self.name ;
+		x = re.sub('[^A-Za-z0-9]+','-',re.sub('[^A-Za-z0-9]+',' ',self.name).strip(' '))
+		return "/scholarship-details/"+x ;
 
 class UserProfile(models.Model):
 	# linking user profile to a user

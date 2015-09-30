@@ -7,14 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-
 from django.contrib.auth.models import User
-
 from functions import *
 from scholarships.models import *
-
-
 from scholarships.models import *
+import re
 
 
 @login_required(login_url='/login/')
@@ -104,6 +101,10 @@ def state_only(request , scholarship_state):
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
+        x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
+        x = x.strip(' ')
+        x = re.sub('[^A-Za-z0-9]+','-',x)
+        sc.url = x;
     amount = int(amount)
     print amount
     amount = indianformat(amount)
@@ -193,6 +194,10 @@ def interest_only(request):
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
+        x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
+        x = x.strip(' ')
+        x = re.sub('[^A-Za-z0-9]+','-',x)
+        sc.url = x;
     amount = int(amount)
     print amount
     amount = indianformat(amount)
@@ -279,6 +284,10 @@ def india_only(request):
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
+        x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
+        x = x.strip(' ')
+        x = re.sub('[^A-Za-z0-9]+','-',x)
+        sc.url = x;
     amount = int(amount)
     print amount
     amount = indianformat(amount)
@@ -368,6 +377,10 @@ def abroad_only(request):
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
+        x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
+        x = x.strip(' ')
+        x = re.sub('[^A-Za-z0-9]+','-',x)
+        sc.url = x;
     amount = int(amount)
     amount = indianformat(amount)
     context_list = {
@@ -466,6 +479,10 @@ def caste_only(request):
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
+        x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
+        x = x.strip(' ')
+        x = re.sub('[^A-Za-z0-9]+','-',x)
+        sc.url = x;
     amount = int(amount)
     print amount
     amount = indianformat(amount)
@@ -565,6 +582,10 @@ def religion_only(request):
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
+        x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
+        x = x.strip(' ')
+        x = re.sub('[^A-Za-z0-9]+','-',x)
+        sc.url = x
     amount = int(amount)
     print amount
     amount = indianformat(amount)

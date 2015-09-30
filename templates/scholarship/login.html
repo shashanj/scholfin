@@ -6,6 +6,12 @@
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="{% static "scholarship/css/bootstrap.css" %}" />
 		<link href='http://fonts.googleapis.com/css?family=BenchNine' rel='stylesheet' type='text/css'>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
 		<style>
 		@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700);
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css);
@@ -224,7 +230,8 @@ i.fa{
 	<body>	
 		<div class="login">
 		  <div class="heading">
-			<h2>ScholFin</h2>
+			<h2>ScholFin</h2><br>
+      <a href="/fbsignup/"><button class="btn btn-primary" >Sign in via Facebook</button></a>
 			<form action="/login/" method="post">{% csrf_token %}
                 <p style="color: black">{{ state }}</p>
 			  <div class="input-group input-group-lg">
@@ -237,7 +244,7 @@ i.fa{
 				  <input type="password" name="password" class="form-control" placeholder="Password">
 				</div>
 
-				<button type="submit" class="float">Log In</button>
+				<button type="submit" class="float">Log In</button>{% csrf_token %}
 			   </form>
 		 		</div>
 		 		<div class="signup">
@@ -245,5 +252,8 @@ i.fa{
 		 		</div>
 		 </div>
 		 <p><a href="/forgotpassword/"><u>Forgot your password ?</u></a></p>
+     <!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 	</body>
 </html>

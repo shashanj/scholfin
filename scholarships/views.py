@@ -14,7 +14,10 @@ from django.contrib.auth.hashers import make_password
 
 
 # Create your views here.
+import re
 import random, string
+
+next_url = '/dashboard/'
 
 def randomword(length):
    return ''.join(random.choice(string.lowercase) for i in range(length))
@@ -46,7 +49,7 @@ def login_page(request):
                         login(request, user)
                         request.session['userid']=user.id
                         state = "login successfull"
-                        return HttpResponseRedirect('/dashboard/')
+                        return HttpResponseRedirect(next_url)
                     else:
                         state = "your account is not active"
                 else:
@@ -70,22 +73,41 @@ def signup(request):
 
 def fbsignup(request):
     # Settings for Facebook API call
-    client_id = '1675623895984487'
-    redirect_uri = 'http://localhost:8000/fbsignup_process/'
+    client_id = '1497240163926202'
+    redirect_uri = 'http://scholfin.com/fbsignup_process/'
     scope = 'email'
     api_url = 'https://www.facebook.com/dialog/oauth?'
 
     return HttpResponseRedirect(api_url + 'client_id=' + client_id + '&' + 'redirect_uri=' + redirect_uri + '&' 
         + 'scope=' + scope)
 
+@csrf_exempt
+def googlesignup_process(request):
+    import urllib2, json
+    # data_url = https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=youraccess_token
+    #client_id =  143411720163-k159r2o0uqtas51d96qqf9lri7511bjk.apps.googleusercontent.com 
+    #client_secret = Zbgj6udZxEXiZo5I1BLiU2sA
+    data_url = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='
+    s = request.POST.get('codee',False)
+    try:
+        data = json.load(urllib2.urlopen(data_url+s))
+    except ValueError:
+        return HttpResponseRedirect('/')
+    except urllib2.URLError:
+        return HttpResponseRedirect('/')
+
+    print s
+    return HttpResponse(data)
+
+
 
 def fbsignup_process(request):
     code = request.GET.get('code', False)
     # Settings for Facebook API call
-    client_id = '1675623895984487'
-    redirect_uri = 'http://localhost:8000/fbsignup_process/'
+    client_id = '1497240163926202'
+    redirect_uri = 'http://scholfin.com/fbsignup_process/'
     api_url = 'https://graph.facebook.com/v2.3/oauth/access_token?'
-    client_secret = 'c3a7ba0d03e7ce5aecb4c755983d9166'
+    client_secret = 'c5bf6a6b7eb80fdf1326fb9112accea8'
 
     if code:
         import json
@@ -128,7 +150,7 @@ def fbsignup_process(request):
             user = authenticate(username=username, password=password)
             login(request,user)
             request.session['userid']=user.id
-            return HttpResponseRedirect('/dashboard/')
+            return HttpResponseRedirect(next_url)
 
         else:
             password = access_token
@@ -212,6 +234,7 @@ def signup_complete(request):
                         'password': password,
                         'email': email,
                         'auth_type' : auth_type,
+                        'next_url' : next_url,
                         }
     return render_to_response('scholarship/signup_detail.html', context_list, RequestContext(request))
 
@@ -274,7 +297,7 @@ def signupprocess(request):
             if user is not None:
                 login(request,user)
                 request.session['userid']=user.id
-                return HttpResponseRedirect('/dashboard/')
+                return HttpResponseRedirect(next_url)
 
         elif user.profile.auth_type == 'facebook':
             password = randomword(30)
@@ -286,7 +309,7 @@ def signupprocess(request):
             if user is not None:
                 login(request,user)
                 request.session['userid']=user.id
-                return HttpResponseRedirect('/dashboard/')
+                return HttpResponseRedirect(next_url)
 
         elif user.profile.auth_type == 'google':
             password = randomword(30)
@@ -298,7 +321,7 @@ def signupprocess(request):
             if user is not None:
                 login(request,user)
                 request.session['userid']=user.id
-                return HttpResponseRedirect('/dashboard/')
+                return HttpResponseRedirect(next_url)
     return HttpResponse("error in registration")
 
 
@@ -379,6 +402,10 @@ def dashboard(request):
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
+        x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
+        x = x.strip(' ')
+        x = re.sub('[^A-Za-z0-9]+','-',x)
+        sc.url = x;
     amount = int(amount)
     print amount
     amount = indianformat(amount)
@@ -400,8 +427,23 @@ def logout_user(request):
 
 
 def detail(request , scholarship_name):
-    scholarship_s = scholarship.objects.filter(name=scholarship_name)
-    scholarship_s=scholarship_s[0]
+    scholarship_name = scholarship_name.replace("-","")
+    i=1
+    for x in scholarship.objects.all():
+        s_name = re.sub('[^A-Za-z0-9]+', '', x.name)
+        if s_name == scholarship_name:
+            break
+        i=i+1
+    scholarship_s = scholarship.objects.filter(pk=i)
+    #scholarship_s = scholarship.objects.filter(name=scholarship_name)
+    scholarship_s = scholarship_s[0]
+
+    if 'userid' not in request.session:
+        global next_url 
+        next_url = request.get_full_path()
+    else: 
+        global next_url 
+        next_url = '/dashboard/'
     if 'userid' not in request.session:
     	userid=-1
     else:
@@ -418,13 +460,25 @@ def profilepage(request):
     option_field = field.objects.all
     option_interest = interest.objects.all
     option_abroad = abroad.objects.all
+    userdetail = UserProfile.objects.get(user__email=request.user.email)
+    inters =[] 
+    inters = [val for val in interest.objects.all() if val in userdetail.user_interest.all()]
+    op = option_interest();
+    #print(userdetail.user_abroad_id)
+    for i in op :
+        i.bc = 0;
+    for i in op : 
+        for inter in inters:
+            if(i == inter ):
+                i.bc = 1
     context_list = {'castes': option_caste,
                     'states': option_state,
                     'levels': option_level,
                     'religions': option_religion,
                     'fields': option_field,
-                    'interests': option_interest,
+                    'interests': op,
                     'abroads': option_abroad,
+                    'userdetail' : userdetail,
                     }
     return render_to_response('scholarship/profile.html', context_list, RequestContext(request))
 

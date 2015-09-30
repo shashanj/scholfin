@@ -1,5 +1,5 @@
 from django.contrib.sitemaps import Sitemap
-
+import re
 from scholarships.models import *
 
 class ScholarshipSitemap(Sitemap):
@@ -8,3 +8,5 @@ class ScholarshipSitemap(Sitemap):
 
 	def items(self):
 		return scholarship.objects.all()
+	def lastmod(self,item):
+		return item.timestamp

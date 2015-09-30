@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^forgotpassword/' , views.forgot_password , name='forgotpassword'),
     url(r'^signup/' , views.signup , name='signup'),
     url(r'^fbsignup/' , views.fbsignup , name='fbsignup'),
+    url(r'^googlesignup_process/' , views.googlesignup_process , name='googlesignup_process'),
     url(r'^fbsignup_process/' , views.fbsignup_process , name='fbsignup_process'),
     url(r'^signup-complete/' , views.signup_complete , name='signup_complete'),
     url(r'^a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/', include(admin.site.urls)),

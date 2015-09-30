@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from sorting import *
 from django.contrib.auth.models import User
-
+import re
 from functions import *
 from scholarships.models import *
 
@@ -107,6 +107,10 @@ def gov(request):
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
+        x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
+        x = x.strip(' ')
+        x = re.sub('[^A-Za-z0-9]+','-',x)
+        sc.url = x;
     amount = int(amount)
     amount = indianformat(amount)
 
@@ -211,6 +215,10 @@ def pri(request):
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
+        x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
+        x = x.strip(' ')
+        x = re.sub('[^A-Za-z0-9]+','-',x)
+        sc.url = x;
     amount = int(amount)
     print amount
     amount = indianformat(amount)
@@ -322,6 +330,10 @@ def comp(request):
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
+        x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
+        x = x.strip(' ')
+        x = re.sub('[^A-Za-z0-9]+','-',x)
+        sc.url = x;
     amount = int(amount)
     print amount
     amount = indianformat(amount)
