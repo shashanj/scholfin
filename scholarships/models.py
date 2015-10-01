@@ -145,7 +145,6 @@ class UserProfile(models.Model):
 
 
 
-
 class MyModelAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},

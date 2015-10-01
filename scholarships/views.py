@@ -36,6 +36,7 @@ def login_page(request):
         username = request.POST.get('username')
         print username
         password = request.POST.get('password')
+        
         try:
             user = User.objects.get(username = username)
         except User.DoesNotExist:
@@ -105,7 +106,7 @@ def fbsignup_process(request):
     code = request.GET.get('code', False)
     # Settings for Facebook API call
     client_id = '1497240163926202'
-    redirect_uri = 'http://scholfin.com/fbsignup_process/'
+    redirect_uri = 'http://www.scholfin.com/fbsignup_process/'
     api_url = 'https://graph.facebook.com/v2.3/oauth/access_token?'
     client_secret = 'c5bf6a6b7eb80fdf1326fb9112accea8'
 
@@ -431,18 +432,19 @@ def detail(request , scholarship_name):
     i=1
     for x in scholarship.objects.all():
         s_name = re.sub('[^A-Za-z0-9]+', '', x.name)
+        i=x.scholarship_id
         if s_name == scholarship_name:
             break
-        i=i+1
+        
     scholarship_s = scholarship.objects.filter(pk=i)
     #scholarship_s = scholarship.objects.filter(name=scholarship_name)
     scholarship_s = scholarship_s[0]
 
     if 'userid' not in request.session:
-        global next_url 
+        global next_url
         next_url = request.get_full_path()
     else: 
-        global next_url 
+        global next_url
         next_url = '/dashboard/'
     if 'userid' not in request.session:
     	userid=-1
