@@ -293,7 +293,7 @@ def signupprocess(request):
             profile.user_interest.add(u)
 
         user = User.objects.get(username = u_username)
-        if user.profile.auth_type == 'basic':
+        if user.profile.auth_type == 'basic' or user.profile.auth_type == None:
             user=authenticate(username=u_username, password=u_password);
             if user is not None:
                 login(request,user)
