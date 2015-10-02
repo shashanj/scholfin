@@ -109,9 +109,6 @@ class scholarship(models.Model):
 	contact_details=models.TextField(default=' ')
 	apply_link=models.CharField(max_length=500,default=' ')
 	additional_links=models.CharField(max_length=500,default=' ')
-	count=models.IntegerField(default=0)
-	mobile=models.IntegerField(default=0)
-	email_id=models.CharField(max_length=500,default=' ')
 
 	meta_data=models.CharField(max_length=170,default=' ')
 	meta_title=models.CharField(max_length=65,default=' ')
@@ -139,8 +136,6 @@ class UserProfile(models.Model):
 	user_field = models.ForeignKey(field)
 	user_gender = models.IntegerField(blank=False)
 	user_disability = models.IntegerField(blank=False)
-	user_mobile=models.IntegerField(default=0)
-	user_domicile_state = models.ForeignKey(state)
 
 
 	def __unicode__(self):
