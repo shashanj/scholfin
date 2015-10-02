@@ -3,6 +3,7 @@
 	<head>
 		<title>Sign up | ScholFin</title>
 		{% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="{% static "scholarship/css/bootstrap.css" %}" />
 		<link href='http://fonts.googleapis.com/css?family=BenchNine' rel='stylesheet' type='text/css'>
@@ -264,7 +265,7 @@ i.fa{
         <p style="color:red">{{error}}</p>
 			  <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input type="text" name="email" class="form-control" placeholder="Email" value="{{email}}" required>
+        <input type="email" name="email" class="form-control" placeholder="Email" value="{{email}}" required>
           </div>
           <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>

@@ -75,7 +75,7 @@ def signup(request):
 def fbsignup(request):
     # Settings for Facebook API call
     client_id = '1497240163926202'
-    redirect_uri = 'http://scholfin.com/fbsignup_process/'
+    redirect_uri = 'http://www.scholfin.com/fbsignup_process/'
     scope = 'email'
     api_url = 'https://www.facebook.com/dialog/oauth?'
 
@@ -135,24 +135,31 @@ def fbsignup_process(request):
             return HttpResponseRedirect('/')
 
         username = data['email']
-        print username
-
+        
         try:
-            user = User.objects.get(username = username)
+            user = User.objects.get(email = username)
         except User.DoesNotExist:
             user = None
 
-        if user is not None:
-            password = randomword(30)
-            user.password = make_password(password=password,
-                                  salt=None,
-                                  hasher='unsalted_md5')
-            user.save()
-            user = authenticate(username=username, password=password)
-            login(request,user)
-            request.session['userid']=user.id
-            return HttpResponseRedirect(next_url)
+        if user is not None:    
+            userprofile = UserProfile.objects.get(user__email=username)
 
+            if userprofile.auth_type == 'facebook':
+                password = randomword(30)
+                user.password = make_password(password=password,
+                                      salt=None,
+                                      hasher='unsalted_md5')
+                user.save()
+                user = authenticate(username=username, password=password)
+                login(request,user)
+                request.session['userid']=user.id
+                return HttpResponseRedirect(next_url)
+            else:
+                error = '* This Email-id already exits Please login Normally'
+                context={
+                    'error' : error,
+                }
+            return render_to_response('scholarship/signup.html',context)
         else:
             password = access_token
             email = data['email']
