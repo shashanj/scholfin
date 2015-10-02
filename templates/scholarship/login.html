@@ -1,20 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<title>Log in | ScholFin</title>
-		{% load static %}
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" href="{% static "scholarship/css/bootstrap.css" %}" />
-		<link href='http://fonts.googleapis.com/css?family=BenchNine' rel='stylesheet' type='text/css'>
+  <head>
+    <title>Log in | ScholFin</title>
+    {% load static %}
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="{% static "scholarship/css/bootstrap.css" %}" />
+    <link href='http://fonts.googleapis.com/css?family=BenchNine' rel='stylesheet' type='text/css'>
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
-		<style>
-		@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700);
+    <style>
+    @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700);
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css);
 * {
@@ -34,27 +33,27 @@ html{
 }
 
 body {
-	height:100%;
-	width:100%;
-	background:#55bbea;
+  height:100%;
+  width:100%;
+  background:#55bbea;
  /* background: -webkit-radial-gradient(#55bbea, #7733cc, #9933cc);  Safari 5.1 to 6.0 */
  /* background: -o-radial-gradient(#55bbea, #7733cc, #9933cc);  For Opera 11.6 to 12.0 */
  /* background: -moz-radial-gradient(#55bbea, #7733cc, #9933cc);  For Firefox 3.6 to 15 */
  /* background: radial-gradient(#55bbea, #7733cc, #9933cc);  Standard syntax */
 }
 body p{
-	margin-top:10px;
-	text-align:center;
-	color:#fff;
+  margin-top:10px;
+  text-align:center;
+  color:#fff;
 }
 body p a {
-	text-decoration:none;
-	color:#fff;
-	text-transformation:none;
+  text-decoration:none;
+  color:#fff;
+  text-transformation:none;
 }
 body p a:hover{
-	color:#fff;
-	text-transformation:underline;
+  color:#fff;
+  text-transformation:underline;
 }
 body, input, button {
   font-family: 'Source Sans Pro', sans-serif;
@@ -70,37 +69,37 @@ body, input, button {
   background:#fff;
 }
 .signup{
-	height:80px;
-	margin-top:10px;
-	border-radius:10px;
-	background:#f5f5f5;
+  height:80px;
+  margin-top:10px;
+  border-radius:10px;
+  background:#f5f5f5;
 }
 .signup h2{
-	color:#222;
-	font-size:1.5em;
-	text-align:center;
-	padding:30px;
+  color:#222;
+  font-size:1.5em;
+  text-align:center;
+  padding:30px;
 }
 .signup h2 a{
-	color:#55bbea;
-	text-transformation:none;
-	text-decoration:none;
+  color:#55bbea;
+  text-transformation:none;
+  text-decoration:none;
 }
 .signup h2 a:hover{
-	text-decoration:none;
-	text-transformation:none;
-	color:#55bbea;
+  text-decoration:none;
+  text-transformation:none;
+  color:#55bbea;
 }
 .signup h2 span a{
-	color:#555;
-	text-decoration:none;
+  color:#555;
+  text-decoration:none;
 }
 .signup h2 span a:hover{
-	color:#555;
-	text-transformation:none;
+  color:#555;
+  text-transformation:none;
 }
 i.fa{
-	color:#9933cc;
+  color:#9933cc;
 }
 .login .heading {
   text-align: center;
@@ -226,35 +225,75 @@ i.fa{
   }
 }
 
-		</style>
-	</head>
-	<body>	
-		<div class="login">
-		  <div class="heading">
-			<h2>ScholFin</h2><br>
-      <a href="/fbsignup/"><button class="btn btn-primary" >Sign in via Facebook</button></a> 
-			<form action="/login/" method="post">{% csrf_token %}
+    </style>
+     <!-- BEGIN Pre-requisites -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+  </script>
+  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
+  </script>
+  <!-- END Pre-requisites -->
+   <script>
+    function start() {
+      gapi.load('auth2', function() {
+        auth2 = gapi.auth2.init({
+          client_id: '143411720163-k159r2o0uqtas51d96qqf9lri7511bjk.apps.googleusercontent.com',
+          // Scopes to request in addition to 'profile' and 'email'
+          //scope: 'additional_scope'
+        });
+      });
+    }
+  </script>
+  </head>
+  <body>  
+    <div class="login">
+      <div class="heading">
+      <h2>ScholFin</h2><br>
+      <div class="btn-group">
+        <button class="btn btn-danger" id="signinButton" >Sign in via Google</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/fbsignup/"><button class="btn btn-primary" >Sign in via Facebook</button></a>
+      </div>
+      <script>
+        $('#signinButton').click(function() {
+          // signInCallback defined in step 6.
+          auth2.grantOfflineAccess({'redirect_uri': 'postmessage'}).then(signInCallback);
+        });
+      </script>
+      <div id="result"></div>
+
+      <form action="/login/" method="post">{% csrf_token %}
                 <p style="color: black">{{ state }}</p>
-			  <div class="input-group input-group-lg">
-				<span class="input-group-addon"><i class="fa fa-user"></i></span>
-				<input type="text" class="form-control" name="username" placeholder="Email">
-				  </div>
+        <div class="input-group input-group-lg">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input type="text" class="form-control" name="username" placeholder="Email">
+          </div>
 
-				<div class="input-group input-group-lg">
-				  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-				  <input type="password" name="password" class="form-control" placeholder="Password">
-				</div>
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+          <input type="password" name="password" class="form-control" placeholder="Password">
+        </div>
 
-				<button type="submit" class="float">Log In</button>{% csrf_token %}
-			   </form>
-		 		</div>
-		 		<div class="signup">
-		 			<h2>New to <span><a href="/">ScholFin</a></span> ? <a href="/signup/">&nbsp;Sign up</a></h2>
-		 		</div>
-		 </div>
-		 <p><a href="/forgotpassword/"><u>Forgot your password ?</u></a></p>
+        <button type="submit" class="float">Log In</button>{% csrf_token %}
+         </form>
+        </div>
+        <div class="signup">
+          <h2>New to <span><a href="/">ScholFin</a></span> ? <a href="/signup/">&nbsp;Sign up</a></h2>
+        </div>
+     </div>
+     <p><a href="/forgotpassword/"><u>Forgot your password ?</u></a></p>
+
+     <form id="code" action="/googlesignup_process/" method="POST">
+      <input type="hidden" name="codee" value="" />
+      </form>
+      <script>
+      function signInCallback(authResult) {
+        if (authResult['code']) {
+          $("input[name=codee]").val(authResult['code']);
+          $('#code').submit();
+          }}
+      </script>
      <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-	</body>
+  </body>
 </html>

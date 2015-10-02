@@ -23,10 +23,10 @@ def randomword(length):
    return ''.join(random.choice(string.lowercase) for i in range(length))
 
 def index(request):
-	if 'userid' not in request.session:
-		t = loader.get_template('scholarship/index.html')
-		return HttpResponse(t.render())
-	return HttpResponseRedirect('/dashboard/')
+    if 'userid' not in request.session:
+        t = loader.get_template('scholarship/index.html')
+        return HttpResponse(t.render())
+    return HttpResponseRedirect('/dashboard/')
 
 
 def login_page(request):
@@ -75,7 +75,7 @@ def signup(request):
 def fbsignup(request):
     # Settings for Facebook API call
     client_id = '1497240163926202'
-    redirect_uri = 'http://www.scholfin.com/fbsignup_process/'
+    redirect_uri = 'http://scholfin.com/fbsignup_process/'
     scope = 'email'
     api_url = 'https://www.facebook.com/dialog/oauth?'
 
@@ -84,22 +84,102 @@ def fbsignup(request):
 
 @csrf_exempt
 def googlesignup_process(request):
-    import urllib2, json
+    import requests
     # data_url = https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=youraccess_token
-    #client_id =  143411720163-k159r2o0uqtas51d96qqf9lri7511bjk.apps.googleusercontent.com 
-    #client_secret = Zbgj6udZxEXiZo5I1BLiU2sA
-    data_url = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='
-    s = request.POST.get('codee',False)
-    try:
-        data = json.load(urllib2.urlopen(data_url+s))
-    except ValueError:
-        return HttpResponseRedirect('/')
-    except urllib2.URLError:
-        return HttpResponseRedirect('/')
+    auth_code = request.POST.get('codee',False)
+    # print auth_code
 
-    print s
-    return HttpResponse(data)
+    if auth_code:
+        client_id =  '143411720163-k159r2o0uqtas51d96qqf9lri7511bjk.apps.googleusercontent.com' 
+        client_secret = 'Zbgj6udZxEXiZo5I1BLiU2sA'
 
+        redirect_uri = 'postmessage'
+        data_url = 'https://www.googleapis.com/oauth2/v3/token'
+
+        payload = {'code':auth_code, 'client_id':client_id, 'client_secret':client_secret, 'redirect_uri':redirect_uri, 'grant_type':'authorization_code' }
+        r = requests.post(data_url, data=payload)
+
+        import json
+        import urllib2
+        try:
+            data = json.loads(r.text)
+        except ValueError:
+            return HttpResponseRedirect('/signup/')
+        except urllib2.URLError:
+            return HttpResponseRedirect('/signup/')
+
+        access_token = data['access_token']
+        # print access_token
+
+        data_url = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token='+access_token
+            
+        try:
+            data = json.load(urllib2.urlopen(data_url))
+        except ValueError:
+            return HttpResponseRedirect('/signup/')
+        except urllib2.URLError:
+            return HttpResponseRedirect('/signup/')
+
+        username = data['email']
+        print username
+
+        try:
+            user = User.objects.get(username = username)
+        except User.DoesNotExist:
+            user = None
+
+        if user is not None :
+            if user.profile.auth_type == 'google':
+                password = randomword(30)
+                user.password = make_password(password=password,
+                                      salt=None,
+                                      hasher='unsalted_md5')
+                user.save()
+                user = authenticate(username=username, password=password)
+                login(request,user)
+                request.session['userid']=user.id
+                return HttpResponseRedirect('/dashboard/')
+
+            else:
+                error = '* This Email-id already exits'
+                context={
+                    'error' : error,
+                }
+                return render_to_response('scholarship/signup.html',context)
+
+        else:
+            password = access_token
+            email = data['email']
+            lastname = data['family_name']
+            firstname = data['given_name']
+            auth_type = 'google'
+            option_caste = caste.objects.all
+            option_state = state.objects.all
+            option_level = level.objects.all
+            option_religion = religion.objects.all
+            option_field = field.objects.all
+            option_interest = interest.objects.all
+            option_abroad = abroad.objects.all
+            context_list = {'castes': option_caste,
+                            'states': option_state,
+                            'levels': option_level,
+                            'religions': option_religion,
+                            'fields': option_field,
+                            'interests': option_interest,
+                            'abroads': option_abroad,
+                            'username': username,
+                            'password': password,
+                            'email': email,
+                            'auth_type' : auth_type,
+                            'lastname' : lastname,
+                            'firstname' : firstname
+                            }
+            return render_to_response('scholarship/signup_detail.html', context_list, RequestContext(request))
+
+    else:
+        response = HttpResponseRedirect('/')
+
+    return response
 
 
 def fbsignup_process(request):
@@ -135,16 +215,15 @@ def fbsignup_process(request):
             return HttpResponseRedirect('/')
 
         username = data['email']
-        
+        print username
+
         try:
-            user = User.objects.get(email = username)
+            user = User.objects.get(username = username)
         except User.DoesNotExist:
             user = None
 
-        if user is not None:    
-            userprofile = UserProfile.objects.get(user__email=username)
-
-            if userprofile.auth_type == 'facebook':
+        if user is not None:
+            if user.profile.auth_type == 'facebook':
                 password = randomword(30)
                 user.password = make_password(password=password,
                                       salt=None,
@@ -153,13 +232,14 @@ def fbsignup_process(request):
                 user = authenticate(username=username, password=password)
                 login(request,user)
                 request.session['userid']=user.id
-                return HttpResponseRedirect(next_url)
+                return HttpResponseRedirect('/dashboard/')
             else:
-                error = '* This Email-id already exits Please login Normally'
+                error = '* This Email-id already exits'
                 context={
                     'error' : error,
                 }
-            return render_to_response('scholarship/signup.html',context)
+                return render_to_response('scholarship/signup.html',context)
+                
         else:
             password = access_token
             email = data['email']
@@ -429,9 +509,9 @@ def dashboard(request):
 
 
 def logout_user(request):
-	del request.session['userid']
-	logout(request)
-	return render_to_response('scholarship/index.html')
+    del request.session['userid']
+    logout(request)
+    return render_to_response('scholarship/index.html')
 
 
 def detail(request , scholarship_name):
@@ -454,9 +534,9 @@ def detail(request , scholarship_name):
         global next_url
         next_url = '/dashboard/'
     if 'userid' not in request.session:
-    	userid=-1
+        userid=-1
     else:
-    	userid=request.session['userid']
+        userid=request.session['userid']
     
     return render_to_response('scholarship/details.html' , {'scholarship':scholarship_s,'userid':userid,})
 
