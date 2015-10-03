@@ -515,6 +515,7 @@ def dashboard(request):
 
                 else:
                     not_declared.append(schlrshp)
+                    
             for_sorting.sort(key=lambda x: x.deadline)
             for_sorting.extend(year_long)
             for_sorting.extend(not_declared)
@@ -526,6 +527,16 @@ def dashboard(request):
             'sctype1':sctype1,
             'user':user_d,
             }
+
+        else:
+        context_list = {
+            'scholarships': scholarship_d,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_d,
+
+        }
 
 
     else:
