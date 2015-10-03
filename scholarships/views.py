@@ -497,14 +497,46 @@ def dashboard(request):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
-    context_list = {
-        'scholarships': scholarship_d,
-        'number': number_of_scholarships,
-        'amount': amount,
-        'sctype1':sctype1,
-        'user':user_d,
 
-    }
+    #####Sorting list on basis of deadline
+    sort_by = request.GET.get('sort_by',False)
+    if sort_by:
+        if sort_by == 'deadline':
+            for_sorting = [] #deadline_type= 0&3
+            year_long = [] #deadline_type= 1
+            not_declared = [] #deadline_type= 2
+
+            for schlrshp in scholarship_d:
+                if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
+                    for_sorting.append(schlrshp)
+
+                elif schlrshp.deadline_type == 1:
+                    year_long.append(schlrshp)
+
+                else:
+                    not_declared.append(schlrshp)
+            for_sorting.sort(key=lambda x: x.deadline)
+            for_sorting.extend(year_long)
+            for_sorting.extend(not_declared)
+
+            context_list = {
+            'scholarships': for_sorting,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_d,
+            }
+
+
+    else:
+        context_list = {
+            'scholarships': scholarship_d,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_d,
+
+        }
     return render_to_response('scholarship/fin_dash.html', context_list, context)
 
 
