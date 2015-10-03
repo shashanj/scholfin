@@ -498,10 +498,10 @@ def dashboard(request):
     print amount
     amount = indianformat(amount)
 
-    #####Sorting list on basis of deadline
+    #####Sorting list on basis of deadline and amount
     sort_by = request.GET.get('sort_by',False)
     if sort_by:
-        if sort_by == 'deadline':
+        if sort_by == 'deadline_a' or sort_by == 'deadline_d':
             for_sorting = [] #deadline_type= 0&3
             year_long = [] #deadline_type= 1
             not_declared = [] #deadline_type= 2
@@ -515,30 +515,65 @@ def dashboard(request):
 
                 else:
                     not_declared.append(schlrshp)
-                    
-            for_sorting.sort(key=lambda x: x.deadline)
-            for_sorting.extend(year_long)
-            for_sorting.extend(not_declared)
 
+            if sort_by == 'deadline_a':        
+                for_sorting.sort(key=lambda x: x.deadline)
+                for_sorting.extend(year_long)
+                for_sorting.extend(not_declared)
+                context_list = {
+                'scholarships': for_sorting,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_d,
+                }
+
+            elif sort_by == 'deadline_d':
+                for_sorting.sort(key=lambda x: x.deadline, reverse=True)
+                not_declared.extend(year_long)
+                not_declared.extend(for_sorting)
+                context_list = {
+                'scholarships': not_declared,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_d,
+                }
+
+        elif sort_by == 'amount_a' or sort_by == 'amount_d':
+            for_sorting = []
+            final_sorted = []
+            for sc in scholarship_d:
+                amount = amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
+                for_sorting.append((sc, amount))
+
+            if sort_by == 'amount_a':
+                for_sorting.sort(key=lambda x: x[1])
+
+            elif sort_by == 'amount_d':
+                for_sorting.sort(key=lambda x: x[1], reverse=True)
+
+            for sc in for_sorting:
+                final_sorted.append(sc[0])
+                
             context_list = {
-            'scholarships': for_sorting,
+            'scholarships': final_sorted,
             'number': number_of_scholarships,
             'amount': amount,
             'sctype1':sctype1,
             'user':user_d,
             }
 
+
         else:
-        context_list = {
-            'scholarships': scholarship_d,
-            'number': number_of_scholarships,
-            'amount': amount,
-            'sctype1':sctype1,
-            'user':user_d,
+            context_list = {
+                'scholarships': scholarship_d,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_d,
 
-        }
-
-
+            }
     else:
         context_list = {
             'scholarships': scholarship_d,

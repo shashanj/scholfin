@@ -102,8 +102,22 @@
 
 
       <main class="mdl-layout__content mdl-color--grey-100"><br>
-      <a href="/dashboard/?sort_by='deadline'"><button class="btn btn-primary" >Sort by deadline</button></a>
-        <div class="mdl-grid demo-content">
+      <!-- Sorting options -->
+      <form class="form-inline" method="GET" role="form" action="/dashboard/">
+                    {% csrf_token %}
+                        <div class="form-group">    
+                            <select class="form-control" name="sort_by">
+                              <option value="">Sort By-</option>
+                              <option value="deadline_a">Deadline(Ascending order)</option>
+                              <option value="deadline_d">Deadline(Descending order)</option>
+                              <option value="amount_a">Amount(Ascending order)</option>
+                              <option value="amount_d">Amount(Descending order)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-default filter-col">
+                            <span class="glyphicon glyphicon-record"></span> Sort
+                        </button>  
+      </form>
 
           <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
             <ul id="scholarship-list-results " style="position: relative">
