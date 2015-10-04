@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html lang="en" class=" js no-touch csstransforms csstransitions"><!--<![endif]-->
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- Basic Page Needs -->
+<meta charset="utf-8">
+<title>ScholFin| Search engine for scholarships and competitions</title>
+<meta name="description" content="ScholFin helps you to search from a database of more than 5,000 scholarships and competitions. Its free! Scholarships are available for education, sports, co-cirricular, loans and internships etc. ">
+<meta name="author" content="Scholfin">
+{% load staticfiles %}
+<!-- Favicons-->
+<link rel="shortcut icon" href="" type="image/x-icon">
+<link rel="apple-touch-icon" type="image/x-icon" href="">
+<link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="">
+<link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="">
+<link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="">
+
+<!-- Mobile Specific Metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- CSS -->
+<link href="{% static "about/css/bootstrap.css" %}" rel="stylesheet">
+<link href="{% static "about/css/style.css" %}" rel="stylesheet">
+<link href="{% static "about/css/font-awesome" %}" rel="stylesheet">
+<link href="{% static "about/css/socialize-bookmarks.css" %}" rel="stylesheet">
+<link href="{% static "about/css/all.css" %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static "scholarship/material.css" %}">
+<link rel="stylesheet" href="{% static "scholarship/styles.css" %}">
+
+
+<!-- Toggle Switch -->
+<script src="{% static "scholarship/js/jquery.js" %}"></script>
+<link rel="stylesheet" href="{% static "about/css/jquery.switch.css" %}">
+
+<!-- Google web font -->
+
+<link href="{% static "about/css/css" %}" rel="stylesheet" type="text/css">
+
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- Jquery -->
+<script src="{% static "about/js/jquery.js" %}"></script>
+<style type="text/css"></style>
+<script src="{% static "about/js/jquery-ui-1.8.22.min.js" %}"></script>
+
+<!-- Wizard-->
+<script src="{% static "about/js/jquery.wizard.js" %}"></script>
+
+<!-- Radio and checkbox styles -->
+<script src="{% static "about/js/icheck.min.js" %}"></script>
+
+
+<!-- HTML5 and CSS3-in older browsers-->
+
+<!-- Support media queries for IE8 -->
+<script src="{% static "about/js/respond.min.js" %}" ></script>
+
+<script type="text/javascript">
+  // var _gaq = _gaq || [];
+  // _gaq.push(['_setAccount', 'UA-11097556-8']);
+  // _gaq.push(['_trackPageview']);
+
+  // (function() {
+  //   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  //   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  //   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  // })();
+</script>
+
+</head>
+
+<body>
+
+
+
+      <header class="demo-header mdl-layout__header_viewdetail " style="background-color:#55bbea">
+        <div class="mdl-layout__header-row" style="background-color:#55bbea">
+        {% if userid != -1 %}
+          <span class="mdl-layout-title" style="color:white !important;text-decoration:none"><a href="/dashboard/">ScholFin</a></span>
+         {% endif %}
+         {% if userid == -1 %}
+          <a href="/" style="color:white !important;text-decoration:none"><span class="mdl-layout-title" >ScholFin</span></a>
+         {% endif %}
+          <div class="mdl-layout-spacer"></div>
+          {% if userid != -1%}
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+            <a href="/profile/" style="text-decoration:none"><li class="mdl-menu__item" >Profile</li></a>
+            <a class="typeform-share link" href="https://scholfin.typeform.com/to/EgBAUf" data-mode="2" target="_blank" style="text-decoration:none"><li class="mdl-menu__item">Feedback
+			     </li></a>
+            <a href="/logout/" style="text-decoration:none"><li class="mdl-menu__item">Logout</li></a>
+          </ul>
+          {% endif %}
+        </div>
+      </header>
+
+
+<section class="container" id="main">
+
+
+
+
+<div class="row">
+	<div class="col-md-12">
+	<br>
+	<br>
+	<br>
+		<h1 style = "text-transform: none; font-weight: 500" >About Us</h1><h3><span>"Alone we can do so little; together we can do so much"</h3></span>
+	</div>
+</div><!-- end row -->
+
+<div class="row">
+
+	
+	<div class="col-md-6">
+		<h4>The problem</h4>
+		<p>
+			No one will deny on the fact that searching for scholarships is one of the most boring and tedious
+			tasks they ever did on the internet! We faced the same problem too. So we built ScholFin 
+			which makes this process easy, friendly and fast.
+				
+		</p>
+		
+		<h4>What is ScholFin?</h4>
+		<p>
+			<b> For students</b>: ScholFin is a scholarship search engine which helps students to find perfectly matching scholarships in
+			which they are eligible in just 3 clicks! The total worth of scholarship on our portal is 9,458 crore.<br><br>
+			<b> For scholarship providers</b>: ScholFin helps them to create application forms, accept online applications, 
+			verify their identity and reward scholarships to the most deserving and needy student. <br><br>
+            <b> For companies </b> ScholFin is a unique and most effective platform to spend the CSR money in 
+			such a way that it reaches the most deserving and meritorious students who are in need of financial assistance. 
+			<br>			
+			
+				
+		</p>
+		
+		<h4> Do you know?</h4>
+		<p> According to our research, the total no. of scholarships in India is around 9 crore and the <a href= "https://en.wikipedia.org/wiki/Education_in_IndiaWikipedia">total no. of students according to 
+		the Wikipedia </a>is 30 crore. That means that Out of every 3 students in India, One student must get a scholarship. 
+		Surprisingly,<i> that’s not true!</i> <br>
+		<b>Reasons</b> – Unawareness, Corruption and the many pitfalls in our education system!</p>
+		<h4>Our Vision</h4>
+		<p>
+			We want to become the India's best resource 
+			to discover opportunities, which you might be unaware 
+			of and help you with tough financial conditions. We help you today so you have a brighter tomorrow!
+				
+		</p>
+		
+		<h4> Achievments </h4>
+		<p>  First prize at <a href= "https://www.facebook.com/SWNagpur/photos/a.816637611736022.1073741828.816364655096651/995876937145421/?type=3&theater">Google Startup Weekend </a>
+		</p>
+	</div>
+	
+    
+	
+	
+	<div class="col-md-3">
+		<div class="thumbnail">
+			<div class="project-item-image-container"><img src="https://scontent.fbom1-2.fna.fbcdn.net/hphotos-xpf1/v/t1.0-9/734097_373318422770825_130043098_n.jpg?oh=04a967d551e59358d3b3dbfb2dd80129&oe=5691C1C1" alt=""></div>
+			<div class="caption">
+				<div class="transit-to-top">
+					<h4 class="p-title">Shubham Agrawal <small> </small></h4>
+						<div class="widget_nav_menu">
+							<ul class="social-bookmarks team">
+								<li class="facebook"><a href="https://www.facebook.com/879.shubham">facebook</a></li>
+								<li class="linkedin"><a href="https://in.linkedin.com/in/shubham879">linkedin</a></li>
+							</ul>
+							<!--<div class="phone-info"><i class="icon-phone-sign"></i> + 4 (123) 456-7890</div> -->
+					</div><!-- transition top -->
+				</div><!-- caption -->
+			</div>
+		</div>
+	</div><!-- team  item -->
+    
+	<div class="col-md-3">
+		<div class="thumbnail">
+			<div class="project-item-image-container">
+				<img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAXVAAAAJDNmZTFhOWEwLTNkZDctNDVlNy1iNDUwLTU0OGQ3ZWJlNjIxNg.jpg" alt="">
+			</div>
+			<div class="caption">
+				<div class="transit-to-top">
+					<h4 class="p-title">Jenil Savla<small></small></h4>
+						<div class="widget_nav_menu">
+							<ul class="social-bookmarks team">
+								<li class="facebook"><a href="https://www.facebook.com/jenil.savla.5">facebook</a></li>
+								<li class="linkedin"><a href="https://in.linkedin.com/pub/jenil-savla/88/808/170">linkedin</a></li>
+							</ul>
+							<!--
+							<div class="phone-info">
+								<i class="icon-phone-sign"></i> + 4 (123) 456-7890
+							</div>
+							-->
+					</div><!-- transition top -->
+				</div><!-- caption -->
+			</div>
+		</div>
+	</div><!-- team  item -->
+	
+	
+	<div class="col-md-3">
+		<div class="thumbnail">
+			<div class="project-item-image-container">
+				<img src="https://scontent.fbom1-2.fna.fbcdn.net/hphotos-xta1/v/t1.0-9/11164745_855632657841148_6349650091917469662_n.jpg?oh=ec0894dd66a375cec91e1910a1b699ea&oe=568D679F" alt="">
+			</div>
+			<div class="caption">
+				<div class="transit-to-top">
+					<h4 class="p-title">Shashank Singh<small></small></h4>
+						<div class="widget_nav_menu">
+							<ul class="social-bookmarks team">
+								<li class="facebook"><a href="https://www.facebook.com/shashank.singh.923">facebook</a></li>
+								<li class="linkedin"><a href="https://in.linkedin.com/pub/shashank-singh/107/76/53">linkedin</a></li>
+							</ul>
+							<!--
+							<div class="phone-info">
+								<i class="icon-phone-sign"></i> + 4 (123) 456-7890
+							</div>
+							-->
+					</div><!-- transition top -->
+				</div><!-- caption -->
+			</div>
+		</div>
+	</div><!-- team  item -->
+	
+	
+	<div class="col-md-3">
+		<div class="thumbnail">
+			<div class="project-item-image-container">
+				<img src="{% static "about/images/team_2.jpg" %}" alt="">
+			</div>
+			<div class="caption">
+				<div class="transit-to-top">
+					<h4 class="p-title">Join Us<small></small></h4>
+						<div class="widget_nav_menu">
+							<ul class="social-bookmarks team">
+								<li class="googleplus"><a href="/">googleplus</a></li>
+								
+							</ul>
+							<!--
+							<div class="phone-info">
+								<i class="icon-phone-sign"></i> + 4 (123) 456-7890
+							</div>
+							-->
+					</div><!-- transition top -->
+				</div><!-- caption -->
+			</div>
+		</div>
+	</div><!-- team  item -->
+
+    
+</div><!-- end row -->
+</section><!-- end section main container -->
+       
+<footer>
+	<section class="container">
+	<div class="row">
+    	<div class="col-md-4">
+        	<h3>Free mobile recharge!</h3>
+            <p>We pay you ₹50 as a fine for each scholarship that you inform us and is not present in our database. Make sure that the scholarship or competition is authentic, has an online presence and is open for students. </p>
+			<p>You can submit the scholarship <a href="http://">Here</a>.
+        </div>
+        
+        <div class="col-md-4" id="contact">
+        	<h3>Contact info</h3>
+            <p> Feel free to contact us for any query. We will be happy to help you. </p> 
+                <ul>
+                        <li><i class="icon-home"></i> Center for Innovation (CIVN)
+                              3rd floor
+                               Library building<br>
+                              Visvesvaraya National Institute of Technology,
+                              Nagpur,<br> Maharashtra.
+                              (India) 440010</li>
+                        <li><i class="icon-phone"></i> Mobile: +91-9503748792 </li>
+                        <li><i class="icon-envelope"></i> Email: info@scholaa.com </li>
+                        
+                    </ul>    
+        </div>
+        
+    </div><!-- end row -->
+  	</section>
+    
+    <section id="footer_2">
+    <div class="container">
+    <div class="row">
+    	<div class="col-md-6">
+                <ul id="footer-nav">
+                  <li>Copyright © ScholFin </li>
+                  <li><a href="#">About Us</a></li>
+                  <li><a href="/contact_us/" target="_blank">Contact Us</a></li>
+                  <li><a href="/sitemap.xml" target="_blank">Sitemap</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#myModal">Privacy Policy</a></li>
+                </ul>              
+        </div>
+            <div class="col-md-6" style="text-align:center">
+                <ul class="social-bookmarks clearfix">
+                    <a href="https://www.facebook.com/SWNagpur/photos/a.816637611736022.1073741828.816364655096651/995876937145421/?type=3&theater" target="_blank"><li>
+                    <img src="{% static "scholarship/images/sw.png" %}" width="160" height="200%" style="margin: 0 auto;" alt="scholfin google startup weekend">&nbsp;&nbsp;&nbsp;
+             </li></a>
+             <a href="http://www.nextbig100.com/" target="_blank"><li>
+                    <img src="{% static "scholarship/images/nb.png" %}" width="60" height="60" style="margin: 0 auto; " alt="scholfin next big 100">&nbsp;&nbsp;&nbsp;
+             </li></a>
+             <a href="http://www.nagpurangels.com/" target="_blank"><li>
+                    <img src="{% static "scholarship/images/na.png" %}" width="160" height="200%" style="margin: 0 auto;" alt="scholfin nagpur angel">&nbsp;&nbsp;&nbsp;
+             </li></a>
+                </ul>
+            </div>
+        </div>
+		</div>
+    </section>
+
+</footer> 
+ 
+ <div id="toTop">Back to Top</div>  
+
+<!-- Modal About -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">Privacy Policy</h4>
+      </div>
+      <div class="modal-body">
+        <p>If you register on this website, you should provide us with some personal information which is important for a correct matching. Only you and ScholFin team may view that personal information.
+                    There is an exception to that rule. While we will make every effort to make sure your personal information remains private, we may be compelled by law to reveal your personal information 
+					if we are required to by court order, or legal process. </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Modal About -->
+
+
+<!-- OTHER JS --> 
+<script src="{% static "about/js/jquery.validate.js" %}"></script>
+<script src="{% static "about/js/jquery.bxslider.min.js" %}"></script>
+<script src="{% static "about/js/quantity-bt.js" %}"></script>
+<script src="{% static "about/js/bootstrap.min.js" %}"></script>
+<script src="{% static "about/js/retina.js" %}"></script>
+<script src="{% static "about/js/functions.js" %}"></script>
+
+</body></html>

@@ -691,3 +691,40 @@ def profilechange(request):
             profile.user_interest.add(u)
         profile.save()
     return HttpResponseRedirect('/dashboard/')
+
+def contact_us(request):
+    if 'userid' not in request.session:
+        userid=-1
+    else:
+        userid=request.session['userid']
+    context = {
+        'userid' :  userid,
+    } 
+    if request.POST:
+        subject = request.POST.get('subject')
+        uid = request.POST.get('email_id')
+        phno = request.POST.get('phone')
+        mess = request.POST.get('message')
+        if subject is None :
+            subject = 'Query contact us page'
+        try :
+            send_mail(subject, mess, uid,
+                    ['thescholfin@gmail.com', 'shubham.879@gmail.com','info@scholfin.com'])
+            context['mes'] = "Thank you for contacting us. We will reply as soon as possible."
+            
+        except BadHeaderError:
+            context['mes'] = "Something Went wrong"
+            return HttpResponse('Invalid header found.')
+    
+
+    return render_to_response('scholarship/contact_us.html',context,RequestContext(request))
+
+def about_us(request) :
+    if 'userid' not in request.session:
+        userid=-1
+    else:
+        userid=request.session['userid']
+    context = {
+        'userid' :  userid,
+    }
+    return render_to_response('scholarship/about_us.html',context)

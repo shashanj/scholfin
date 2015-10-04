@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ScholFin | Contact Us</title>
+	{% load staticfiles %}
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="{% static "scholarship/material.css" %}">
+    <link rel="stylesheet" href="{% static "scholarship/styles.css" %}">
+	<link rel="stylesheet" href="{% static "scholarship/css/bootstrap.css" %}">
+
+    <!-- Custom CSS -->
+    <link href="{% static "scholarship/css/agency.css" %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+	<link href="{% static "signup/css/font-awesome.css" %}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    
+    
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<body >
+<!--topbar-->
+
+      <header class="demo-header mdl-layout__header_viewdetail mdl-color--white mdl-color--grey-100 mdl-color-text--grey-800">
+        <div class="mdl-layout__header-row" style="background-color:#55bbea">
+        {% if userid != -1 %}
+          <a href="/dashboard/" style="color:white !important;text-decoration:none"><span class="mdl-layout-title" >ScholFin</span></a>
+         {% endif %}
+         {% if userid == -1 %}
+          <a href="/" style="color:white !important;text-decoration:none"><span class="mdl-layout-title">ScholFin</span></a>
+         {% endif %}
+          <div class="mdl-layout-spacer"></div>
+          {% if userid != -1%}
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons" style="color:white">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+            <a href="/profile/" style="text-decoration:none"><li class="mdl-menu__item" >Profile</li></a>
+            <a class="typeform-share link" href="https://scholfin.typeform.com/to/EgBAUf" data-mode="2" target="_blank" style="text-decoration:none"><li class="mdl-menu__item">Feedback
+			     </li></a>
+            <a href="/logout/" style="text-decoration:none"><li class="mdl-menu__item">Logout</li></a>
+          </ul>
+          {% endif %}
+      </header>
+
+<!-- Contact Section -->
+    <section id="contact" style="background-color:#BEBEBE">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Contact Us</h2>
+                    <h3 class="section-subheading text-muted">scholfin.</h3>
+                    <h4 class="text-muted">	{{ mes }}</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form method="post" id="contactForm" >{% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Your Email *" id="email" name="email_id"required>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Subject *" id="name" name="subject" >
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="tel" class="form-control" placeholder="Your Phone without 0 or +91 *" id="phone" name="phone" >
+                                    <!-- <p class="help-block text-danger"></p> -->
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="Your Message *" id="message" name="message" required ></textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12 text-center">
+                                <div id="success"></div>
+                                <button type="submit" class="btn btn-xl">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+	<script src="{% static "scholarship/jquery.min.js" %}"></script>
+    <script src="{% static "scholarship/material.js" %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static "scholarship/js/bootstrap.min.js" %}"></script>
+	</body>
+</html>
