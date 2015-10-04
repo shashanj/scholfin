@@ -124,12 +124,14 @@ def googlesignup_process(request):
         print username
 
         try:
-            user = User.objects.get(username = username)
+            user = User.objects.get(email = username)
         except User.DoesNotExist:
             user = None
 
-        if user is not None :
-            if user.profile.auth_type == 'google':
+       if user is not None:    
+            userprofile = UserProfile.objects.get(user__email=username)
+
+            if userprofile.auth_type == 'google':
                 password = randomword(30)
                 user.password = make_password(password=password,
                                       salt=None,
@@ -138,10 +140,9 @@ def googlesignup_process(request):
                 user = authenticate(username=username, password=password)
                 login(request,user)
                 request.session['userid']=user.id
-                return HttpResponseRedirect('/dashboard/')
-
+                return HttpResponseRedirect(next_url)
             else:
-                error = '* This Email-id already exits'
+                error = '* This Email-id already exits Please login Normally'
                 context={
                     'error' : error,
                 }
@@ -218,12 +219,14 @@ def fbsignup_process(request):
         print username
 
         try:
-            user = User.objects.get(username = username)
+            user = User.objects.get(email = username)
         except User.DoesNotExist:
             user = None
 
-        if user is not None:
-            if user.profile.auth_type == 'facebook':
+        if user is not None:    
+            userprofile = UserProfile.objects.get(user__email=username)
+
+            if userprofile.auth_type == 'facebook':
                 password = randomword(30)
                 user.password = make_password(password=password,
                                       salt=None,
@@ -232,9 +235,9 @@ def fbsignup_process(request):
                 user = authenticate(username=username, password=password)
                 login(request,user)
                 request.session['userid']=user.id
-                return HttpResponseRedirect('/dashboard/')
+                return HttpResponseRedirect(next_url)
             else:
-                error = '* This Email-id already exits'
+                error = '* This Email-id already exits Please login Normally'
                 context={
                     'error' : error,
                 }
