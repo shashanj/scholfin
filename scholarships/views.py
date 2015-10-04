@@ -75,7 +75,7 @@ def signup(request):
 def fbsignup(request):
     # Settings for Facebook API call
     client_id = '1497240163926202'
-    redirect_uri = 'http://scholfin.com/fbsignup_process/'
+    redirect_uri = 'http://www.scholfin.com/fbsignup_process/'
     scope = 'email'
     api_url = 'https://www.facebook.com/dialog/oauth?'
 
