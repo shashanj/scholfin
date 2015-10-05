@@ -415,6 +415,30 @@ def signupprocess(request):
                 return HttpResponseRedirect(next_url)
     return HttpResponse("error in registration")
 
+def discard_passed(scholarships):
+    from django.utils import timezone
+
+    after_discarded = []
+    year_long = []
+    not_declared = []
+    current = timezone.now()
+
+    for schlrshp in scholarships:
+        if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
+            if schlrshp.deadline > current:
+                after_discarded.append(schlrshp)
+
+        elif schlrshp.deadline_type == 1:
+            year_long.append(schlrshp)
+
+        else:
+            not_declared.append(schlrshp)
+
+    after_discarded.extend(year_long)
+    after_discarded.extend(not_declared)
+    return after_discarded
+
+
 
 @login_required(login_url='/login/')
 def dashboard(request):
@@ -500,6 +524,8 @@ def dashboard(request):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+    # filtering out the passed deadlines
+    scholarship_d = discard_passed(scholarship_d)
 
     #####Sorting list on basis of deadline and amount
     sort_by = request.GET.get('sort_by',False)
