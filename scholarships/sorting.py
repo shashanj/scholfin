@@ -13,6 +13,29 @@ from scholarships.models import *
 from scholarships.models import *
 import re
 
+def discard_passed(scholarships):
+    from django.utils import timezone
+
+    after_discarded = []
+    year_long = []
+    not_declared = []
+    current = timezone.now()
+
+    for schlrshp in scholarships:
+        if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
+            if schlrshp.deadline > current:
+                after_discarded.append(schlrshp)
+
+        elif schlrshp.deadline_type == 1:
+            year_long.append(schlrshp)
+
+        else:
+            not_declared.append(schlrshp)
+
+    after_discarded.extend(year_long)
+    after_discarded.extend(not_declared)
+    return after_discarded
+
 
 @login_required(login_url='/login/')
 def state_only(request , scholarship_state):
@@ -108,6 +131,9 @@ def state_only(request , scholarship_state):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+
+    scholarship_state_only = discard_passed(scholarship_state_only)
+
     context_list = {
         'scholarships': scholarship_state_only,
         'number': number_of_scholarships,
@@ -201,6 +227,9 @@ def interest_only(request):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+
+    scholarship_disability = discard_passed(scholarship_disability)
+
     context_list = {
         'scholarships': scholarship_disability,
         'number': number_of_scholarships,
@@ -291,6 +320,9 @@ def india_only(request):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+
+    scholarship_disability = discard_passed(scholarship_disability)
+
     context_list = {
         'scholarships': scholarship_disability,
         'number': number_of_scholarships,
@@ -383,6 +415,9 @@ def abroad_only(request):
         sc.url = x;
     amount = int(amount)
     amount = indianformat(amount)
+
+    scholarship_disability = discard_passed(scholarship_disability)
+
     context_list = {
         'scholarships': scholarship_disability,
         'number': number_of_scholarships,
@@ -486,6 +521,9 @@ def caste_only(request):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+
+    scholarship_caste_only = discard_passed(scholarship_caste_only)
+
     context_list = {
         'scholarships': scholarship_caste_only,
         'number': number_of_scholarships,
@@ -589,6 +627,9 @@ def religion_only(request):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+
+    scholarship_religion_only = discard_passed(scholarship_religion_only)
+
     context_list = {
         'scholarships': scholarship_religion_only,
         'number': number_of_scholarships,

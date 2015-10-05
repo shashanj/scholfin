@@ -128,7 +128,7 @@ def googlesignup_process(request):
         except User.DoesNotExist:
             user = None
 
-       if user is not None:    
+        if user is not None:    
             userprofile = UserProfile.objects.get(user__email=username)
 
             if userprofile.auth_type == 'google':
