@@ -438,7 +438,8 @@ def discard_passed(scholarships):
     after_discarded.extend(not_declared)
     return after_discarded
 
-
+def sort_by(request):
+    pass
 
 @login_required(login_url='/login/')
 def dashboard(request):
@@ -555,6 +556,7 @@ def dashboard(request):
                 'amount': amount,
                 'sctype1':sctype1,
                 'user':user_d,
+                'sorted_by':'Deadline(Ascending order)',
                 }
 
             elif sort_by == 'deadline_d':
@@ -567,6 +569,7 @@ def dashboard(request):
                 'amount': amount,
                 'sctype1':sctype1,
                 'user':user_d,
+                'sorted_by':'Deadline(Descending order)',
                 }
 
         elif sort_by == 'amount_a' or sort_by == 'amount_d':
@@ -578,9 +581,11 @@ def dashboard(request):
 
             if sort_by == 'amount_a':
                 for_sorting.sort(key=lambda x: x[1])
+                sorted_by = 'Amount(Ascending order)'
 
             elif sort_by == 'amount_d':
                 for_sorting.sort(key=lambda x: x[1], reverse=True)
+                sorted_by = 'Amount(Descending order)'
 
             for sc in for_sorting:
                 final_sorted.append(sc[0])
@@ -591,6 +596,7 @@ def dashboard(request):
             'amount': amount,
             'sctype1':sctype1,
             'user':user_d,
+            'sorted_by': sorted_by,
             }
 
 
@@ -601,6 +607,7 @@ def dashboard(request):
                 'amount': amount,
                 'sctype1':sctype1,
                 'user':user_d,
+                'sorted_by': '',
 
             }
     else:
@@ -610,6 +617,7 @@ def dashboard(request):
             'amount': amount,
             'sctype1':sctype1,
             'user':user_d,
+            'sorted_by': '',
 
         }
     return render_to_response('scholarship/fin_dash.html', context_list, context)
