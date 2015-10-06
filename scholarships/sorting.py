@@ -133,15 +133,99 @@ def state_only(request , scholarship_state):
     amount = indianformat(amount)
 
     scholarship_state_only = discard_passed(scholarship_state_only)
+    
+    #####Sorting list on basis of deadline and amount
+    sort_by = request.GET.get('sort_by',False)
+    if sort_by:
+        if sort_by == 'deadline_a' or sort_by == 'deadline_d':
+            for_sorting = [] #deadline_type= 0&3
+            year_long = [] #deadline_type= 1
+            not_declared = [] #deadline_type= 2
 
-    context_list = {
+            for schlrshp in scholarship_state_only:
+                if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
+                    for_sorting.append(schlrshp)
+
+                elif schlrshp.deadline_type == 1:
+                    year_long.append(schlrshp)
+
+                else:
+                    not_declared.append(schlrshp)
+
+            if sort_by == 'deadline_a':        
+                for_sorting.sort(key=lambda x: x.deadline)
+                for_sorting.extend(year_long)
+                for_sorting.extend(not_declared)
+                context_list = {
+                'scholarships': for_sorting,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_d,
+                'sorted_by':'Deadline(Ascending order)',
+                }
+
+            elif sort_by == 'deadline_d':
+                for_sorting.sort(key=lambda x: x.deadline, reverse=True)
+                not_declared.extend(year_long)
+                not_declared.extend(for_sorting)
+                context_list = {
+                'scholarships': not_declared,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_d,
+                'sorted_by':'Deadline(Descending order)',
+                }
+
+        elif sort_by == 'amount_a' or sort_by == 'amount_d':
+            for_sorting = []
+            final_sorted = []
+            for sc in scholarship_state_only:
+                amount = amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
+                for_sorting.append((sc, amount))
+
+            if sort_by == 'amount_a':
+                for_sorting.sort(key=lambda x: x[1])
+                sorted_by = 'Amount(Ascending order)'
+
+            elif sort_by == 'amount_d':
+                for_sorting.sort(key=lambda x: x[1], reverse=True)
+                sorted_by = 'Amount(Descending order)'
+
+            for sc in for_sorting:
+                final_sorted.append(sc[0])
+                
+            context_list = {
+            'scholarships': final_sorted,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_d,
+            'sorted_by': sorted_by,
+            }
+
+
+        else:
+            context_list = {
+            'scholarships': scholarship_state_only,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_data,
+            'sorted_by': '',
+            }
+
+    else:
+        context_list = {
         'scholarships': scholarship_state_only,
         'number': number_of_scholarships,
         'amount': amount,
         'sctype1':sctype1,
         'user':user_data,
+        'sorted_by': '',
+        }
 
-    }
     return render_to_response('scholarship/fin_dash.html', context_list, context)
 
 
