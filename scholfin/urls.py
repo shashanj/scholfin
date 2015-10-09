@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^uninterested_scholarship/',views.uninterested_scholarship , name='uninterested_scholarship'),
     url(r'^dashboard/',views.dashboard , name='dashboard'),
     url(r'^logout/',views.logout_user , name='logout'),
+    url(r'^scholarships/saved/' ,views.saved_list  , name='saved_list'),
     url(r'^scholarships/government/' ,gov_pri_comp.gov , name='government'),
     url(r'^scholarships/private/' ,gov_pri_comp.pri , name='private'),
     url(r'^scholarships/abroad/' ,sorting.abroad_only , name='abroad'),

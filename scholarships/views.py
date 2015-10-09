@@ -438,18 +438,140 @@ def discard_passed(scholarships):
     after_discarded.extend(not_declared)
     return after_discarded
 
+@login_required(login_url='/login/')
 def save_scholarship(request):
     user = User.objects.filter(pk=request.user.id)
     schlrshp = scholarship.objects.filter(pk=request.POST.get('scholarship_id'))
     user.profile.saved_scholarships.add(schlrshp)
     return HttpResponseRedirect(request.POST.get('redirect_url'))
     
-
+@login_required(login_url='/login/')
 def uninterested_scholarship(request):
     user = User.objects.filter(pk=request.user.id)
     schlrshp = scholarship.objects.filter(pk=request.POST.get('scholarship_id'))
     user.profile.uninterested_scholarships.add(schlrshp)
+    saved_scholarships = user.profile.saved_scholarships.all()
+    if schlrshp in saved_scholarships:
+        user.profile.saved_scholarships.remove(schlrshp)
     return HttpResponseRedirect(request.POST.get('redirect_url'))
+
+@login_required(login_url='/login/')
+def saved_list(request):
+    context = RequestContext(request)
+    user_u = User.objects.filter(pk=request.user.id)
+    scholarship_d = user_u.profile.saved_scholarships.all()
+    user_d = UserProfile.objects.filter(user__username=request.user.username)
+    user_d= user_d[0]
+
+    number_of_scholarships = 0
+    amount = 0
+    sctype1={}
+    for sc in scholarship_d:
+        number_of_scholarships = number_of_scholarships + 1
+        amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
+        sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
+        x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
+        x = x.strip(' ')
+        x = re.sub('[^A-Za-z0-9]+','-',x)
+        sc.url = x;
+    amount = int(amount)
+    print amount
+    amount = indianformat(amount)
+    # filtering out the passed deadlines
+    # scholarship_d = discard_passed(scholarship_d)
+
+    #####Sorting list on basis of deadline and amount
+    sort_by = request.GET.get('sort_by',False)
+    if sort_by:
+        if sort_by == 'deadline_a' or sort_by == 'deadline_d':
+            for_sorting = [] #deadline_type= 0&3
+            year_long = [] #deadline_type= 1
+            not_declared = [] #deadline_type= 2
+
+            for schlrshp in scholarship_d:
+                if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
+                    for_sorting.append(schlrshp)
+
+                elif schlrshp.deadline_type == 1:
+                    year_long.append(schlrshp)
+
+                else:
+                    not_declared.append(schlrshp)
+
+            if sort_by == 'deadline_a':        
+                for_sorting.sort(key=lambda x: x.deadline)
+                for_sorting.extend(year_long)
+                for_sorting.extend(not_declared)
+                context_list = {
+                'scholarships': for_sorting,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_d,
+                'sorted_by':'Deadline(Ascending order)',
+                }
+
+            elif sort_by == 'deadline_d':
+                for_sorting.sort(key=lambda x: x.deadline, reverse=True)
+                not_declared.extend(year_long)
+                not_declared.extend(for_sorting)
+                context_list = {
+                'scholarships': not_declared,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_d,
+                'sorted_by':'Deadline(Descending order)',
+                }
+
+        elif sort_by == 'amount_a' or sort_by == 'amount_d':
+            for_sorting = []
+            final_sorted = []
+            for sc in scholarship_d:
+                amount = amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
+                for_sorting.append((sc, amount))
+
+            if sort_by == 'amount_a':
+                for_sorting.sort(key=lambda x: x[1])
+                sorted_by = 'Amount(Ascending order)'
+
+            elif sort_by == 'amount_d':
+                for_sorting.sort(key=lambda x: x[1], reverse=True)
+                sorted_by = 'Amount(Descending order)'
+
+            for sc in for_sorting:
+                final_sorted.append(sc[0])
+                
+            context_list = {
+            'scholarships': final_sorted,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_d,
+            'sorted_by': sorted_by,
+            }
+
+
+        else:
+            context_list = {
+                'scholarships': scholarship_d,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_d,
+                'sorted_by': '',
+            }
+    else:
+        context_list = {
+            'scholarships': scholarship_d,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_d,
+            'sorted_by': '',
+
+        }
+    return render_to_response('scholarship/saved_list.html', context_list, context)
 
 def sort_by(request):
     pass
