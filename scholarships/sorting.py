@@ -161,8 +161,10 @@ def state_only(request , scholarship_state):
                 'number': number_of_scholarships,
                 'amount': amount,
                 'sctype1':sctype1,
-                'user':user_d,
+                'user':user_data,
                 'sorted_by':'Deadline(Ascending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
             elif sort_by == 'deadline_d':
@@ -174,8 +176,10 @@ def state_only(request , scholarship_state):
                 'number': number_of_scholarships,
                 'amount': amount,
                 'sctype1':sctype1,
-                'user':user_d,
+                'user':user_data,
                 'sorted_by':'Deadline(Descending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
         elif sort_by == 'amount_a' or sort_by == 'amount_d':
@@ -201,8 +205,10 @@ def state_only(request , scholarship_state):
             'number': number_of_scholarships,
             'amount': amount,
             'sctype1':sctype1,
-            'user':user_d,
+            'user':user_data,
             'sorted_by': sorted_by,
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
 
@@ -214,6 +220,8 @@ def state_only(request , scholarship_state):
             'sctype1':sctype1,
             'user':user_data,
             'sorted_by': '',
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
     else:
@@ -224,6 +232,8 @@ def state_only(request , scholarship_state):
         'sctype1':sctype1,
         'user':user_data,
         'sorted_by': '',
+        'saved_scholarships' : user_data.saved_scholarships.all(),
+        'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
         }
 
     return render_to_response('scholarship/fin_dash.html', context_list, context)
@@ -341,8 +351,10 @@ def interest_only(request):
                 'number': number_of_scholarships,
                 'amount': amount,
                 'sctype1':sctype1,
-                'user':user_d,
+                'user':user_data,
                 'sorted_by':'Deadline(Ascending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
             elif sort_by == 'deadline_d':
@@ -354,8 +366,10 @@ def interest_only(request):
                 'number': number_of_scholarships,
                 'amount': amount,
                 'sctype1':sctype1,
-                'user':user_d,
+                'user':user_data,
                 'sorted_by':'Deadline(Descending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
         elif sort_by == 'amount_a' or sort_by == 'amount_d':
@@ -381,8 +395,10 @@ def interest_only(request):
             'number': number_of_scholarships,
             'amount': amount,
             'sctype1':sctype1,
-            'user':user_d,
+            'user':user_data,
             'sorted_by': sorted_by,
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
 
@@ -394,6 +410,8 @@ def interest_only(request):
             'sctype1':sctype1,
             'user':user_data,
             'sorted_by': '',
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
     else:
@@ -404,6 +422,8 @@ def interest_only(request):
         'sctype1':sctype1,
         'user':user_data,
         'sorted_by': '',
+        'saved_scholarships' : user_data.saved_scholarships.all(),
+        'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
         }
 
     return render_to_response('scholarship/fin_dash.html', context_list, context)
@@ -517,8 +537,10 @@ def india_only(request):
                 'number': number_of_scholarships,
                 'amount': amount,
                 'sctype1':sctype1,
-                'user':user_d,
+                'user':user_data,
                 'sorted_by':'Deadline(Ascending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
             elif sort_by == 'deadline_d':
@@ -530,8 +552,10 @@ def india_only(request):
                 'number': number_of_scholarships,
                 'amount': amount,
                 'sctype1':sctype1,
-                'user':user_d,
+                'user':user_data,
                 'sorted_by':'Deadline(Descending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
         elif sort_by == 'amount_a' or sort_by == 'amount_d':
@@ -557,8 +581,10 @@ def india_only(request):
             'number': number_of_scholarships,
             'amount': amount,
             'sctype1':sctype1,
-            'user':user_d,
+            'user':user_data,
             'sorted_by': sorted_by,
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
 
@@ -570,6 +596,8 @@ def india_only(request):
             'sctype1':sctype1,
             'user':user_data,
             'sorted_by': '',
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
     else:
@@ -580,6 +608,8 @@ def india_only(request):
         'sctype1':sctype1,
         'user':user_data,
         'sorted_by': '',
+        'saved_scholarships' : user_data.saved_scholarships.all(),
+        'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
         }
 
     return render_to_response('scholarship/fin_dash.html', context_list, context)
@@ -698,6 +728,8 @@ def abroad_only(request):
                 'sctype1':sctype1,
                 'user':user_d,
                 'sorted_by':'Deadline(Ascending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
             elif sort_by == 'deadline_d':
@@ -711,6 +743,8 @@ def abroad_only(request):
                 'sctype1':sctype1,
                 'user':user_d,
                 'sorted_by':'Deadline(Descending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
         elif sort_by == 'amount_a' or sort_by == 'amount_d':
@@ -738,6 +772,8 @@ def abroad_only(request):
             'sctype1':sctype1,
             'user':user_d,
             'sorted_by': sorted_by,
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
 
@@ -749,6 +785,8 @@ def abroad_only(request):
             'sctype1':sctype1,
             'user':user_data,
             'sorted_by': '',
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
     else:
@@ -759,6 +797,8 @@ def abroad_only(request):
         'sctype1':sctype1,
         'user':user_data,
         'sorted_by': '',
+        'saved_scholarships' : user_data.saved_scholarships.all(),
+        'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
         }
 
     return render_to_response('scholarship/fin_dash.html', context_list, context)
@@ -887,6 +927,8 @@ def caste_only(request):
                 'sctype1':sctype1,
                 'user':user_d,
                 'sorted_by':'Deadline(Ascending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
             elif sort_by == 'deadline_d':
@@ -900,6 +942,8 @@ def caste_only(request):
                 'sctype1':sctype1,
                 'user':user_d,
                 'sorted_by':'Deadline(Descending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
         elif sort_by == 'amount_a' or sort_by == 'amount_d':
@@ -927,6 +971,8 @@ def caste_only(request):
             'sctype1':sctype1,
             'user':user_d,
             'sorted_by': sorted_by,
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
 
@@ -938,6 +984,8 @@ def caste_only(request):
             'sctype1':sctype1,
             'user':user_data,
             'sorted_by': '',
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
     else:
@@ -948,6 +996,8 @@ def caste_only(request):
         'sctype1':sctype1,
         'user':user_data,
         'sorted_by': '',
+        'saved_scholarships' : user_data.saved_scholarships.all(),
+        'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
         }
 
     return render_to_response('scholarship/fin_dash.html', context_list, context)
@@ -1077,6 +1127,8 @@ def religion_only(request):
                 'sctype1':sctype1,
                 'user':user_d,
                 'sorted_by':'Deadline(Ascending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
             elif sort_by == 'deadline_d':
@@ -1090,6 +1142,8 @@ def religion_only(request):
                 'sctype1':sctype1,
                 'user':user_d,
                 'sorted_by':'Deadline(Descending order)',
+                'saved_scholarships' : user_data.saved_scholarships.all(),
+                'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
                 }
 
         elif sort_by == 'amount_a' or sort_by == 'amount_d':
@@ -1117,6 +1171,8 @@ def religion_only(request):
             'sctype1':sctype1,
             'user':user_d,
             'sorted_by': sorted_by,
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
 
@@ -1128,6 +1184,8 @@ def religion_only(request):
             'sctype1':sctype1,
             'user':user_data,
             'sorted_by': '',
+            'saved_scholarships' : user_data.saved_scholarships.all(),
+            'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
             }
 
     else:
@@ -1138,6 +1196,8 @@ def religion_only(request):
         'sctype1':sctype1,
         'user':user_data,
         'sorted_by': '',
+        'saved_scholarships' : user_data.saved_scholarships.all(),
+        'uninterested_scholarships' : user_data.uninterested_scholarships.all(),
         }
 
     return render_to_response('scholarship/fin_dash.html', context_list, context)

@@ -130,6 +130,7 @@
               </li>
     {% if scholarships %}
     {% for scholarship in scholarships %}
+    {% if scholarship not in uninterested_scholarships %}
       <li class="content-bucket secondary scholarship">
           <a href="/scholarship-details/{{ scholarship.url }}/">
               <div class="scholarshipWrap mdl-grid" >
@@ -223,10 +224,31 @@
                           {% endif %}
                       </span>
                   </div>
+                  <div class="table-column name mdl-cell--2-col" >
+                      {% if scholarship not in saved_scholarships %}
+                        <form class="form-inline" method="POST" role="form" action="/save_scholarship/">
+                        {% csrf_token %}
+                        <input type="hidden" name="scholarship_id" value="{{ scholarship.scholarship_id }}" />
+                        <input type="hidden" name="redirect_url" value="{{ request.path }}" />
+                        <button type="submit" class="btn btn-default filter-col">
+                            <span class="glyphicon glyphicon-record"></span> SAVE
+                        </button>  
+                        </form>
+                      {% endif %}
+                      <form class="form-inline" method="POST" role="form" action="/uninterested_scholarship/">
+                        {% csrf_token %}
+                        <input type="hidden" name="scholarship_id" value="{{ scholarship.scholarship_id }}" />
+                        <input type="hidden" name="redirect_url" value="{{ request.path }}" />
+                        <button type="submit" class="btn btn-default filter-col">
+                            <span class="glyphicon glyphicon-record"></span> Not Interested
+                        </button>  
+                        </form>
+                  </div>
 
               </div>
           </a>
       </li>
+    {% endif %}
     {% endfor %}
     {% endif %}
   </ul>

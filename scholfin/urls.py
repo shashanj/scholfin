@@ -36,6 +36,8 @@ urlpatterns = [
     url(r'^signup-complete/' , views.signup_complete , name='signup_complete'),
     url(r'^a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/', include(admin.site.urls)),
     url(r'^signupprocess/' , views.signupprocess , name='signup'),
+    url(r'^save_scholarship/',views.save_scholarship , name='save_scholarship'),
+    url(r'^uninterested_scholarship/',views.uninterested_scholarship , name='uninterested_scholarship'),
     url(r'^dashboard/',views.dashboard , name='dashboard'),
     url(r'^logout/',views.logout_user , name='logout'),
     url(r'^scholarships/government/' ,gov_pri_comp.gov , name='government'),

@@ -438,6 +438,19 @@ def discard_passed(scholarships):
     after_discarded.extend(not_declared)
     return after_discarded
 
+def save_scholarship(request):
+    user = User.objects.filter(pk=request.user.id)
+    schlrshp = scholarship.objects.filter(pk=request.POST.get('scholarship_id'))
+    user.profile.saved_scholarships.add(schlrshp)
+    return HttpResponseRedirect(request.POST.get('redirect_url'))
+    
+
+def uninterested_scholarship(request):
+    user = User.objects.filter(pk=request.user.id)
+    schlrshp = scholarship.objects.filter(pk=request.POST.get('scholarship_id'))
+    user.profile.uninterested_scholarships.add(schlrshp)
+    return HttpResponseRedirect(request.POST.get('redirect_url'))
+
 def sort_by(request):
     pass
 
@@ -557,6 +570,8 @@ def dashboard(request):
                 'sctype1':sctype1,
                 'user':user_d,
                 'sorted_by':'Deadline(Ascending order)',
+                'saved_scholarships' : user_d.saved_scholarships.all(),
+                'uninterested_scholarships' : user_d.uninterested_scholarships.all()
                 }
 
             elif sort_by == 'deadline_d':
@@ -570,6 +585,8 @@ def dashboard(request):
                 'sctype1':sctype1,
                 'user':user_d,
                 'sorted_by':'Deadline(Descending order)',
+                'saved_scholarships' : user_d.saved_scholarships.all(),
+                'uninterested_scholarships' : user_d.uninterested_scholarships.all()
                 }
 
         elif sort_by == 'amount_a' or sort_by == 'amount_d':
@@ -597,6 +614,8 @@ def dashboard(request):
             'sctype1':sctype1,
             'user':user_d,
             'sorted_by': sorted_by,
+            'saved_scholarships' : user_d.saved_scholarships.all(),
+            'uninterested_scholarships' : user_d.uninterested_scholarships.all()
             }
 
 
@@ -608,6 +627,8 @@ def dashboard(request):
                 'sctype1':sctype1,
                 'user':user_d,
                 'sorted_by': '',
+                'saved_scholarships' : user_d.saved_scholarships.all(),
+                'uninterested_scholarships' : user_d.uninterested_scholarships.all()
 
             }
     else:
@@ -618,6 +639,8 @@ def dashboard(request):
             'sctype1':sctype1,
             'user':user_d,
             'sorted_by': '',
+            'saved_scholarships' : user_d.saved_scholarships.all(),
+            'uninterested_scholarships' : user_d.uninterested_scholarships.all()
 
         }
     return render_to_response('scholarship/fin_dash.html', context_list, context)
