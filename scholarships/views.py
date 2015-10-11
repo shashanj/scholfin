@@ -440,15 +440,15 @@ def discard_passed(scholarships):
 
 @login_required(login_url='/login/')
 def save_scholarship(request):
-    user = User.objects.filter(pk=request.user.id)
-    schlrshp = scholarship.objects.filter(pk=request.POST.get('scholarship_id'))
+    user = User.objects.get(pk=request.user.id)
+    schlrshp = scholarship.objects.get(pk=request.POST.get('scholarship_id'))
     user.profile.saved_scholarships.add(schlrshp)
     return HttpResponseRedirect(request.POST.get('redirect_url'))
     
 @login_required(login_url='/login/')
 def uninterested_scholarship(request):
-    user = User.objects.filter(pk=request.user.id)
-    schlrshp = scholarship.objects.filter(pk=request.POST.get('scholarship_id'))
+    user = User.objects.get(pk=request.user.id)
+    schlrshp = scholarship.objects.get(pk=request.POST.get('scholarship_id'))
     user.profile.uninterested_scholarships.add(schlrshp)
     saved_scholarships = user.profile.saved_scholarships.all()
     if schlrshp in saved_scholarships:

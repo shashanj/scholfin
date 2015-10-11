@@ -136,8 +136,8 @@ class UserProfile(models.Model):
 	user_field = models.ForeignKey(field)
 	user_gender = models.IntegerField(blank=False)
 	user_disability = models.IntegerField(blank=False)
-	saved_scholarships = models.ManyToManyField(scholarship,blank=True)
-	uninterested_scholarships = models.ManyToManyField(scholarship,blank=True)
+	saved_scholarships = models.ManyToManyField(scholarship,blank=True,related_name='saved_scholarships+')
+	uninterested_scholarships = models.ManyToManyField(scholarship,blank=True,related_name='uninterested_scholarships+')
 
 
 	def __unicode__(self):
