@@ -55,7 +55,7 @@ def state_only(request , scholarship_state):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
@@ -164,7 +164,7 @@ def interest_only(request):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
@@ -260,7 +260,7 @@ def india_only(request):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
@@ -353,10 +353,10 @@ def abroad_only(request):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
-    scholarships_count = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships_count = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field']).count()
     print scholarships_count
@@ -448,7 +448,7 @@ def caste_only(request):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
@@ -554,7 +554,7 @@ def religion_only(request):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]

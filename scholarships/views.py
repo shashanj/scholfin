@@ -460,7 +460,7 @@ def dashboard(request):
         'gender':user_d.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_l=[]
