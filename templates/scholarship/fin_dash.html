@@ -101,11 +101,16 @@
       </div>
 
 
-      <main class="mdl-layout__content mdl-color--grey-100"><br>
-      <!-- Sorting options -->
-      <form class="form-inline" method="GET" role="form" action="/dashboard/">
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid demo-content">
+
+          <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+
+            <ul id="scholarship-list-results " style="position: relative">
+              <li >
+                <form class="form-inline" method="GET" role="form" action="/dashboard/">
                     {% csrf_token %}
-                        <div class="form-group">    
+                        <div class="form-group ">    
                             <select class="form-control" name="sort_by">
                               <option value="">Sort By-</option>
                               <option value="deadline_a">Deadline(Ascending order)</option>
@@ -117,10 +122,9 @@
                         <button type="submit" class="btn btn-default filter-col">
                             <span class="glyphicon glyphicon-record"></span> Sort
                         </button>  
-      </form>
-
-          <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
-            <ul id="scholarship-list-results " style="position: relative">
+                </form>
+              <p> Sorted By: {{ sorted_by }}</p>
+              </li>
     {% if scholarships %}
     {% for scholarship in scholarships %}
       <li class="content-bucket secondary scholarship">

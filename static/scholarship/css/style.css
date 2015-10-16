@@ -303,10 +303,20 @@ header {
 }
 #logo a{
 	text-indent:-99999px;
-	background: url(../images/logo.png) no-repeat 0 0;
+	/*background: url(http://www.ansonika.com/annova/img/logo.png) no-repeat 0 0;*/
+	background-image: url(http://localhost:7777/static/scholarship/images/logo.png);
+    background-position-x: 0px;
+    background-position-y: 0px;
+    background-size: initial;
+    background-repeat-x: no-repeat;
+    background-repeat-y: no-repeat;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: initial;
 	display:block;
-	height:32px;
-	width:190px;
+	height:100px;
+	width:150px;
 }
 .col-md-12 h3 , .col-lg-12 h3{
 	line-height: 56px;

@@ -13,8 +13,6 @@ from functions import *
 from scholarships.models import *
 from django.contrib.auth.hashers import make_password
 
-from datetime import datetime,timedelta
-from django.core.mail import send_mail
 
 # Create your views here.
 import re
@@ -71,33 +69,6 @@ def forgot_password(request):
 
     return render_to_response('scholarship/forgotpassword.html')
 
-def forgot_password_submit(request):    
-    
-    #after the user enters email in forgot password page
-    email = request.GET.get('email')
-    print email
-    
-    try:
-
-        user = User.objects.get(email=email)
-
-        subpswd1 = ''.join(random.choice(string.ascii_uppercase) for i in range(4))
-        subpswd2 = ''.join(random.choice(string.digits) for i in range(4))       
-        newpswd = subpswd1+subpswd2        
-        
-        user.set_password(newpswd)
-        user.save()        
-
-        subject = "Scholfin account new password"
-        message = "Hi "+user.first_name+", your new password for scholfin is "+newpswd;
-        print message
-
-        send_mail(subject,message, 'support@scholfin.com', [email], fail_silently=False)
-    
-    except User.DoesNotExist:
-        print "Email id entered does not exist"
-        
-    return render_to_response('scholarship/forgotpassword.html')
 
 def signup(request):
     return render_to_response('scholarship/signup.html')

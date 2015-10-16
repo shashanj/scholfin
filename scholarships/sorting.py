@@ -13,6 +13,29 @@ from scholarships.models import *
 from scholarships.models import *
 import re
 
+def discard_passed(scholarships):
+    from django.utils import timezone
+
+    after_discarded = []
+    year_long = []
+    not_declared = []
+    current = timezone.now()
+
+    for schlrshp in scholarships:
+        if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
+            if schlrshp.deadline > current:
+                after_discarded.append(schlrshp)
+
+        elif schlrshp.deadline_type == 1:
+            year_long.append(schlrshp)
+
+        else:
+            not_declared.append(schlrshp)
+
+    after_discarded.extend(year_long)
+    after_discarded.extend(not_declared)
+    return after_discarded
+
 
 @login_required(login_url='/login/')
 def state_only(request , scholarship_state):
@@ -32,7 +55,7 @@ def state_only(request , scholarship_state):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
@@ -108,6 +131,9 @@ def state_only(request , scholarship_state):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+
+    scholarship_state_only = discard_passed(scholarship_state_only)
+
     context_list = {
         'scholarships': scholarship_state_only,
         'number': number_of_scholarships,
@@ -138,7 +164,7 @@ def interest_only(request):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
@@ -201,6 +227,9 @@ def interest_only(request):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+
+    scholarship_disability = discard_passed(scholarship_disability)
+
     context_list = {
         'scholarships': scholarship_disability,
         'number': number_of_scholarships,
@@ -231,7 +260,7 @@ def india_only(request):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
@@ -291,6 +320,9 @@ def india_only(request):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+
+    scholarship_disability = discard_passed(scholarship_disability)
+
     context_list = {
         'scholarships': scholarship_disability,
         'number': number_of_scholarships,
@@ -321,10 +353,10 @@ def abroad_only(request):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
-    scholarships_count = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships_count = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field']).count()
     print scholarships_count
@@ -383,6 +415,9 @@ def abroad_only(request):
         sc.url = x;
     amount = int(amount)
     amount = indianformat(amount)
+
+    scholarship_disability = discard_passed(scholarship_disability)
+
     context_list = {
         'scholarships': scholarship_disability,
         'number': number_of_scholarships,
@@ -413,7 +448,7 @@ def caste_only(request):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
@@ -486,6 +521,9 @@ def caste_only(request):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+
+    scholarship_caste_only = discard_passed(scholarship_caste_only)
+
     context_list = {
         'scholarships': scholarship_caste_only,
         'number': number_of_scholarships,
@@ -516,7 +554,7 @@ def religion_only(request):
         'gender':user_data.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
@@ -589,6 +627,9 @@ def religion_only(request):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+
+    scholarship_religion_only = discard_passed(scholarship_religion_only)
+
     context_list = {
         'scholarships': scholarship_religion_only,
         'number': number_of_scholarships,
