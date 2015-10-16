@@ -7,11 +7,14 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from sorting import *
 from django.contrib.auth.models import User
+from django.views.decorators.cache import cache_control
 
 from functions import *
 from scholarships.models import *
 from django.contrib.auth.hashers import make_password
 
+from datetime import datetime,timedelta
+from django.core.mail import send_mail
 
 # Create your views here.
 import re
@@ -68,6 +71,33 @@ def forgot_password(request):
 
     return render_to_response('scholarship/forgotpassword.html')
 
+def forgot_password_submit(request):    
+    
+    #after the user enters email in forgot password page
+    email = request.GET.get('email')
+    print email
+    
+    try:
+
+        user = User.objects.get(email=email)
+
+        subpswd1 = ''.join(random.choice(string.ascii_uppercase) for i in range(4))
+        subpswd2 = ''.join(random.choice(string.digits) for i in range(4))       
+        newpswd = subpswd1+subpswd2        
+        
+        user.set_password(newpswd)
+        user.save()        
+
+        subject = "Scholfin account new password"
+        message = "Hi "+user.first_name+", your new password for scholfin is "+newpswd;
+        print message
+
+        send_mail(subject,message, 'support@scholfin.com', [email], fail_silently=False)
+    
+    except User.DoesNotExist:
+        print "Email id entered does not exist"
+        
+    return render_to_response('scholarship/forgotpassword.html')
 
 def signup(request):
     return render_to_response('scholarship/signup.html')
@@ -124,12 +154,14 @@ def googlesignup_process(request):
         print username
 
         try:
-            user = User.objects.get(username = username)
+            user = User.objects.get(email = username)
         except User.DoesNotExist:
             user = None
 
-        if user is not None :
-            if user.profile.auth_type == 'google':
+        if user is not None:    
+            userprofile = UserProfile.objects.get(user__email=username)
+
+            if userprofile.auth_type == 'google':
                 password = randomword(30)
                 user.password = make_password(password=password,
                                       salt=None,
@@ -138,10 +170,9 @@ def googlesignup_process(request):
                 user = authenticate(username=username, password=password)
                 login(request,user)
                 request.session['userid']=user.id
-                return HttpResponseRedirect('/dashboard/')
-
+                return HttpResponseRedirect(next_url)
             else:
-                error = '* This Email-id already exits'
+                error = '* This Email-id already exits Please login Normally'
                 context={
                     'error' : error,
                 }
@@ -218,12 +249,14 @@ def fbsignup_process(request):
         print username
 
         try:
-            user = User.objects.get(username = username)
+            user = User.objects.get(email = username)
         except User.DoesNotExist:
             user = None
 
-        if user is not None:
-            if user.profile.auth_type == 'facebook':
+        if user is not None:    
+            userprofile = UserProfile.objects.get(user__email=username)
+
+            if userprofile.auth_type == 'facebook':
                 password = randomword(30)
                 user.password = make_password(password=password,
                                       salt=None,
@@ -232,9 +265,9 @@ def fbsignup_process(request):
                 user = authenticate(username=username, password=password)
                 login(request,user)
                 request.session['userid']=user.id
-                return HttpResponseRedirect('/dashboard/')
+                return HttpResponseRedirect(next_url)
             else:
-                error = '* This Email-id already exits'
+                error = '* This Email-id already exits Please login Normally'
                 context={
                     'error' : error,
                 }
@@ -412,8 +445,34 @@ def signupprocess(request):
                 return HttpResponseRedirect(next_url)
     return HttpResponse("error in registration")
 
+def discard_passed(scholarships):
+    from django.utils import timezone
+
+    after_discarded = []
+    year_long = []
+    not_declared = []
+    current = timezone.now()
+
+    for schlrshp in scholarships:
+        if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
+            if schlrshp.deadline > current:
+                after_discarded.append(schlrshp)
+
+        elif schlrshp.deadline_type == 1:
+            year_long.append(schlrshp)
+
+        else:
+            not_declared.append(schlrshp)
+
+    after_discarded.extend(year_long)
+    after_discarded.extend(not_declared)
+    return after_discarded
+
+def sort_by(request):
+    pass
 
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def dashboard(request):
     context = RequestContext(request)
     user_u = User.objects.filter(pk=request.user.id)
@@ -432,7 +491,7 @@ def dashboard(request):
         'gender':user_d.user_gender,
 
     }
-    scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_l=[]
@@ -497,6 +556,8 @@ def dashboard(request):
     amount = int(amount)
     print amount
     amount = indianformat(amount)
+    # filtering out the passed deadlines
+    scholarship_d = discard_passed(scholarship_d)
 
     #####Sorting list on basis of deadline and amount
     sort_by = request.GET.get('sort_by',False)
@@ -526,6 +587,7 @@ def dashboard(request):
                 'amount': amount,
                 'sctype1':sctype1,
                 'user':user_d,
+                'sorted_by':'Deadline(Ascending order)',
                 }
 
             elif sort_by == 'deadline_d':
@@ -538,6 +600,7 @@ def dashboard(request):
                 'amount': amount,
                 'sctype1':sctype1,
                 'user':user_d,
+                'sorted_by':'Deadline(Descending order)',
                 }
 
         elif sort_by == 'amount_a' or sort_by == 'amount_d':
@@ -549,9 +612,11 @@ def dashboard(request):
 
             if sort_by == 'amount_a':
                 for_sorting.sort(key=lambda x: x[1])
+                sorted_by = 'Amount(Ascending order)'
 
             elif sort_by == 'amount_d':
                 for_sorting.sort(key=lambda x: x[1], reverse=True)
+                sorted_by = 'Amount(Descending order)'
 
             for sc in for_sorting:
                 final_sorted.append(sc[0])
@@ -562,6 +627,7 @@ def dashboard(request):
             'amount': amount,
             'sctype1':sctype1,
             'user':user_d,
+            'sorted_by': sorted_by,
             }
 
 
@@ -572,6 +638,7 @@ def dashboard(request):
                 'amount': amount,
                 'sctype1':sctype1,
                 'user':user_d,
+                'sorted_by': '',
 
             }
     else:
@@ -581,6 +648,7 @@ def dashboard(request):
             'amount': amount,
             'sctype1':sctype1,
             'user':user_d,
+            'sorted_by': '',
 
         }
     return render_to_response('scholarship/fin_dash.html', context_list, context)
@@ -691,3 +759,40 @@ def profilechange(request):
             profile.user_interest.add(u)
         profile.save()
     return HttpResponseRedirect('/dashboard/')
+
+def contact_us(request):
+    if 'userid' not in request.session:
+        userid=-1
+    else:
+        userid=request.session['userid']
+    context = {
+        'userid' :  userid,
+    } 
+    if request.POST:
+        subject = request.POST.get('subject')
+        uid = request.POST.get('email_id')
+        phno = request.POST.get('phone')
+        mess = request.POST.get('message')
+        if subject is None :
+            subject = 'Query contact us page'
+        try :
+            send_mail(subject, mess, uid,
+                    ['thescholfin@gmail.com', 'shubham.879@gmail.com','info@scholfin.com'])
+            context['mes'] = "Thank you for contacting us. We will reply as soon as possible."
+            
+        except BadHeaderError:
+            context['mes'] = "Something Went wrong"
+            return HttpResponse('Invalid header found.')
+    
+
+    return render_to_response('scholarship/contact_us.html',context,RequestContext(request))
+
+def about_us(request) :
+    if 'userid' not in request.session:
+        userid=-1
+    else:
+        userid=request.session['userid']
+    context = {
+        'userid' :  userid,
+    }
+    return render_to_response('scholarship/about_us.html',context)
