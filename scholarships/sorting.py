@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.models import User
+from django.views.decorators.cache import cache_control
+
 from functions import *
 from scholarships.models import *
 from scholarships.models import *
@@ -36,8 +38,8 @@ def discard_passed(scholarships):
     after_discarded.extend(not_declared)
     return after_discarded
 
-
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def state_only(request , scholarship_state):
     context = RequestContext(request)
     user_data = UserProfile.objects.filter(user__username=request.user.username)
@@ -147,6 +149,7 @@ def state_only(request , scholarship_state):
 
 
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def interest_only(request):
     context = RequestContext(request)
     user_data = UserProfile.objects.filter(user__username=request.user.username)
@@ -241,8 +244,8 @@ def interest_only(request):
     return render_to_response('scholarship/fin_dash.html', context_list, context)
 
 
-
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def india_only(request):
     context = RequestContext(request)
     user_data = UserProfile.objects.filter(user__username=request.user.username)
@@ -337,6 +340,7 @@ def india_only(request):
 
 
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def abroad_only(request):
     context = RequestContext(request)
     user_data = UserProfile.objects.filter(user__username=request.user.username)
@@ -431,6 +435,7 @@ def abroad_only(request):
 
 
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def caste_only(request):
     context = RequestContext(request)
     user_data = UserProfile.objects.filter(user__username=request.user.username)
@@ -537,6 +542,7 @@ def caste_only(request):
 
 
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def religion_only(request):
     context = RequestContext(request)
     user_data = UserProfile.objects.filter(user__username=request.user.username)

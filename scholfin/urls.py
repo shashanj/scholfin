@@ -55,4 +55,5 @@ urlpatterns = [
     url(r'^atom/$', AtomSiteNewsFeed()),
     url(r'^contact_us/$', views.contact_us , name='contact_us'),
     url(r'^about_us/$',views.about_us),
+    # url(r'^weekly-update/$', views.weekly_update , name='weekly-update'),
 ]

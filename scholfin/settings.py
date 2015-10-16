@@ -1,3 +1,18 @@
+from __future__ import absolute_import
+# ^^^ The above is required if you want to import from the celery
+# library.  If you don't have this then `from celery.schedules import`
+# becomes `proj.celery.schedules` in Python 2.x since it allows
+# for relative imports by default.
+
+# Celery settings
+#from celery.schedules import crontab
+from datetime import timedelta
+#BROKER_URL = 'amqp://guest:guest@localhost//'
+
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+#CELERY_ACCEPT_CONTENT = ['json']
+
 """
 Django settings for scholfin project.
 
@@ -77,24 +92,29 @@ WSGI_APPLICATION = 'scholfin.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'scholfin',
-	'USER': 'root',
-	'PASSWORD': '9308513225',
-	'HOST': 'localhost',
-	'PORT': '',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'mydatabase',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'scholfin',
+# 	'USER': 'root',
+# 	'PASSWORD': '9308513225',
+# 	'HOST': 'localhost',
+# 	'PORT': '',
 #     }
 # }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    }
+}
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'scholfin'
+EMAIL_HOST_PASSWORD = 'sameer1234'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -113,6 +133,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'http://localhost:7777/static/'
+# STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
+#STATIC_ROOT = os.path.join(BASE_DIR, '../staticfiles/')
+'''
+CELERYBEAT_SCHEDULE = {
+    'weekly-notifications': {
+        'task': 'scholarships.tasks.notify',
+        'schedule': timedelta(days=7)
+        
+    },
+}
+
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_TIMEZONE = 'UTC'
+'''

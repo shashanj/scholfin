@@ -7,13 +7,15 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from sorting import *
 from django.contrib.auth.models import User
+from django.views.decorators.cache import cache_control
+
 import re
 from functions import *
 from scholarships.models import *
 
 
-
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def gov(request):
     context = RequestContext(request)
     user_data = UserProfile.objects.filter(user__username=request.user.username)
@@ -127,8 +129,8 @@ def gov(request):
 
     return render_to_response('scholarship/fin_dash.html', context_list, context)
 
-
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def pri(request):
     context = RequestContext(request)
     user_data = UserProfile.objects.filter(user__username=request.user.username)
@@ -234,6 +236,7 @@ def pri(request):
 
 
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def comp(request):
     context = RequestContext(request)
     user_data = UserProfile.objects.filter(user__username=request.user.username)

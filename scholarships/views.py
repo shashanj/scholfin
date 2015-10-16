@@ -13,7 +13,8 @@ from functions import *
 from scholarships.models import *
 from django.contrib.auth.hashers import make_password
 
-
+from datetime import datetime,timedelta
+from django.core.mail import send_mail
 # Create your views here.
 import re
 import random, string
@@ -64,10 +65,36 @@ def login_page(request):
     return render_to_response('scholarship/login.html', {'state': state, 'username': username}, RequestContext(request))
 
 def forgot_password(request):
+    state = 'Enter your email address below and we\'ll send you your new password.'
     if request.POST:
         email = request.POST.get('email')
+        print email
+        try:
+            user = User.objects.get(email=email)
+            if user.profile.auth_type == 'basic':
+                subpswd1 = ''.join(random.choice(string.ascii_uppercase) for i in range(4))
+                subpswd2 = ''.join(random.choice(string.digits) for i in range(4))       
+                newpswd = subpswd1+subpswd2        
+                
+                user.set_password(newpswd)
+                user.save()        
 
-    return render_to_response('scholarship/forgotpassword.html')
+                subject = "Scholfin account new password"
+                message = "Hi "+user.first_name+", your new password for scholfin is "+newpswd;
+                print message
+
+                send_mail(subject,message, 'support@scholfin.com', [email], fail_silently=False)
+                state = 'Please check your email for the new password'
+            else:
+                state = 'You have registered through '+ user.profile.auth_type + 'Please use it to sign in' 
+        
+        except User.DoesNotExist:
+            state = 'Email id entered does not exist'
+
+        print "Email id entered does not exist"
+
+
+    return render_to_response('scholarship/forgotpassword.html',{'state': state}, RequestContext(request))
 
 
 def signup(request):
@@ -658,6 +685,7 @@ def detail(request , scholarship_name):
     return render_to_response('scholarship/details.html' , {'scholarship':scholarship_s,'userid':userid,})
 
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def profilepage(request):
     option_caste = caste.objects.all
     option_state = state.objects.all
@@ -689,6 +717,7 @@ def profilepage(request):
     return render_to_response('scholarship/profile.html', context_list, RequestContext(request))
 
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def profilechange(request):
     if request.POST:
         u_email = request.user.email
