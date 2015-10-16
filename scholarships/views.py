@@ -68,7 +68,7 @@ def forgot_password(request):
     state = 'Enter your email address below and we\'ll send you your new password.'
     if request.POST:
         email = request.POST.get('email')
-        print email
+        # print email
         try:
             user = User.objects.get(email=email)
             if user.profile.auth_type == 'basic':
@@ -81,7 +81,7 @@ def forgot_password(request):
 
                 subject = "Scholfin account new password"
                 message = "Hi "+user.first_name+", your new password for scholfin is "+newpswd;
-                print message
+                # print message
 
                 send_mail(subject,message, 'support@scholfin.com', [email], fail_silently=False)
                 state = 'Please check your email for the new password'
@@ -95,6 +95,26 @@ def forgot_password(request):
 
 
     return render_to_response('scholarship/forgotpassword.html',{'state': state}, RequestContext(request))
+
+
+@login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def change_password(request):
+    state = '* Please enter the new password!'
+    if request.POST:
+        email = request.user.email
+        user = User.objects.get(email=email)
+        password = request.POST.get('password')
+        cp = request.POST.get('cp')
+        if cp != password :
+            state = "* Password didn't match"
+
+        else:
+            user.set_password(password)
+            user.save() 
+            state = "Password changed successfully"
+
+    return render_to_response('scholarship/changepassword.html',{'state': state}, RequestContext(request))
 
 
 def signup(request):

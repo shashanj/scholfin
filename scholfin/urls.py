@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^$', views.index , name='index' ),
     url(r'^login/' , views.login_page , name='login'),
     url(r'^forgotpassword/' , views.forgot_password , name='forgotpassword'),
+    url(r'^changePassword/' , views.change_password , name='changePassword'),
     url(r'^signup/' , views.signup , name='signup'),
     url(r'^fbsignup/' , views.fbsignup , name='fbsignup'),
     url(r'^googlesignup_process/' , views.googlesignup_process , name='googlesignup_process'),
