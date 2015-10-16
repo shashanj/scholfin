@@ -7,6 +7,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from sorting import *
 from django.contrib.auth.models import User
+from django.views.decorators.cache import cache_control
 
 from functions import *
 from scholarships.models import *
@@ -442,6 +443,7 @@ def sort_by(request):
     pass
 
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def dashboard(request):
     context = RequestContext(request)
     user_u = User.objects.filter(pk=request.user.id)
