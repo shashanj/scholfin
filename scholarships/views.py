@@ -35,6 +35,7 @@ def login_page(request):
     username = password = ''
     if request.POST:
         username = request.POST.get('username')
+        username = username[:30]
         print username
         password = request.POST.get('password')
         
@@ -578,8 +579,8 @@ def dashboard(request):
             for_sorting = []
             final_sorted = []
             for sc in scholarship_d:
-                amount = amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
-                for_sorting.append((sc, amount))
+                new_amount = amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
+                for_sorting.append((sc, new_amount))
 
             if sort_by == 'amount_a':
                 for_sorting.sort(key=lambda x: x[1])
