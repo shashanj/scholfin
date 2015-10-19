@@ -702,7 +702,7 @@ def detail(request , scholarship_name):
     else:
         userid=request.session['userid']
     
-    return render_to_response('scholarship/details.html' , {'scholarship':scholarship_s,'userid':userid,})
+    return render_to_response('scholarship/details.html' , {'scholarship':scholarship_s,'userid':userid,}, RequestContext(request))
 
 @login_required(login_url='/login/')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -997,3 +997,47 @@ def weekly_update(request):
 
                 print msg
     return HttpResponseRedirect('/')
+
+@login_required(login_url='/login/')
+def send_email_provider(request):
+    provider_email = ''
+    schol_id = ''
+    if request.POST:
+        provider_email = request.POST.get('provider_email')
+        schol_id = request.POST.get('schol_id')
+    return render_to_response('scholarship/send_email.html',{'provider_email':provider_email, 'schol_id':schol_id}, RequestContext(request))
+
+@login_required(login_url='/login/')
+def send_email_complete(request):
+    status = ''
+    if request.POST:
+        provider_email = request.POST.get('provider_email', False)
+        schol_id = request.POST.get('schol_id', False)
+        email_message = request.POST.get('message', False)
+        # print provider_email
+        # print schol_id
+        # print email_message
+        if not email_message:
+            status = '* Please enter your message'
+            return render_to_response('scholarship/send_email.html',{'status':status,'provider_email':provider_email, 'schol_id':schol_id}, RequestContext(request))
+        else:
+            sender_email = request.user.email
+            # print sender_email
+            bcc_email = 'thescholfin@gmail.com'
+            scholarship_s = scholarship.objects.get(pk=schol_id)
+            # print scholarship_s.name
+
+            import sendgrid
+            sg_username = "scholfin"
+            sg_password = "sameer1234"
+            sg = sendgrid.SendGridClient(sg_username, sg_password)
+            message = sendgrid.Mail()
+            message.add_to(provider_email)
+            message.add_bcc(bcc_email)
+            message.set_from(sender_email)
+            message.set_subject('Regarding'+scholarship_s.name)
+            message.set_text(email_message)
+            # print message
+            status, msg = sg.send(message)
+            return render_to_response('scholarship/email_sent.html',{'name':scholarship_s.name})
+    return render_to_response('scholarship/send_email.html',{'status':status}, RequestContext(request))

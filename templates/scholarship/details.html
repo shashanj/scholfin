@@ -95,6 +95,9 @@
       <div class="row">
         <div class=" col-md-12 col-sm-12">
           <h1 id="name" style="padding-top:4%; font-family: 'Open Sans', sans-serif;">{{ scholarship.name }}</h1>
+
+            
+
           <h5 id="offer" style="opacity:0.7;font-weight:50">Offered By: {{ scholarship.offered_by }}</h5>
         </div>
         <div class="col-md-12 col-xs-12 scholfin-font" style="padding-top:1.5%;">
@@ -117,6 +120,14 @@
         <!-- details about deadline -->
           <div class="col-md-4 col-md-push-8 demo-graphs mdl-shadow--8dp mdl-color--white" >
             <div class="row">
+            <form action="/send_email_provider/" method="post">{% csrf_token %}
+            <input type="hidden" name='provider_email' value="{{ scholarship.emails.all.0 }}">
+            <input type="hidden" name='schol_id' value="{{ scholarship.scholarship_id }}">
+            <button style="opacity:0.8;margin-top:1%" type="submit" class="btn btn-success col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11" aria-haspopup="true" aria-expanded="false"  >
+            <h4>Send email to scholarship provider!</h4>
+            </button>
+            </form>
+
 			{% if userid != -1 %}
              <a href="{{ scholarship.apply_link }}" target="_blank" style="color:white !important;text-decoration:none">
                  <button style="margin-top:1%" type="button" class="btn btn-success col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11" aria-haspopup="true" aria-expanded="false"  >
@@ -127,6 +138,7 @@
               </div>
             </a>
             {% endif %}
+
             {% if userid == -1 %}
             <button style="opacity:0.8;margin-top:1%" type="button" class="btn btn-success col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#myModal">
                   <h4>Let's Apply</h4>

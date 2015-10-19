@@ -55,8 +55,12 @@ class abroad (models.Model):
     # new class method
     def __unicode__(self):
         return self.abroad_name
-class scholarshipEmails(models.Model):
-    email_address = models.EmailField(blank=True)
+
+class scholarshipEmail(models.Model):
+    email_address = models.EmailField()
+
+    def __unicode__(self):
+        return self.email_address
 
 class scholarship(models.Model):
     scholarship_id=models.AutoField(primary_key=True)
@@ -67,7 +71,7 @@ class scholarship(models.Model):
     summary = models.TextField(blank=True)
     
     # foreign keys
-    emails = models.ManyToManyField(scholarshipEmails)
+    emails = models.ManyToManyField(scholarshipEmail, blank=True)
     education_field=models.ManyToManyField(field)
     education_interest=models.ManyToManyField(interest,blank=True)
     education_caste=models.ManyToManyField(caste)
