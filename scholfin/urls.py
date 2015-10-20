@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^scholarships/private/' ,gov_pri_comp.pri , name='private'),
     url(r'^scholarships/abroad/' ,sorting.abroad_only , name='abroad'),
     url(r'^scholarships/india/' ,sorting.india_only , name='india'),
+    url(r'^scholarships/old/' ,views.old_scholarships , name='old_scholarships'),
     url(r'^scholarships/competitions/' ,gov_pri_comp.comp , name='competition'),
     url(r'^scholarship-details/(?P<scholarship_name>[a-z,A-Z,0-9-]+)/$', views.detail,name='detail'),
     url(r'^scholarships/state/(?P<scholarship_state>[a-z,A-Z -]+)/$', sorting.state_only, name='states'),
