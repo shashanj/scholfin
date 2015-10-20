@@ -1,40 +1,58 @@
 <!doctype html>
-
 <html lang="en">
   <head>
+  <!-- Meta tags SEO-->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="{{ scholarship.meta_data }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>{{ scholarship.meta_title }}</title>
-
+    <title> {{ scholarship.meta_title }}</title>  
+  
+  <!-- Open graph data Meta tags Facebook-->
+  <meta property="og:title" content="ScholFin | Scholarships in 3 Clicks!" />
+  <meta property="og:site_name" content="ScholFin"/>
+  <meta property="og:url" content="{{ scholarship.meta_title }} " />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="{{ scholarship.meta_data }}" />
+  <meta property="og:image" content="{% static "scholarship/images/scholfin.png"}" />
+  
+  
+  <!-- Meta tags Twitter-->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@nytimes">
+  <meta name="twitter:creator" content="@myscholfin">
+  <meta name="twitter:title" content="{{ scholarship.meta_title }}">
+  <meta name="twitter:description" content="{{ scholarship.meta_data }}">
+  <meta name="twitter:image" content="{% static "scholarship/images/scholfin.png"}">
+  
+  <!-- Meta tags favicon-->
+  <link rel="shortcut icon" type="image/png" href="favicon.png" />
+  
+  
+    
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
-
     <!-- Add to homescreen for Safari on iOS -->
-    <meta name="title" content="{{ scholarship.meta_title }}">
-
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
     <!-- Tile icon for Win8 (144x144 + tile color) -->
     <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
     <meta name="msapplication-TileColor" content="#3372DF">
-
     <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
     <!--
     <link rel="canonical" href="http://www.example.com/">
     -->
     {% load staticfiles %}
     <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{% static  'scholarship/material.css' %}">
-    <link rel="stylesheet" href="{% static 'scholarship/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'scholarship/css/bootstrap.css' %}">
-    <script src="{% static 'scholarship/jquery.min.js' %}"></script>
-    <script src="{% static 'scholarship/bootstrap.js' %}"></script>
-    <link src=url('fonts/glyphicons-halflings-regular.ttf')>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link  rel="stylesheet" href="{% static "scholarship/css/bootstrap.css" %}"/>
 
+    <link rel="stylesheet" href="{% static "/static/viewdetail/material.min.css" %}">    
+    <link rel="stylesheet" href="{% static "/static/viewdetail/styles.css" %}">
     <style>
     #view-source {
       position: fixed;
@@ -45,37 +63,42 @@
       margin-bottom: 40px;
       z-index: 900;
     }
-    .scholfin-font{
-    font-family: 'Open Sans', sans-serif;  
+    .material-icons.md-48 { 
+      font-size: 800%; 
     }
-	.mdl-layout-title , .mdl-layout-title:hover{
-		color:white;
-		text-decoration:none;
-		text-transformation:none;
-	}
+@media only screen and (max-width: 768px) {
+    .material-icons.md-48 { 
+      font-size: 800%; 
+    }
+  }
+@media only screen and (max-width: 508px) {
+    .material-icons.md-48 { 
+      font-size: 600%; 
+    }
+  }
+@media only screen and (max-width: 300px) {
+    .material-icons.md-48 { 
+      font-size: 400%; 
+    }
+  }
+@media screen and (max-width: 850px) {
+    .mdl-layout__container {
+         position: static;
+    }
+}
     </style>
   </head>
-  <body>
-    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-
-      <header class="demo-header mdl-layout__header_viewdetail mdl-color--white mdl-color--grey-100 mdl-color-text--grey-800">
-        <div class="mdl-layout__header-row" style="background-color:#55bbea">
-        {% if userid != -1 %}
-          <span class="mdl-layout-title" style="color:white !important;text-decoration:none"><a href="/dashboard/">ScholFin</a></span>
+  <body  itemscope itemtype="http://schema.org/CreativeWork" class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" > 
+      <header class="mdl-layout__header mdl-layout__header--scroll" style="background-color:#3399cc;">
+        <div class="mdl-layout--large-screen mdl-layout__header-row" style="background-color:#55bbea">
+          {% if userid != -1 %}
+          <a href="/dashboard/" style="color:white;text-decoration:none"><h4>ScholFin</h4></a>
          {% endif %}
          {% if userid == -1 %}
-          <span class="mdl-layout-title" style="color:white !important;text-decoration:none"><a href="/">ScholFin</a></span>
+          <a href="/" style="color:white;text-decoration:none"><h4>ScholFin</h4></a>
          {% endif %}
           <div class="mdl-layout-spacer"></div>
-<!--           <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-              <i class="material-icons">search</i>
-            </label>
-            <div class="mdl-textfield__expandable-holder">
-              <input class="mdl-textfield__input" type="text" id="search" />
-              <label class="mdl-textfield__label" for="search">Enter your query...</label>
-            </div>
-          </div> -->
           {% if userid != -1%}
           <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
             <i class="material-icons">more_vert</i>
@@ -83,61 +106,220 @@
           <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
             <a href="/profile/" style="text-decoration:none"><li class="mdl-menu__item" >Profile</li></a>
             <a class="typeform-share link" href="https://scholfin.typeform.com/to/EgBAUf" data-mode="2" target="_blank" style="text-decoration:none"><li class="mdl-menu__item">Feedback
-			     </li></a>
+           </li></a>
             <a href="/logout/" style="text-decoration:none"><li class="mdl-menu__item">Logout</li></a>
           </ul>
           {% endif %}
         </div>
-      </header>
-      <script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}})()</script>
-    
-    <div class="container">
-      <div class="row">
-        <div class=" col-md-12 col-sm-12">
-          <h1 id="name" style="padding-top:4%; font-family: 'Open Sans', sans-serif;">{{ scholarship.name }}</h1>
-          <h5 id="offer" style="opacity:0.7;font-weight:50">Offered By: {{ scholarship.offered_by }}</h5>
-        </div>
-        <div class="col-md-12 col-xs-12 scholfin-font" style="padding-top:1.5%;">
-          <h2 style="font-size:160%;">
-              {% if scholarship.scholarship_type == 0 or scholarship.scholarship.scholarship_type == 1 %}
-                Scholarship's Application Details
-              {% elif scholarship.scholarship_type == 2 %}
-                Competition's Application Details
-              {% endif %}
-          </h2>
-        </div>
-        <div class="col-xs-12 col-md-12">
-          <hr style="margin-top:-0.25%;">
-
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="row">
-        <!-- details about deadline -->
-          <div class="col-md-4 col-md-push-8 demo-graphs mdl-shadow--8dp mdl-color--white" >
-            <div class="row">
-			{% if userid != -1 %}
-             <a href="{{ scholarship.apply_link }}" target="_blank" style="color:white !important;text-decoration:none">
-                 <button style="margin-top:1%" type="button" class="btn btn-success col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11" aria-haspopup="true" aria-expanded="false"  >
-                  <h4> Let's Apply</h4>
-                </button>
-              <div class="col-xs-12 col-md-12">
-                <hr style="padding-top:5%;">
-              </div>
-            </a>
+        <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
+          <h3 style="text-align:center"> <span itemprop="name headline">{{ scholarship.name }}</span></h3>
+           {% if scholarship.total_number_scholarship > 0 %}
+            <h4 style="text-align:center">Total Scholarships - {{ scholarship.total_number_scholarship }}</h4>
             {% endif %}
-            {% if userid == -1 %}
-            <button style="opacity:0.8;margin-top:1%" type="button" class="btn btn-success col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-11 col-xs-offset-1 col-xs-11" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#myModal">
-                  <h4>Let's Apply</h4>
-              </button>
-             {% endif %}
-              <div class="col-md-offset-1 col-md-9 col-sm-9 col-xs-9" >
-                <h2 style="color:grey;text-transform: uppercase;font-size:110%;"><i class="material-icons">school</i>&nbsp Scholarship Award</h2>
+      </div>
+        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
+       
+            <p style="text-align:center">Offered by - <span itemprop="provider" >{{ scholarship.offered_by }}</span></p>
+        </div>
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect" style="background-color:#336699">
+          <a href="#overview" class="mdl-layout__tab is-active">Details</a>
+          <!-- <a href="#features" class="mdl-layout__tab">Extra</a> -->
+         
+<!--           <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add">
+            <i class="material-icons" role="presentation">share</i>
+            <span class="visuallyhidden">Add</span>
+          </button> -->
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+        <div class="mdl-layout__tab-panel is-active" id="overview">
+      <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text" >
+                <h4><i class="material-icons">group</i>&nbsp;Eligibility</h4>
+                <span itemprop="audience">
+                  {{ scholarship.eligibility| linebreaksbr}}
+                </span>
+        </div>
+        {% if userid != -1 %}
+              <div class="mdl-card__actions">
+                <a href="/profile/" class="mdl-button">Update Profile</a>
               </div>
-              <div class="col-md-offset-1 col-md-11 col-sm-8 col-xs-8" >
-                <h2 title="{{ scholarship.name }} Amount" style="text-transform: uppercase;margin-top:0.5%;opacity:0.6;margin-right:-0.25%;font-weight:700 ;font-size:250%">
-                    {% if scholarship.amount  %}
+        {% else %}
+              <div class="mdl-card__actions">
+                <a href="/" class="mdl-button">Login | signup to apply</a>
+              </div>
+        {% endif %}
+            </div>
+            
+          </section>
+          
+      
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone" >
+              <i class="material-icons"></i>
+        <img src="{% static "scholarship/images/about.png"%}" alt="Scholfin small logo" height="230" width="215">
+        
+            </header>
+            <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+
+
+              <div class="mdl-card__supporting-text">
+                <h4><i class="material-icons">school</i>&nbsp;About</h4>
+                <span itemprop="about description">
+        {{scholarship.about| linebreaksbr}}
+        </span>
+        </div>
+              <div class="mdl-card__actions">
+                {% if userid != -1 %}
+                <a href="{{ scholarship.apply_link }}" target="_blank" class="mdl-button">Apply</a>
+                {% else %}
+                <a href="/" class="mdl-button">Login | SignUp to Apply</a>
+                {% endif %}
+              </div>
+            </div>
+          
+            <!-- <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn1">
+              <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn1">
+              <li class="mdl-menu__item">Save</li>
+              
+            </ul> -->
+          </section>
+      
+      
+     {% if userid == -1 %} 
+      <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone" >
+              <i class="material-icons"></i>
+        <img src="{% static "scholarship/images/dashboard.jpg" %}" alt="ScholFin dashboard" height="230" width="215">
+        
+            </header>
+            <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+              <div class="mdl-card__supporting-text">
+                <h4>ScholFin - Scholarship Search Engine</h4>
+                
+                  
+                    <li>Tired of searching for scholarships? Try ScholFin!</li>
+                    <li>Get perfectly matching <b>Scholarships in just 3 clicks!</b></li>
+                    <li><b>Rs 9548 crores</b> of scholarships for more than <b>10 crore students!</b></li>
+     
+        </div>
+              <div class="mdl-card__actions">
+                <a href="/" class="mdl-button">Login | SignUp to Apply</a>
+                
+              </div>
+            </div>
+          </section>
+          {% endif %}
+      
+      
+      
+          <section  class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            {% if scholarship.deadline_details or scholarship.other_benefits != ' ' %}
+            <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+                {% if scholarship.deadline_details %}
+                <h4 class="mdl-cell mdl-cell--12-col"><i class="material-icons">info</i>&nbsp;Details</h4>
+                <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                  <div class=" visible-lg visible-md section__circle-container__circle " style="background-color:#336699"></div>
+                </div>
+                <div  class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>Deadline</h5>
+                  {{ scholarship.deadline_details| linebreaksbr}}
+                </div>
+                <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                   {% endif %}
+                {% if scholarship.other_benefits != " " %}
+                  <div class=" visible-lg visible-md section__circle-container__circle " style="background-color:#336699"></div>
+                </div>
+                <div  class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>Other Benifits</h5>
+                  {{ scholarship.other_benefits| linebreaksbr }}
+                </div>
+                {% endif %}               
+              </div>
+               <!--    {% if scholarship.other_benefits == " " %}
+                  <div  class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  </div>
+                  {%endif%}
+              <div class="mdl-card__actions">
+                <a href="#" class="mdl-button">E-mail</a>
+              </div> -->
+            </div>
+            {% endif %}
+            
+          </section>
+          <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text" itemscope itemtype="https://schema.org/AchieveAction">
+                <h4><i class="material-icons">assignment</i>&nbsp;<span itemprop="name">Procedure </span></h4>
+                <span itemprop="description">
+                    {{ scholarship.procedure| linebreaksbr }}
+                </span>
+        </div>
+         {% if userid != -1 %}
+              <div class="mdl-card__actions">
+                <a href="/dashboard/" class="mdl-button">Back to Dashboard</a>
+              </div>
+          {% else %}
+              <div class="mdl-card__actions">
+                <a href="/" class="mdl-button">Login | SignUp To Apply</a>
+              </div>
+          {% endif %}
+            </div>
+          
+          
+            
+          </section>
+      
+      <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text" itemscope itemtype="https://schema.org/Organization">
+                <h4><i class="material-icons">perm_phone_msg</i>&nbsp;Contact details</h4>
+        <span itemprop="address">
+                      {{ scholarship.contact_details| linebreaksbr}}
+        </span>
+        </div>
+        {% if scholarship.additional_links != ' ' %}
+        <div class="mdl-card__actions">
+                <a href=" {{ scholarship.additional_links}}" class="mdl-button">Additional Link</a>
+              </div>
+        {% endif %}
+            </div>
+            
+          </section>
+      
+      
+      
+          <section itemscope itemtype="https://schema.org/DatedMoneySpecification" class="section--footer mdl-color--white mdl-grid">
+            <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="material-icons md-48 ">access_time</i>
+            </div>
+            <div class="section__text mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+              <h3>&nbsp;Deadline</h3>
+              <h3> <span itemprop= "endDate">
+                      {% if scholarship.deadline_type == 0 %}
+                        {{ scholarship.deadline|date:'d M Y'  }}
+                      {% elif scholarship.deadline_type == 1 %}
+                         Year Long
+                      {% elif scholarship.deadline_type == 2 %}
+                        Not Declared
+                      {% elif scholarship.deadline_type == 3 %}
+                        {{ scholarship.deadline|date:'d M Y' }} <small>Expected</small>
+                    {% endif %}</span></h3>
+            </div>
+            <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+              
+              <i class="material-icons md-48 ">school</i>
+                
+            </div>
+            <div  class="section__text mdl-cell mdl-cell--4-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+              <h3><span itemprop= "name"> Amount </span></h3>
+        <p style="display:none"> <span itemprop="currency" > INR  </span></p>
+              <h3><span itemprop="amount"> 
+                  {% if scholarship.amount  %}
                       {% if scholarship.amount_frequency == 0 %}
                         {% if scholarship.currency == 0 %}
                             ₹{{ scholarship.amount  }}
@@ -204,229 +386,147 @@
                       {% elif scholarship.amount == 0  %}
                          VARIES
                       {% endif %}
-                </h2>
-              </div>
-              
-             <div class="col-xs-12 col-md-12">
-                <hr style="padding-top:5%;">
-              </div>
+              </span></h3>
             </div>
-            <div class="row">
-              <div class="col-md-offset-1 col-md-9" >
-                <h2 style="color:grey;margin-top:-1%;text-transform: uppercase;font-size:110%;"><i style="font-size:100%" class="glyphicon glyphicon-calendar " aria-hidden="true"></i>&nbsp Application Deadline</h2>
-              </div>
-              <div class="col-md-offset-1 col-md-11 col-sm-8 col-xs-8" >
-                <h2 title="{{ scholarship.name }} Deadline" style="margin-top:0.5%;opacity:0.6;margin-right:-0.25%;font-weight:700;font-size:250%">
-                    {% if scholarship.deadline_type == 0 %}
-                        {{ scholarship.deadline|date:'d M Y'  }}
-                      {% elif scholarship.deadline_type == 1 %}
-                         Year Long
-                      {% elif scholarship.deadline_type == 2 %}
-                        Not Declared
-                      {% elif scholarship.deadline_type == 3 %}
-                        {{ scholarship.deadline|date:'d M Y' }} <small>Expected</small>
-                    {% endif %}
-                </h2>
-              </div>
-              <div class="col-md-offset-5 col-sm-offset-4 col-xs-offset-4 col-md-1 col-sm-1 col-xs-1">
-                <a href="#" ><i id="expand"  style="font-size:100%" class="glyphicon glyphicon-menu-down " aria-hidden="true"></i></a>
-              </div>
-                <div class="extra_info col-md-11  col-xs-8  col-sm-8" >
-                  <ul id="check" class="scholfin-font" style="color:black">
-                    <li><h4 title="{{ scholarship.name }} deadline details">{{ scholarship.deadline_details }}</h4></li>
-                  </ul>
-                </div>
+          </section>
+        </div>
+<!--         <div class="mdl-layout__tab-panel" id="features">
+          <section class="section--center mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col">
+              <h4>Features</h4>
+              Minim duis incididunt est cillum est ex occaecat consectetur. Qui sint ut et qui nisi cupidatat. Reprehenderit nostrud proident officia exercitation anim et pariatur ex.
+              <ul class="toc">
+                <h4>Contents</h4>
+                <a href="#lorem1">Lorem ipsum</a>
+                <a href="#lorem2">Lorem ipsum</a>
+                <a href="#lorem3">Lorem ipsum</a>
+                <a href="#lorem4">Lorem ipsum</a>
+                <a href="#lorem5">Lorem ipsum</a>
+              </ul>
+              <h5 id="lorem1">Lorem ipsum dolor sit amet</h5>
+              Excepteur et pariatur officia veniam anim culpa cupidatat consequat ad velit culpa est non.
+              <ul>
+                <li>Nisi qui nisi duis commodo duis reprehenderit consequat velit aliquip.</li>
+                <li>Dolor consectetur incididunt in ipsum laborum non et irure pariatur excepteur anim occaecat officia sint.</li>
+                <li>Lorem labore proident officia excepteur do.</li>
+              </ul>
+              <p>
+                Sit qui est voluptate proident minim cillum in aliquip cupidatat labore pariatur id tempor id. Proident occaecat occaecat sint mollit tempor duis dolor cillum anim. Dolore sunt ea mollit fugiat in aliqua consequat nostrud aliqua ut irure in dolore. Proident aliqua culpa sint sint exercitation. Non proident occaecat reprehenderit veniam et proident dolor id culpa ea tempor do dolor. Nulla adipisicing qui fugiat id dolor. Nostrud magna voluptate irure veniam veniam labore ipsum deserunt adipisicing laboris amet eu irure. Sunt dolore nisi velit sit id. Nostrud voluptate labore proident cupidatat enim amet Lorem officia magna excepteur occaecat eu qui. Exercitation culpa deserunt non et tempor et non.
+              </p>
+              <p>
+                Do dolor eiusmod eu mollit dolore nostrud deserunt cillum irure esse sint irure fugiat exercitation. Magna sit voluptate id in tempor elit veniam enim cupidatat ea labore elit. Aliqua pariatur eu nulla labore magna dolore mollit occaecat sint commodo culpa. Eu non minim duis pariatur Lorem quis exercitation. Sunt qui ex incididunt sit anim incididunt sit elit ad officia id.
+              </p>
+              <p id="lorem2">
+                Tempor voluptate ex consequat fugiat aliqua. Do sit et reprehenderit culpa deserunt culpa. Excepteur quis minim mollit irure nulla excepteur enim quis in laborum. Aliqua elit voluptate ad deserunt nulla reprehenderit adipisicing sint. Est in eiusmod exercitation esse commodo. Ea reprehenderit exercitation veniam adipisicing minim nostrud. Veniam dolore ex ea occaecat non enim minim id ut aliqua adipisicing ad. Occaecat excepteur aliqua tempor cupidatat aute dolore deserunt ipsum qui incididunt aliqua occaecat sit quis. Culpa sint aliqua aliqua reprehenderit veniam irure fugiat ea ad.
+              </p>
+              <p>
+                Eu minim fugiat laborum irure veniam Lorem aliqua enim. Aliqua veniam incididunt consequat irure consequat tempor do nisi deserunt. Elit dolore ad quis consectetur sint laborum anim magna do nostrud amet. Ea nulla sit consequat quis qui irure dolor. Sint deserunt excepteur consectetur magna irure. Dolor tempor exercitation dolore pariatur incididunt ut laboris fugiat ipsum sunt veniam aute sunt labore. Non dolore sit nostrud eu ad excepteur cillum eu ex Lorem duis.
+              </p>
+              <p>
+                Id occaecat velit non ipsum occaecat aliqua quis ut. Eiusmod est magna non esse est ex incididunt aute ullamco. Cillum excepteur sint ipsum qui quis velit incididunt amet. Qui deserunt anim enim laborum cillum reprehenderit duis mollit amet ad officia enim. Minim sint et quis aliqua aliqua do minim officia dolor deserunt ipsum laboris. Nulla nisi voluptate consectetur est voluptate et amet. Occaecat ut quis adipisicing ad enim. Magna est magna sit duis proident veniam reprehenderit fugiat reprehenderit enim velit ex. Ullamco laboris culpa irure aliquip ad Lorem consequat veniam ad ipsum eu. Ipsum culpa dolore sunt officia laborum quis.
+              </p>
+              <h5 id="lorem3">Lorem ipsum dolor sit amet</h5>
+              <p id="lorem4">
+                Eiusmod nulla aliquip ipsum reprehenderit nostrud non excepteur mollit amet esse est est dolor. Dolore quis pariatur sit consectetur veniam esse ullamco duis Lorem qui enim ut veniam. Officia deserunt minim duis laborum dolor in velit pariatur commodo ullamco eu. Aute adipisicing ad duis labore laboris do mollit dolor cillum sunt aliqua ullamco. Esse tempor quis cillum consequat reprehenderit. Adipisicing proident anim eu sint elit aliqua anim dolore cupidatat fugiat aliquip qui.
+              </p>
+              <p id="lorem5">
+                Nisi eiusmod esse cupidatat excepteur exercitation ipsum reprehenderit nostrud deserunt aliqua ullamco. Anim est irure commodo eiusmod pariatur officia. Est dolor ipsum excepteur magna aliqua ad veniam irure qui occaecat eiusmod aute fugiat commodo. Quis mollit incididunt amet sit minim velit eu fugiat voluptate excepteur. Sit minim id pariatur ex cupidatat cupidatat nostrud nostrud ipsum.
+              </p>
+              <p>
+                Enim ea officia excepteur ad veniam id reprehenderit eiusmod esse mollit consequat. Esse non aute ullamco Lorem aliqua qui dolore irure eiusmod aute aliqua proident labore aliqua. Ipsum voluptate voluptate exercitation laborum deserunt nulla elit aliquip et minim ex veniam. Duis cupidatat aute sunt officia mollit dolor ad elit ad aute labore nostrud duis pariatur. In est sint voluptate consectetur velit ea non labore. Ut duis ea aliqua consequat nulla laboris fugiat aute id culpa proident. Minim eiusmod laboris enim Lorem nisi excepteur mollit voluptate enim labore reprehenderit officia mollit.
+              </p>
+              <p>
+                Cupidatat labore nisi ut sunt voluptate quis sunt qui ad Lorem esse nisi. Ex esse velit ullamco incididunt occaecat dolore veniam tempor minim adipisicing amet. Consequat in exercitation est elit anim consequat cillum sint labore cillum. Aliquip mollit laboris ad labore anim.
+              </p>
             </div>
-            
-                
-             
+          </section>
+        </div> -->
+        <footer class="mdl-mega-footer">
+       <!--    <div class="mdl-mega-footer--middle-section">
+            <div class="mdl-mega-footer--drop-down-section">
+              <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+              <h1 class="mdl-mega-footer--heading">Features</h1>
+              <ul class="mdl-mega-footer--link-list">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Partners</a></li>
+                <li><a href="#">Updates</a></li>
+              </ul>
+            </div>
+            <div class="mdl-mega-footer--drop-down-section">
+              <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+              <h1 class="mdl-mega-footer--heading">Details</h1>
+              <ul class="mdl-mega-footer--link-list">
+                <li><a href="#">Spec</a></li>
+                <li><a href="#">Tools</a></li>
+                <li><a href="#">Resources</a></li>
+              </ul>
+            </div>
+            <div class="mdl-mega-footer--drop-down-section">
+              <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+              <h1 class="mdl-mega-footer--heading">Technology</h1>
+              <ul class="mdl-mega-footer--link-list">
+                <li><a href="#">How it works</a></li>
+                <li><a href="#">Patterns</a></li>
+                <li><a href="#">Usage</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Contracts</a></li>
+              </ul>
+            </div>
+            <div class="mdl-mega-footer--drop-down-section">
+              <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+              <h1 class="mdl-mega-footer--heading">FAQ</h1>
+              <ul class="mdl-mega-footer--link-list">
+                <li><a href="#">Questions</a></li>
+                <li><a href="#">Answers</a></li>
+                <li><a href="#">Contact us</a></li>
+              </ul>
+            </div>
+          </div> -->
+          <div class="mdl-mega-footer--bottom-section">
+            <div class="mdl-logo">
+              Copyright@scholfin
+            </div>
+            <ul class="mdl-mega-footer--link-list">
+              <li><a href="/about_us/">About Us</a></li>
+              <li><a href="/contact_us/">Contact Us</a></li>
+              <li><a href="/sitemap.xml">Sitmap</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#myModal">Privacy Policy</a></li>            
+            </ul>
           </div>
-
-
-        <!-- details about scholarship -->
-          <div class="col-md-8 col-md-pull-4 demo-graphs mdl-shadow--2dp mdl-color--white">
-            
-              <div class="row aboutschol" >
-
-                <div class="eligibility ">
-                  <h3 class="col-md-11 col-sm-8 col-xs-8 topoft" style="font-family: 'Helvetica', 'Arial', Sans-serif;font-size:120%" ><i class="material-icons" style="color:#55bbea">group</i> &nbsp ELIGIBILITY</h3>
-                  <hr class="col-md-11 col-sm-8 col-xs-8" style="margin-top:-0.75%">
-                  <p title="{{ scholarship.name }} Eligibility" class="col-md-12 col-sm-8 col-xs-8 scholfin-font " style="opacity:3;color:black;">
-                      {{ scholarship.eligibility| linebreaksbr }}
-                  </p>
-                </div>
-                
-                <div class="about">
-                  <h3 class="col-md-12 col-sm-8 col-xs-8 topoft" style="font-family: 'Helvetica', 'Arial', Sans-serif;font-size:120%"><i class="material-icons" style="color:#55bbea">info</i>&nbspABOUT</h3>
-                  <hr class="col-md-11 col-sm-8 col-xs-8" style="margin-top:-0.75%">
-                  <p title="{{ scholarship.name }} About" class="col-md-12 col-sm-8 col-xs-8 scholfin-font" style="opacity:3;color:black;">
-                      {{ scholarship.about| linebreaksbr }}
-                  </p>
-                </div>
-
-                <div class="Procedure">
-                  <h3 class="col-md-12 col-sm-8 col-xs-8 topoft" style="font-family: 'Helvetica', 'Arial', Sans-serif;font-size:120%"><i class="material-icons" style="color:#55bbea">assignment</i>&nbsp PROCEDURE</h3>
-                  <hr class="col-md-11 col-sm-8 col-xs-8" style="margin-top:-0.75%">
-                  {% if userid == -1 %}
-                  	<ul class="col-md-12 col-sm-8 col-xs-8 scholfin-font">
-		              <li  style="opacity:3;color:black;"><p>{{ scholarship.procedure| linebreaksbr | slice:":100" }}....</p></li>
-		              <li>
-		                <a href="/login/" class="btn btn-justified btn-success">Login</a>
-		                <a href="/signup/" class="btn btn-justified" style="background-color:#55bbea;color:white">Sign Up</a></li><br>
-						  <li>>> Get scholarships in just 3 clicks!</li>
-						  <li>>> Personalized scholarship matches worth ₹9458 crores </li>
-						  <li>>> Never miss a scholarship deadline with email notifications</li>
-						</ul>
-                  {% endif %}
-                  {% if userid != -1 %}
-                  <p title="{{ scholarship.name }} Application Procedure" class="col-md-12 col-sm-8 col-xs-8 scholfin-font" style="opacity:3;color:black;">
-                      {{ scholarship.procedure| linebreaksbr }}
-                  </p>
-                  {% endif %}
-                </div>
-                {% if scholarship.other_benefits != ' ' %}
-              <div class="Other Benifits">
-                <h3 class="col-md-12 col-sm-8 col-xs-8 topoft" style="font-family: 'Helvetica', 'Arial', Sans-serif;font-size:120%"><i class="material-icons" style="color:#55bbea">layers</i>&nbsp AMOUNT DETAILS</h3>
-                <hr class="col-md-11 col-sm-8 col-xs-8" style="margin-top:-0.75%">
-                <p title="{{ scholarship.name }} Amount Details" class="col-md-12 col-sm-8 col-xs-8 scholfin-font" style="opacity:3;color:black;">{{ scholarship.other_benefits| linebreaksbr }}</p>.
-                </p>
-              </div>
-                  {% endif %}
-
-             <div class="Contact details">
-                  <h3 class="col-md-12 col-sm-8 col-xs-8 topoft" style="font-family: 'Helvetica', 'Arial', Sans-serif;font-size:120%"><i class="material-icons" style="color:#55bbea">perm_phone_msg</i>&nbsp CONTACT DETAILS</h3>
-                  <hr class="col-md-11 col-sm-8 col-xs-8" style="margin-top:-0.75%">
-                  <address title="{{ scholarship.name }} Contact Details" class="col-md-12 col-sm-8 col-xs-8 scholfin-font" style="opacity:3;color:black;">
-                      {{ scholarship.contact_details| linebreaksbr}}
-                  </address>
-              </div>
-                {% if scholarship.additional_links != ' ' %}
-              <div class="Additional Links">
-                  <h3 class="col-md-12 col-sm-8 col-xs-8 topoft" style="font-family: 'Helvetica', 'Arial', Sans-serif;font-size:120%"><i class="material-icons" style="color:#55bbea">link</i>&nbsp ADDITIONAL INFORMATION</h3>
-                  <hr class="col-md-11 col-sm-8 col-xs-8" style="margin-top:-0.75%">
-                  <p title="{{ scholarship.name }} Additional Link" class="col-md-12 col-sm-8 col-xs-8 scholfin-font" ><a href="{{ scholarship.additional_links }}" target="_blank">{{ scholarship.additional_links }}</a>
-                  </p>
-              </div>
-                {% endif %}
-            </div>
-            {% if userid == -1 %}
-		      <div>
-		      	<p style="color:grey">{{ scholarship.meta_data }}</p>
-		      </div>
-		      {% endif %}
-
-          </div>
-       </div>
+        </footer>
+      </main>
     </div>
 
-    <footer>
-      <div class="row" style="padding : 5%">
-        {% if userid != -1%}
-        <a href="/dashboard/" class="col-md-8" style="font-size:150%;text-align:center">
-          << Back to Scholarship Dashboard 
-        </a>
-        {% endif %}
-        <br>
-        <a class="typeform-share button" href="https://scholfin.typeform.com/to/EgBAUf" data-mode="2" target="_blank" style="color:blue"; >Give us a Feedback</a>
-<script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}id=id+'_';if(!gi.call(d,id)){qs=ce.call(d,'link');qs.rel='stylesheet';qs.id=id;qs.href=b+'share-button.css';s=gt.call(d,'head')[0];s.appendChild(qs,s)}})()</script>
-
-      </div>
-
-    </footer>
-    
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
-  <div class="modal-dialog" role="document">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Create an account to Explore All scholarship</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">Privacy Policy</h4>
       </div>
       <div class="modal-body">
-        <ol>
-        	<li>Get scholarships in just 3 clicks!</li>
-          <li>Personalized scholarship matches worth ₹9458 crores </li>
-          <li>Never miss a scholarship deadline with email notifications</li>
-        </ol>
+        <p>If you register on this website, you should provide us with some personal information which is important for a correct matching. Only you and ScholFin team may view that personal information.
+                    There is an exception to that rule. While we will make every effort to make sure your personal information remains private, we may be compelled by law to reveal your personal information 
+          if we are required to by court order, or legal process. </p>
       </div>
       <div class="modal-footer">
-        <a href="/login/" class="btn btn-success">Login</a>
-        <a href="/signup/" class="btn" style="background-color:#55bbea;color:white">Sign Up</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
-    </div>
-  </div>
-</div>
-    
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
-    <script src="{% static 'scholarship/material.js' %}"></script>
-    <script>
+    {% if userid != -1 %}
+    <a href="{{ scholarship.apply_link }}" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">Lets Apply</a>
+    {% else %}
+    <a href="/signup/" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">SignUp To Apply</a>
+    {% endif %}
 
-    function initialiseJS() {
-         $('#check').hide();
+    <script src="{% static "scholarship/material.js" %}"></script>
+<script src="{% static "scholarship/js/jquery.js" %}"></script>
 
-      jQuery(function() {
+    <script src="{% static "scholarship/js/bootstrap.min.js" %}"></script>
 
-        function responsiveView(){
-
-          var wSize = jQuery(window).width();
-          if(wSize>768){
-            $('#name').css({
-              'text-align' : 'left'
-            })
-            $('#offer').css({
-              'text-align' : 'left'
-            })
-            $('.topoft').css({
-              'margin-top' : '2%'
-            })
-            $('.aboutschol').css({
-              'margin-top' : '2%'
-            })
-          }
-          if(wSize<=768){
-            $('#name').css({
-              'text-align' : 'center'
-            })
-            $('#offer').css({
-              'text-align' : 'center'
-            })
-            $('.topoft').css({
-              'margin-top' : '20%'
-            })
-            $('.aboutschol').css({
-              'margin-top' : '10%'
-            })
-          }
-        }
-
-      $(window).on('load', responsiveView);
-      $(window).on('resize', responsiveView);
-    })
-  }
-
-    $(document).on('ready', getStarted); 
-
-    function getStarted(){
-      initialiseJS();
-      registerOnClick();
-    };
-    
-    function registerOnClick() {
-      $('#expand').on('click', showdate);
-    }
-
-    function showdate(){
-      console.log("message");
-      $('#check').toggle();
-        if($('#check').is(':visible') === true){
-          $('#expand').removeClass('glyphicon-menu-down');
-          $('#expand').addClass('glyphicon-menu-up');
-        }
-        else{
-          $('#expand').addClass('glyphicon-menu-down');
-          $('#expand').removeClass('glyphicon-menu-up');
-        }
-      }
-    </script>
   </body>
 </html>

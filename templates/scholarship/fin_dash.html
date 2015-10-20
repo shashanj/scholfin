@@ -108,9 +108,10 @@
 
             <ul id="scholarship-list-results " style="position: relative">
               <li >
-                <form class="form-inline" method="GET" role="form" action="/dashboard/">
+                <form class="form-inline" method="GET" role="form" action="{{ request.path }} ">
                     {% csrf_token %}
-                        <div class="form-group ">    
+                        <div class="form-group ">  
+
                             <select class="form-control" name="sort_by">
                               <option value="">Sort By-</option>
                               <option value="deadline_a">Deadline(Ascending order)</option>
@@ -122,8 +123,10 @@
                         <button type="submit" class="btn btn-default filter-col">
                             <span class="glyphicon glyphicon-record"></span> Sort
                         </button>  
+                        <div class="form-group "><p> Sorted By:{{ sorted_by }}</p>   </div>
+
                 </form>
-              <p> Sorted By: {{ sorted_by }}</p>
+              
               </li>
     {% if scholarships %}
     {% for scholarship in scholarships %}
@@ -220,6 +223,26 @@
                           {% endif %}
                       </span>
                   </div>
+<!--                   <div class="table-column name mdl-cell--2-col" >
+                      {% if scholarship not in saved_scholarships %}
+                        <form class="form-inline" method="POST" role="form" action="/save_scholarship/">
+                        {% csrf_token %}
+                        <input type="hidden" name="scholarship_id" value="{{ scholarship.scholarship_id }}" />
+                        <input type="hidden" name="redirect_url" value="{{ request.path }}" />
+                        <button type="submit" class="btn btn-default filter-col">
+                            <span class="glyphicon glyphicon-record"></span> SAVE
+                        </button>  
+                        </form>
+                      {% endif %}
+                      <form class="form-inline" method="POST" role="form" action="/uninterested_scholarship/">
+                        {% csrf_token %}
+                        <input type="hidden" name="scholarship_id" value="{{ scholarship.scholarship_id }}" />
+                        <input type="hidden" name="redirect_url" value="{{ request.path }}" />
+                        <button type="submit" class="btn btn-default filter-col">
+                            <span class="glyphicon glyphicon-record"></span> Not Interested
+                        </button>  
+                        </form>
+                  </div> -->
 
               </div>
           </a>

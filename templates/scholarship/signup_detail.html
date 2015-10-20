@@ -82,7 +82,8 @@
 	</div><!-- end top-wizard -->
     
 	<form name="example-1" id="wrapped" action="/signupprocess/" method="post">{% csrf_token %}
-        {% if next_url != "/dashboard/" or next_url != "/dashboard/#_=_" %}
+        {% if next_url == "/dashboard/" %}
+        {% else %}
         <br></br>
             <h4 style="text-align:center"> Create a profile and you will be directed to your scholarship</h4>
         {% endif %}

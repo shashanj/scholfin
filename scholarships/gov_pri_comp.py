@@ -5,10 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from sorting import *
+from .sorting import *
 from django.contrib.auth.models import User
 import re
-from functions import *
+from .functions import *
 from scholarships.models import *
 
 
@@ -18,7 +18,7 @@ def gov(request):
     context = RequestContext(request)
     user_data = UserProfile.objects.filter(user__username=request.user.username)
     user_data= user_data[0]
-    print user_data
+    #print user_data
 
 
     # user dictionary for the searching
@@ -35,7 +35,7 @@ def gov(request):
     }
 
 
-    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
 
@@ -63,7 +63,7 @@ def gov(request):
         scholarship_gender=scholarship_interest
     else :
         for s in scholarship_interest:
-            #print s.gender
+            ##print s.gender
             if s.gender == 0:
                 scholarship_gender.append(s)
 
@@ -93,17 +93,17 @@ def gov(request):
     else:
         scholarship_disability=scholarship_abroad
 
-    scholarship_government=[]
+    scholarship_d=[]
 
     for s in scholarship_disability:
         if s.scholarship_type==1:
-            scholarship_government.append(s)
+            scholarship_d.append(s)
 
 
     number_of_scholarships = 0
     amount = 0
     sctype1={}
-    for sc in scholarship_government:
+    for sc in scholarship_d:
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
@@ -114,15 +114,98 @@ def gov(request):
     amount = int(amount)
     amount = indianformat(amount)
 
+    #####Sorting list on basis of deadline and amount
+    sort_by = request.GET.get('sort_by',False)
+    if sort_by:
+        if sort_by == 'deadline_a' or sort_by == 'deadline_d':
+            for_sorting = [] #deadline_type= 0&3
+            year_long = [] #deadline_type= 1
+            not_declared = [] #deadline_type= 2
 
-    context_list = {
-        'scholarships': scholarship_government,
-        'number': number_of_scholarships,
-        'amount': amount,
-        'sctype1':sctype1,
-        'user':user_data,
+            for schlrshp in scholarship_d:
+                if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
+                    for_sorting.append(schlrshp)
 
-    }
+                elif schlrshp.deadline_type == 1:
+                    year_long.append(schlrshp)
+
+                else:
+                    not_declared.append(schlrshp)
+
+            if sort_by == 'deadline_a':        
+                for_sorting.sort(key=lambda x: x.deadline)
+                for_sorting.extend(year_long)
+                for_sorting.extend(not_declared)
+                context_list = {
+                'scholarships': for_sorting,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_data,
+                'sorted_by':'Deadline(Ascending order)',
+                }
+
+            elif sort_by == 'deadline_d':
+                for_sorting.sort(key=lambda x: x.deadline, reverse=True)
+                not_declared.extend(year_long)
+                not_declared.extend(for_sorting)
+                context_list = {
+                'scholarships': not_declared,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_data,
+                'sorted_by':'Deadline(Descending order)',
+                }
+
+        elif sort_by == 'amount_a' or sort_by == 'amount_d':
+            for_sorting = []
+            final_sorted = []
+            for sc in scholarship_d:
+                amount = amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
+                for_sorting.append((sc, amount))
+
+            if sort_by == 'amount_a':
+                for_sorting.sort(key=lambda x: x[1])
+                sorted_by = 'Amount(Ascending order)'
+
+            elif sort_by == 'amount_d':
+                for_sorting.sort(key=lambda x: x[1], reverse=True)
+                sorted_by = 'Amount(Descending order)'
+
+            for sc in for_sorting:
+                final_sorted.append(sc[0])
+                
+            context_list = {
+            'scholarships': final_sorted,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_data,
+            'sorted_by': sorted_by,
+            }
+
+
+        else:
+            context_list = {
+                'scholarships': scholarship_d,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_data,
+                'sorted_by': '',
+
+            }
+    else:
+        context_list = {
+            'scholarships': scholarship_d,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_data,
+            'sorted_by': '',
+
+        }
 
 
     return render_to_response('scholarship/fin_dash.html', context_list, context)
@@ -147,7 +230,7 @@ def pri(request):
     }
 
 
-    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
 
@@ -174,7 +257,7 @@ def pri(request):
         scholarship_gender=scholarship_interest
     else :
         for s in scholarship_interest:
-            #print s.gender
+            ##print s.gender
             if s.gender == 0:
                 scholarship_gender.append(s)
 
@@ -220,16 +303,101 @@ def pri(request):
         x = re.sub('[^A-Za-z0-9]+','-',x)
         sc.url = x;
     amount = int(amount)
-    print amount
+    print("hii")
+    print(scholarship_private)
     amount = indianformat(amount)
-    context_list = {
-        'scholarships': scholarship_private,
-        'number': number_of_scholarships,
-        'amount': amount,
-        'sctype1':sctype1,
-        'user':user_data,
 
-    }
+    #####Sorting list on basis of deadline and amount
+    sort_by = request.GET.get('sort_by',False)
+    if sort_by:
+        if sort_by == 'deadline_a' or sort_by == 'deadline_d':
+            for_sorting = [] #deadline_type= 0&3
+            year_long = [] #deadline_type= 1
+            not_declared = [] #deadline_type= 2
+
+            for schlrshp in scholarship_private:
+                if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
+                    for_sorting.append(schlrshp)
+
+                elif schlrshp.deadline_type == 1:
+                    year_long.append(schlrshp)
+
+                else:
+                    not_declared.append(schlrshp)
+
+            if sort_by == 'deadline_a':        
+                for_sorting.sort(key=lambda x: x.deadline)
+                for_sorting.extend(year_long)
+                for_sorting.extend(not_declared)
+                context_list = {
+                'scholarships': for_sorting,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_data,
+                'sorted_by':'Deadline(Ascending order)',
+                }
+
+            elif sort_by == 'deadline_d':
+                for_sorting.sort(key=lambda x: x.deadline, reverse=True)
+                not_declared.extend(year_long)
+                not_declared.extend(for_sorting)
+                context_list = {
+                'scholarships': not_declared,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_data,
+                'sorted_by':'Deadline(Descending order)',
+                }
+
+        elif sort_by == 'amount_a' or sort_by == 'amount_d':
+            for_sorting = []
+            final_sorted = []
+            for sc in scholarship_private:
+                amount = amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
+                for_sorting.append((sc, amount))
+
+            if sort_by == 'amount_a':
+                for_sorting.sort(key=lambda x: x[1])
+                sorted_by = 'Amount(Ascending order)'
+
+            elif sort_by == 'amount_d':
+                for_sorting.sort(key=lambda x: x[1], reverse=True)
+                sorted_by = 'Amount(Descending order)'
+
+            for sc in for_sorting:
+                final_sorted.append(sc[0])
+                
+            context_list = {
+            'scholarships': final_sorted,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_data,
+            'sorted_by': sorted_by,
+            }
+
+
+        else:
+            context_list = {
+                'scholarships': scholarship_private,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_data,
+                'sorted_by': '',
+
+            }
+    else:
+        context_list = {
+            'scholarships': scholarship_private,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_data,
+            'sorted_by': '',
+        }
     return render_to_response('scholarship/fin_dash.html', context_list, context)
 
 
@@ -238,7 +406,7 @@ def comp(request):
     context = RequestContext(request)
     user_data = UserProfile.objects.filter(user__username=request.user.username)
     user_data= user_data[0]
-    print user_data
+    #print user_data
 
 
     # user dictionary for the searching
@@ -256,7 +424,7 @@ def comp(request):
 
 
 
-    scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
+    scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
         education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
 
@@ -278,13 +446,12 @@ def comp(request):
                         matched=1
             if matched==1:
                 scholarship_interest.append(s)
-
-	scholarship_gender=[]
+    scholarship_gender=[]
     if user_data.user_gender ==1:
         scholarship_gender=scholarship_interest
     else :
         for s in scholarship_interest:
-            #print s.gender
+            ##print s.gender
             if s.gender == 0:
                 scholarship_gender.append(s)
 
@@ -317,16 +484,16 @@ def comp(request):
     else:
         scholarship_disability=scholarship_abroad
    
-    scholarship_competitions=[]
+    scholarship_d=[]
 
     for s in scholarship_disability:
         if s.scholarship_type==2:
-            scholarship_competitions.append(s)
+            scholarship_d.append(s)
 
     number_of_scholarships = 0
     amount = 0
     sctype1={}
-    for sc in scholarship_competitions:
+    for sc in scholarship_d:
         number_of_scholarships = number_of_scholarships + 1
         amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         sctype1[sc.scholarship_id]=sctype(sc.amount_frequency,sc.amount)
@@ -335,16 +502,101 @@ def comp(request):
         x = re.sub('[^A-Za-z0-9]+','-',x)
         sc.url = x;
     amount = int(amount)
-    print amount
+    #print amount
     amount = indianformat(amount)
-    context_list = {
-        'scholarships': scholarship_competitions,
-        'number': number_of_scholarships,
-        'amount': amount,
-        'sctype1':sctype1,
-        'user':user_data,
+    
+        #####Sorting list on basis of deadline and amount
+    sort_by = request.GET.get('sort_by',False)
+    if sort_by:
+        if sort_by == 'deadline_a' or sort_by == 'deadline_d':
+            for_sorting = [] #deadline_type= 0&3
+            year_long = [] #deadline_type= 1
+            not_declared = [] #deadline_type= 2
 
-    }
+            for schlrshp in scholarship_d:
+                if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
+                    for_sorting.append(schlrshp)
+
+                elif schlrshp.deadline_type == 1:
+                    year_long.append(schlrshp)
+
+                else:
+                    not_declared.append(schlrshp)
+
+            if sort_by == 'deadline_a':        
+                for_sorting.sort(key=lambda x: x.deadline)
+                for_sorting.extend(year_long)
+                for_sorting.extend(not_declared)
+                context_list = {
+                'scholarships': for_sorting,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_data,
+                'sorted_by':'Deadline(Ascending order)',
+                }
+
+            elif sort_by == 'deadline_d':
+                for_sorting.sort(key=lambda x: x.deadline, reverse=True)
+                not_declared.extend(year_long)
+                not_declared.extend(for_sorting)
+                context_list = {
+                'scholarships': not_declared,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_data,
+                'sorted_by':'Deadline(Descending order)',
+                }
+
+        elif sort_by == 'amount_a' or sort_by == 'amount_d':
+            for_sorting = []
+            final_sorted = []
+            for sc in scholarship_d:
+                amount = amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
+                for_sorting.append((sc, amount))
+
+            if sort_by == 'amount_a':
+                for_sorting.sort(key=lambda x: x[1])
+                sorted_by = 'Amount(Ascending order)'
+
+            elif sort_by == 'amount_d':
+                for_sorting.sort(key=lambda x: x[1], reverse=True)
+                sorted_by = 'Amount(Descending order)'
+
+            for sc in for_sorting:
+                final_sorted.append(sc[0])
+                
+            context_list = {
+            'scholarships': final_sorted,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_data,
+            'sorted_by': sorted_by,
+            }
+
+
+        else:
+            context_list = {
+                'scholarships': scholarship_d,
+                'number': number_of_scholarships,
+                'amount': amount,
+                'sctype1':sctype1,
+                'user':user_data,
+                'sorted_by': '',
+
+            }
+    else:
+        context_list = {
+            'scholarships': scholarship_d,
+            'number': number_of_scholarships,
+            'amount': amount,
+            'sctype1':sctype1,
+            'user':user_data,
+            'sorted_by': '',
+
+        }
 
 
     return render_to_response('scholarship/fin_dash.html', context_list, context)

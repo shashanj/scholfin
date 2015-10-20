@@ -175,7 +175,9 @@ def googlesignup_process(request):
                             'email': email,
                             'auth_type' : auth_type,
                             'lastname' : lastname,
-                            'firstname' : firstname
+                            'firstname' : firstname,
+                            'next_url' : next_url,
+
                             }
             return render_to_response('scholarship/signup_detail.html', context_list, RequestContext(request))
 
@@ -270,7 +272,9 @@ def fbsignup_process(request):
                             'email': email,
                             'auth_type' : auth_type,
                             'lastname' : lastname,
-                            'firstname' : firstname
+                            'firstname' : firstname,
+                            'next_url' : next_url,
+
                             }
             return render_to_response('scholarship/signup_detail.html', context_list, RequestContext(request))
         # response = HttpResponse(data.items())
@@ -283,8 +287,11 @@ def fbsignup_process(request):
 @csrf_exempt
 def signup_complete(request):
     if request.POST:
-        username = request.POST.get('email')
-        email = username
+        email = request.POST.get('email')
+        if len(email) > 30:
+            username = email[:30]
+        else:
+            username = email
         #print username
         password = request.POST.get('password')
         cp = request.POST.get('cp')
@@ -417,28 +424,28 @@ def signupprocess(request):
                 return HttpResponseRedirect(next_url)
     return HttpResponse("error in registration")
 
-def discard_passed(scholarships):
-    from django.utils import timezone
+# def discard_passed(scholarships):
+#     from django.utils import timezone
 
-    after_discarded = []
-    year_long = []
-    not_declared = []
-    current = timezone.now()
+#     after_discarded = []
+#     year_long = []
+#     not_declared = []
+#     current = timezone.now()
 
-    for schlrshp in scholarships:
-        if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
-            if schlrshp.deadline > current:
-                after_discarded.append(schlrshp)
+#     for schlrshp in scholarships:
+#         if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
+#             if schlrshp.deadline > current:
+#                 after_discarded.append(schlrshp)
 
-        elif schlrshp.deadline_type == 1:
-            year_long.append(schlrshp)
+#         elif schlrshp.deadline_type == 1:
+#             year_long.append(schlrshp)
 
-        else:
-            not_declared.append(schlrshp)
+#         else:
+#             not_declared.append(schlrshp)
 
-    after_discarded.extend(year_long)
-    after_discarded.extend(not_declared)
-    return after_discarded
+#     after_discarded.extend(year_long)
+#     after_discarded.extend(not_declared)
+#     return after_discarded
 
 def sort_by(request):
     pass
@@ -529,7 +536,8 @@ def dashboard(request):
     print amount
     amount = indianformat(amount)
     # filtering out the passed deadlines
-    scholarship_d = discard_passed(scholarship_d)
+    # scholarship_d = discard_passed(scholarship_d)
+
 
     #####Sorting list on basis of deadline and amount
     sort_by = request.GET.get('sort_by',False)
@@ -631,7 +639,7 @@ def logout_user(request):
     logout(request)
     return render_to_response('scholarship/index.html')
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def detail(request , scholarship_name):
     scholarship_name = scholarship_name.replace("-","")
     i=1

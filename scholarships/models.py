@@ -55,19 +55,19 @@ class abroad (models.Model):
     # new class method
     def __unicode__(self):
         return self.abroad_name
-class scholarship_emails(models.Model):
-    email_address = models.EmailField(blank=True)
+# class scholarship_emails(models.Model):
+#     email_address = models.EmailField(blank=True)
 
 class scholarship(models.Model):
     scholarship_id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=250,default=' ')
     offered_by=models.CharField(max_length=250,default=' ')
     total_number_scholarship=models.IntegerField(default=0)
-    image_url = models.URLField(max_length=200, default=' ')
+    image_url = models.URLField(max_length=200, default=' ',blank=True)
     summary = models.TextField(blank=True)
     
     # foreign keys
-    emails = models.ManyToManyField(scholarship_emails)
+    # emails = models.ManyToManyField(scholarship_emails)
     education_field=models.ManyToManyField(field)
     education_interest=models.ManyToManyField(interest,blank=True)
     education_caste=models.ManyToManyField(caste)
