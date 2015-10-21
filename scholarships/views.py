@@ -776,3 +776,6 @@ def about_us(request) :
         'userid' :  userid,
     }
     return render_to_response('scholarship/about_us.html',context)
+
+def internship(request):
+    return HttpResponseRedirect('https://docs.google.com/forms/d/1ON0e_gzn4wUtd21my4axak04ozQ7H8Ko24ucZzA9Ojw/viewform')
