@@ -55,5 +55,6 @@ urlpatterns = [
     url(r'^atom/$', AtomSiteNewsFeed()),
     url(r'^contact_us/$', views.contact_us , name='contact_us'),
     url(r'^about_us/$',views.about_us),
+    url(r'^old_scholarship/$',views.old_scholarship, name='old_scholarship'),
     url(r'^internship/$',views.internship,name='internship'),
 ]

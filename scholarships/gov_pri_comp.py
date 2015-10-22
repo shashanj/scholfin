@@ -33,7 +33,16 @@ def gov(request):
         'gender':user_data.user_gender,
 
     }
-
+    ss=[]
+    scholarshipss = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+        education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
+        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
+    
+    for schlrshp in scholarshipss:
+        if schlrshp.deadline_type == 1:
+            ss.append(schlrshp)
+        elif schlrshp.deadline_type == 2:
+            ss.append(schlrshp)
 
     scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
@@ -56,6 +65,20 @@ def gov(request):
             if matched==1:
                 scholarship_interest.append(s)
 
+    for s in ss:
+        matched=0;
+        interests=interest.objects.filter(scholarship=s)
+        interests_count=interest.objects.filter(scholarship=s).count()
+        user_interest=interest.objects.filter(userprofile=user_data)
+        if interests_count==0:
+            scholarship_interest.append(s)
+        else :
+            for intrst in interests:
+                for intrst_u in user_interest:
+                    if intrst==intrst_u:
+                        matched=1
+            if matched==1:
+                scholarship_interest.append(s)
 
 
     scholarship_gender=[]
@@ -228,7 +251,16 @@ def pri(request):
         'gender':user_data.user_gender,
 
     }
-
+    ss=[]
+    scholarshipss = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+        education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
+        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
+    
+    for schlrshp in scholarshipss:
+        if schlrshp.deadline_type == 1:
+            ss.append(schlrshp)
+        elif schlrshp.deadline_type == 2:
+            ss.append(schlrshp)
 
     scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
@@ -251,6 +283,20 @@ def pri(request):
             if matched==1:
                 scholarship_interest.append(s)
 
+    for s in ss:
+        matched=0;
+        interests=interest.objects.filter(scholarship=s)
+        interests_count=interest.objects.filter(scholarship=s).count()
+        user_interest=interest.objects.filter(userprofile=user_data)
+        if interests_count==0:
+            scholarship_interest.append(s)
+        else :
+            for intrst in interests:
+                for intrst_u in user_interest:
+                    if intrst==intrst_u:
+                        matched=1
+            if matched==1:
+                scholarship_interest.append(s)
 
     scholarship_gender=[]
     if user_data.user_gender ==1:
@@ -422,7 +468,16 @@ def comp(request):
 
     }
 
-
+    ss=[]
+    scholarshipss = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+        education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
+        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
+    
+    for schlrshp in scholarshipss:
+        if schlrshp.deadline_type == 1:
+            ss.append(schlrshp)
+        elif schlrshp.deadline_type == 2:
+            ss.append(schlrshp)
 
     scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
@@ -433,6 +488,21 @@ def comp(request):
 
 
     for s in scholarships:
+        matched=0;
+        interests=interest.objects.filter(scholarship=s)
+        interests_count=interest.objects.filter(scholarship=s).count()
+        user_interest=interest.objects.filter(userprofile=user_data)
+        if interests_count==0:
+            scholarship_interest.append(s)
+        else :
+            for intrst in interests:
+                for intrst_u in user_interest:
+                    if intrst==intrst_u:
+                        matched=1
+            if matched==1:
+                scholarship_interest.append(s)
+
+    for s in ss:
         matched=0;
         interests=interest.objects.filter(scholarship=s)
         interests_count=interest.objects.filter(scholarship=s).count()
