@@ -138,7 +138,7 @@ class loggedcount(models.Model):
 
     def __unicode__ (self):
         return self.scholarship.name
-
+        
 class UserProfile(models.Model):
     # linking user profile to a user
     user = models.OneToOneField(User, related_name='profile')
