@@ -62,7 +62,10 @@
           </button>
           <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
             <a href="/profile/" style="text-decoration:none"><li class="mdl-menu__item">Profile</li></a>
+
+            {% if user.auth_type == 'basic' %}
             <a href="/changePassword/" style="text-decoration:none"><li class="mdl-menu__item">Change Password</li></a>
+            {% endif %}
             <a href="/logout/" style="text-decoration:none"><li class="mdl-menu__item">Logout</li></a>
           </ul>
         </div>
