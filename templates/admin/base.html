@@ -33,6 +33,7 @@
                 <strong>{% firstof user.get_short_name user.get_username %}</strong>.
             {% endblock %}
             {% block userlinks %}
+                <a href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/">{% trans 'Custom Admin' %}</a> /
                 {% if site_url %}
                     <a href="{{ site_url }}">{% trans 'View site' %}</a> /
                 {% endif %}

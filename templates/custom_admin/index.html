@@ -1,0 +1,217 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Scholfin Site Administration</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+    {% load staticfiles %}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "scholarship/material.css" %}">
+    <link rel="stylesheet" href="{% static "scholarship/styles.css" %}">
+    <link rel="stylesheet" href="{% static "scholarship/css/bootstrap.css" %}">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    </style>
+  </head>
+  <body>
+  
+  
+
+
+
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+
+      <header class="demo-header mdl-layout__header mdl-color--white mdl-color--grey-100 mdl-color-text--grey-600">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">ScholFin Custom Admin</span>
+          <div class="mdl-layout-spacer"></div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+            <a href="/" style="text-decoration:none"><li class="mdl-menu__item">View Site</li></a>
+            <a href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/password_change/" style="text-decoration:none"><li class="mdl-menu__item">Change Password</li></a>
+            <a href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/logout/" style="text-decoration:none"><li class="mdl-menu__item">Logout</li></a>
+          </ul>
+        </div>
+      </header>
+
+
+
+      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/"><strong> Dashboard </strong></a>
+
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/all/">All Scholarships</a>
+
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/dc/">Scholarships(Deadline crossed)</a>
+
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/dt1/">Scholarships(Deadline type=1)</a>
+
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/dt2/">Scholarships(Deadline type=2)</a>
+
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/a0/">Scholarships(Amount=0 or blank)</a>
+
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/weekly_update/">Weekly Update!</a>
+
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/">Admin</a>
+          
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/logout/">Logout</a>
+          <div class="mdl-layout-spacer"></div>
+        </nav>
+      </div>
+
+      <main class="mdl-layout__content mdl-color--grey-100">
+      <h2> <strong> {{ page_title }} </strong></h2>
+    <table class="table">
+    {% if not dashboard %}
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Edit Link</th>
+        <th>Site Link</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for schol in scholarships %}
+      <tr>
+        <td>{{ schol.name }}</td>
+        <td><a href=" {{ schol.get_admin_url }} " target="_blank">Click Here</a></td>
+        <td><a href=" {{ schol.get_absolute_url }} " target="_blank">Click Here</a></td>
+      </tr>   
+    {% endfor %}
+    </tbody>
+  
+    {% else %}
+      <tbody>
+      <tr>
+        <td><a href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/all/"> All the scholarships</a></td>
+      </tr>
+      <tr>
+        <td><a href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/dc/"> scholarships whose deadline have crossed (expired ones)</a></td>
+      </tr>
+      <tr>
+        <td><a href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/dt1/"> Scholarships whose deadline type is 1</a></td>
+      </tr>
+      <tr>
+        <td><a href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/dt2/"> Scholarships whose deadline type is 2</a></td>
+      </tr>
+      <tr>
+        <td><a href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/a0/">  Scholarship whose amount is equal to 0 or left blank.</a></td>
+      </tr>
+    </tbody>
+    {% endif %}
+    
+  </table>
+      </main>
+    </div>
+
+
+    <script src="{% static "scholarship/material.js" %}"></script>
+    <script src="{% static "scholarship/jquery.min.js" %}"></script>
+      <script>
+function initializeJS() {
+
+
+    // sidebar menu toggle
+    jQuery(function() {
+        function responsiveView() {
+            var wSize = jQuery(window).width();
+            if (wSize <= 768) {
+                $('.table-column').css({
+                  'display': 'inline'
+                })
+                $('.mdl-card__title-text').css({
+                  'font-size' : '40px'
+                })
+                $('#amount').css({
+                  'padding-left' : '0px'
+                })
+            }
+
+            if (wSize > 768) {
+                $('.table-column').css({
+                  'display': 'table-cell'
+                })
+
+                $('#xm').css({
+                  'float' : 'right'
+                })
+                $('.mdl-card__title-text').css({
+                  'font-size' : '50px'
+                })
+
+            }
+            var height = $('#money').height();
+                console.log(height);
+        }
+
+        jQuery(window).on('load', responsiveView);
+        jQuery(window).on('resize', responsiveView);
+    });
+
+    jQuery('.toggle-nav').click(function () {
+        if (jQuery('#sidebar > ul').is(":visible") === true) {
+            jQuery('#main-content').css({
+                'margin-left': '0px'
+            });
+            jQuery('#sidebar').css({
+                'margin-left': '-180px'
+            });
+            jQuery('#sidebar > ul').hide();
+            jQuery("#container").addClass("sidebar-closed");
+        } else {
+            jQuery('#main-content').css({
+                'margin-left': '180px'
+            });
+            jQuery('#sidebar > ul').show();
+            jQuery('#sidebar').css({
+                'margin-left': '0'
+            });
+            jQuery("#container").removeClass("sidebar-closed");
+        }
+    });
+}
+
+jQuery(document).ready(function(){
+    initializeJS();
+
+});
+
+  </script>
+
+
+  </body>
+</html>

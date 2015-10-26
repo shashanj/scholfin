@@ -4,7 +4,10 @@ from datetime import *
 from django.contrib import admin
 from django.forms import CheckboxSelectMultiple
 from django.contrib.auth.models import User
+from django.core import urlresolvers
+from django.contrib.contenttypes.models import ContentType
 import re
+
 # Create your models here.
 
 class field (models.Model):
@@ -120,9 +123,21 @@ class scholarship(models.Model):
     def __unicode__ (self):
         return self.name;
 
+    def get_admin_url(self):
+        content_type = ContentType.objects.get_for_model(self.__class__)
+        return urlresolvers.reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.scholarship_id,))
+
     def get_absolute_url(self):
         x = re.sub('[^A-Za-z0-9]+','-',re.sub('[^A-Za-z0-9]+',' ',self.name).strip(' '))
         return "/scholarship-details/"+x ;
+
+class loggedcount(models.Model):
+    scholarship = models.OneToOneField(scholarship)
+    user = models.ManyToManyField(User)
+    user_count = models.BigIntegerField(default=0)
+
+    def __unicode__ (self):
+        return self.scholarship.name
 
 class UserProfile(models.Model):
     # linking user profile to a user

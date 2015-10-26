@@ -1,3 +1,19 @@
+from __future__ import absolute_import
+# ^^^ The above is required if you want to import from the celery
+# library.  If you don't have this then `from celery.schedules import`
+# becomes `proj.celery.schedules` in Python 2.x since it allows
+# for relative imports by default.
+
+# Celery settings
+#from celery.schedules import crontab
+from datetime import timedelta
+#BROKER_URL = 'amqp://guest:guest@localhost//'
+
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+#CELERY_ACCEPT_CONTENT = ['json']
+
+
 """
 Django settings for scholfin project.
 
@@ -28,6 +44,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'scholfin'
+EMAIL_HOST_PASSWORD = 'sameer1234'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = False
+
+
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -38,6 +62,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'scholarships',
+    'custom_admin',
     'django.contrib.sitemaps',
 )
 
@@ -118,3 +143,20 @@ STATIC_URL = '/static/'
 # STATIC_URL = 'http://localhost:7777/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
+'''
+CELERYBEAT_SCHEDULE = {
+    'weekly-notifications': {
+        'task': 'scholarships.tasks.notify',
+        'schedule': timedelta(days=7)
+        
+    },
+}
+
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_TIMEZONE = 'UTC'
+'''
