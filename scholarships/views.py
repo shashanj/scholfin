@@ -776,6 +776,7 @@ def logout_user(request):
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def detail(request , scholarship_name):
+    scholarshipss = 'http://www.scholfin.com/scholarship-details/' + scholarship_name + '/'
     scholarship_name = scholarship_name.replace("-","")
     i=1
     for x in scholarship.objects.all():
@@ -797,7 +798,7 @@ def detail(request , scholarship_name):
         userid=-1
     else:
         userid=request.session['userid']
-    
+    scholarship_s.url = scholarshipss
     return render_to_response('scholarship/details.html' , {'scholarship':scholarship_s,'userid':userid,})
 
 @login_required(login_url='/login/')

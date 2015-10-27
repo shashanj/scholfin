@@ -7,17 +7,17 @@
     <meta name="description" content="{{ scholarship.meta_data }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> {{ scholarship.meta_title }}</title>  
-  
+     {% load staticfiles %}
   <!-- Open graph data Meta tags Facebook-->
-  <meta property="og:title" content="ScholFin | Scholarships in 3 Clicks!" />
-  <meta property="og:site_name" content="ScholFin"/>
-  <meta property="og:url" content="{{ scholarship.meta_title }} " />
+  <meta property="og:title" content="{{ scholarship.meta_title }}" />
+  <meta property="og:site_name" content="ScholFin.com"/>
+  <meta property="og:url" content="{{ scholarship.url }} " />
   <meta property="og:type" content="website" />
   <meta property="og:description" content="{{ scholarship.meta_data }}" />
   {% if scholarship.name == "VNIT AA Scholarship 2015-16 " %}
   <meta property="og:image" content="http://vaave.s3.amazonaws.com/content/151432277_1434198171_Scholarship_Distribution_img_011.jpg" />
   {% else %}
-  <meta property="og:image" content="{% static "scholarship/images/scholfin.png"}" />
+  <meta property="og:image" content="{% static "scholarship/images/scholfin.png" %}" />
   {% endif %}
   
   <!-- Meta tags Twitter-->
@@ -48,7 +48,7 @@
     <!--
     <link rel="canonical" href="http://www.example.com/">
     -->
-    {% load staticfiles %}
+ 
     <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
