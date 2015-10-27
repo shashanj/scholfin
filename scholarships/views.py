@@ -337,7 +337,6 @@ def fbsignup_process(request):
                 b = Empty()
                 b.__class__ = Urlsetting
                 next_url  = b.geturl()
-                urltogo = next_url
                 return HttpResponseRedirect(next_url)
             else:
                 error = '* This Email-id already exits Please login Normally'
@@ -350,6 +349,7 @@ def fbsignup_process(request):
             b = Empty()
             b.__class__ = Urlsetting
             next_url  = b.geturl()
+            Urlsetting(next_url)
             password = access_token
             email = data['email']
             lastname = data['last_name']
