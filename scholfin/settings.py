@@ -107,8 +107,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'scholfin',
 	'USER': 'root',
-	# 'PASSWORD': '9308513225',
-    'PASSWORD': 'mysql',
+	'PASSWORD': '9308513225',
+    # 'PASSWORD': 'mysql',
 	'HOST': 'localhost',
 	'PORT': '',
     }
@@ -139,8 +139,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-# STATIC_URL = '/static/'
-STATIC_URL = 'http://localhost:7777/static/'
+STATIC_URL = '/static/'
+# STATIC_URL = 'http://localhost:7777/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 '''
