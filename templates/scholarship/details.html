@@ -14,8 +14,11 @@
   <meta property="og:url" content="{{ scholarship.meta_title }} " />
   <meta property="og:type" content="website" />
   <meta property="og:description" content="{{ scholarship.meta_data }}" />
+  {% if scholarship.name == "VNIT AA Scholarship 2015-16 " %}
+  <meta property="og:image" content="http://vaave.s3.amazonaws.com/content/151432277_1434198171_Scholarship_Distribution_img_011.jpg" />
+  {% else %}
   <meta property="og:image" content="{% static "scholarship/images/scholfin.png"}" />
-  
+  {% endif %}
   
   <!-- Meta tags Twitter-->
   <meta name="twitter:card" content="summary_large_image">

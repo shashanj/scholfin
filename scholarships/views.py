@@ -20,7 +20,21 @@ from django.core.mail import send_mail
 import re
 import random, string
 
-next_url = '/dashboard/'
+class Urlsetting(object):
+    Queue = []
+
+    def __init__(self,st):
+        del self.Queue[:]
+        self.Queue.append(st)
+
+    def geturl(self):
+        if len(self.Queue) > 0:
+            return str(self.Queue[0])
+        else :
+            return '/dashboard/'
+
+class Empty(object):
+    pass
 
 def randomword(length):
    return ''.join(random.choice(string.lowercase) for i in range(length))
@@ -54,6 +68,9 @@ def login_page(request):
                         login(request, user)
                         request.session['userid']=user.id
                         state = "login successfull"
+                        b = Empty()
+                        b.__class__ = Urlsetting
+                        next_url  = b.geturl()
                         return HttpResponseRedirect(next_url)
                     else:
                         state = "your account is not active"
@@ -212,6 +229,9 @@ def googlesignup_process(request):
                 user = authenticate(username=username, password=password)
                 login(request,user)
                 request.session['userid']=user.id
+                b = Empty()
+                b.__class__ = Urlsetting
+                next_url  = b.geturl()
                 return HttpResponseRedirect(next_url)
             else:
                 error = '* This Email-id already exits Please login Normally'
@@ -221,6 +241,9 @@ def googlesignup_process(request):
                 return render_to_response('scholarship/signup.html',context)
 
         else:
+            b = Empty()
+            b.__class__ = Urlsetting
+            next_url  = b.geturl()
             password = access_token
             email = data['email']
             lastname = data['family_name']
@@ -309,6 +332,9 @@ def fbsignup_process(request):
                 user = authenticate(username=username, password=password)
                 login(request,user)
                 request.session['userid']=user.id
+                b = Empty()
+                b.__class__ = Urlsetting
+                next_url  = b.geturl()
                 return HttpResponseRedirect(next_url)
             else:
                 error = '* This Email-id already exits Please login Normally'
@@ -318,6 +344,9 @@ def fbsignup_process(request):
                 return render_to_response('scholarship/signup.html',context)
                 
         else:
+            b = Empty()
+            b.__class__ = Urlsetting
+            next_url  = b.geturl()
             password = access_token
             email = data['email']
             lastname = data['last_name']
@@ -386,6 +415,10 @@ def signup_complete(request):
             return render_to_response('scholarship/signup.html',context)
             
         auth_type = 'basic'
+        b = Empty()
+        b.__class__ = Urlsetting
+        next_url  = b.geturl()
+        print next_url
         option_caste = caste.objects.all
         option_state = state.objects.all
         option_level = level.objects.all
@@ -467,6 +500,9 @@ def signupprocess(request):
             if user is not None:
                 login(request,user)
                 request.session['userid']=user.id
+                b = Empty()
+                b.__class__ = Urlsetting
+                next_url  = b.geturl()
                 return HttpResponseRedirect(next_url)
 
         elif user.profile.auth_type == 'facebook':
@@ -479,6 +515,9 @@ def signupprocess(request):
             if user is not None:
                 login(request,user)
                 request.session['userid']=user.id
+                b = Empty()
+                b.__class__ = Urlsetting
+                next_url  = b.geturl()
                 return HttpResponseRedirect(next_url)
 
         elif user.profile.auth_type == 'google':
@@ -491,31 +530,11 @@ def signupprocess(request):
             if user is not None:
                 login(request,user)
                 request.session['userid']=user.id
+                b = Empty()
+                b.__class__ = Urlsetting
+                next_url  = b.geturl()
                 return HttpResponseRedirect(next_url)
     return HttpResponse("error in registration")
-
-# def discard_passed(scholarships):
-#     from django.utils import timezone
-
-#     after_discarded = []
-#     year_long = []
-#     not_declared = []
-#     current = timezone.now()
-
-#     for schlrshp in scholarships:
-#         if schlrshp.deadline_type == 0 or schlrshp.deadline_type == 3:
-#             if schlrshp.deadline > current:
-#                 after_discarded.append(schlrshp)
-
-#         elif schlrshp.deadline_type == 1:
-#             year_long.append(schlrshp)
-
-#         else:
-#             not_declared.append(schlrshp)
-
-#     after_discarded.extend(year_long)
-#     after_discarded.extend(not_declared)
-#     return after_discarded
 
 def sort_by(request):
     pass
@@ -765,12 +784,11 @@ def detail(request , scholarship_name):
     #scholarship_s = scholarship.objects.filter(name=scholarship_name)
     scholarship_s = scholarship_s[0]
 
-    if 'userid' not in request.session:
-        global next_url
-        next_url = request.get_full_path()
+    if 'userid' not in request.session:       
+        xx = str(request.get_full_path())
+        Urlsetting(xx)
     else: 
-        global next_url
-        next_url = '/dashboard/'
+        Urlsetting('/dashboard/')
     if 'userid' not in request.session:
         userid=-1
     else:
@@ -1076,189 +1094,6 @@ def old_scholarship(request):
 def internship(request):
     return HttpResponseRedirect('https://docs.google.com/forms/d/1ON0e_gzn4wUtd21my4axak04ozQ7H8Ko24ucZzA9Ojw/viewform')
 
-# @login_required(login_url='/login/')
-# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-# def weekly_update(request):
-#     #print "In function for weekly updates for new scholarships"
-#     if request.user.is_superuser:
-#         user = User.objects.all()
-#         for u in user:
-#             if u.is_superuser==0 :
-#                 print u.email
-#                 print u.username
-                
-#                 user_d = UserProfile.objects.filter(user__username=u.username)
-#                 user_d= user_d[0]
-
-                
-#                 user_table = {
-#                     'state':user_d.user_state,
-#                     'level':user_d.user_level,
-#                     'religion':user_d.user_religion,
-#                     'caste':user_d.user_caste,
-#                     'field':user_d.user_field,
-#                     'abroad':user_d.user_abroad,
-#                     'gender':user_d.user_gender,
-
-#                 }
-
-#                 now = datetime.now()
-#                 sevendaytimestamp = now - timedelta(days=7)
-
-#                 scholarships = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
-#                     education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
-#                     education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field']).filter(timestamp__gte=sevendaytimestamp)
-#                 scholarship_l=[]
-#                 for s in scholarships:
-#                     matched=0;
-#                     interests=interest.objects.filter(scholarship=s)
-#                     interests_count=interest.objects.filter(scholarship=s).count()
-#                     user_interest=interest.objects.filter(userprofile=user_d)
-#                     if interests_count==0:
-#                         scholarship_l.append(s)
-#                     else :
-#                         for intrst in interests:
-#                             for intrst_u in user_interest:
-#                                 if intrst==intrst_u:
-#                                     matched=1
-#                         if matched==1:
-#                             scholarship_l.append(s)
-#                 #print len(scholarship_l)
-#                 scholarship_g=[]
-#                 if user_d.user_gender ==1:
-#                     scholarship_g=scholarship_l
-#                 else :
-#                     for s in scholarship_l:
-#                         #print s.gender
-#                         if s.gender == 0:
-#                             scholarship_g.append(s)
-
-#                 scholarship_a=[]
-#                 country = abroad.objects.filter(userprofile=user_d)
-#                 c=country[0]
-#                 c=str(c)
-
-#                 if c==("India"):
-#                     for s in scholarship_g:
-#                         country = abroad.objects.filter(scholarship=s)
-#                         country_count = abroad.objects.filter(scholarship=s).count()
-#                         if(country_count==1):
-#                             if(str(country[0])== 'India'):
-#                                 scholarship_a.append(s)
-#                 else:
-#                     scholarship_a = scholarship_g
-
-#                 scholarship_d=[]
-#                 if user_d.user_disability == 0:
-#                     for s in scholarship_a:
-#                         if s.disability !=1:
-#                             scholarship_d.append(s)
-#                 else:
-#                     scholarship_d=scholarship_a
-
-#                 '''
-#                 subject = "New Scholarships matching your profile"
-#                 message = "Hi, the new scholarships are "
-#                 '''         
-
-#                 mail_body_1 = "<tr><td align=\"left\" class=\"padding-meta\" style=\"padding: 0 0 5px 25px; font-size: 13px; font-family: Helvetica, Arial, sans-serif; font-weight: normal; color: #aaaaaa;\">"
-#                 #add deadline to 1
-#                 mail_body_2 = "</td></tr><tr><td align=\"left\" class=\"padding-copy\" style=\"padding: 0 0 5px 25px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; font-weight: normal; color: #55bbea;\">"
-#                 #add name to 2
-#                 mail_body_3 = "</td></tr> <tr><td align=\"left\" class=\"padding-copy\" style=\"padding: 10px 0 15px 25px; font-size: 16px; line-height: 24px; font-family: Helvetica, Arial, sans-serif; color: #666666;\">"
-#                 #add about to 3
-#                 mail_body_4 = "</td></tr><tr><td align=\"left\" class=\"padding\" style=\"padding:0 0 45px 25px;\"><table border=\"0\" cellpadding=\"0\"cellspacing=\"0\" class=\"mobile-button-container\"><tbody><tr><td align=\"center\"><!-- BULLETPROOF BUTTON --><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"mobile-button-container\" width=\"100%\"><tbody><tr><td align=\"center\" class=\"padding-copy\" style=\"padding: 0;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"responsive-table\"><tbody><tr><td align=\"center\"><a class=\"mobile-button\" href=\""
-#                 #add link to 4
-#                 mail_body_5 = "\" style=\"font-size: 15px; font-family: Helvetica, Arial, sans-serif; font-weight: normal; color: #ffffff; text-decoration: none; background-color: #256F9C; border-top: 10px solid #256F9C; border-bottom: 10px solid #256F9C; border-left: 20px solid #256F9C; border-right: 20px solid #256F9C; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; display: inline-block;\" target=\"_blank\">Apply Now &rarr;</a></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr>"
-                   
-#                 mail_message = ""
-
-
-#                 for sc in scholarship_d:
-                    
-#                     root_url = "http://scholfin.com/scholarship-details/"
-#                     x = re.sub('[^A-Za-z0-9]+',' ',sc.name)
-#                     x = x.strip(' ')
-#                     x = re.sub('[^A-Za-z0-9]+','-',x)
-#                     link = root_url + x
-                    
-#                     t = sc.deadline.strftime("%B %d, %Y") # time of deadline of scholarship
-                    
-#                     #message = message + sc.name + sc.about +  link
-#                     #print message
-#                     #send_mail(subject,message, 'updates@scholfin.com', [u.email], fail_silently=False)
-
-#                     mail_message = mail_message + mail_body_1 + t + mail_body_2 + sc.name + mail_body_3 + sc.about + mail_body_4 + link + mail_body_5
-                
-                 
-#                 #
-#                 # SendGrid Python Example (SendGrid Python Library)
-#                 #
-#                 # This example shows how to send email through SendGrid
-#                 # using Python and the SendGrid Python Library.  For 
-#                 # more information on the SendGrid Library, visit:
-#                 #
-#                 #     https://github.com/sendgrid/sendgrid-python
-#                 #
-#                 # Before running this example, make sure you have the
-#                 # library installed by running the following:
-#                 #
-#                 #       pip install sendgrid
-#                 #       or
-#                 #       easy_install sendgrid
-#                 #
-
-#                 import sendgrid
-
-
-#                 # MAKE A SECURE CONNECTION TO SENDGRID
-#                 # Fill in the variables below with your SendGrid 
-#                 # username and password.
-#                 #========================================================#
-#                 sg_username = "scholfin"
-#                 sg_password = "sameer1234"
-
-
-#                 # CREATE THE SENDGRID MAIL OBJECT
-#                 #========================================================#
-#                 sg = sendgrid.SendGridClient(sg_username, sg_password)
-#                 message = sendgrid.Mail()
-
-
-#                 # ENTER THE EMAIL INFORMATION
-#                 #========================================================#
-#                 message.set_from("updates@scholfin.com")
-#                 message.set_subject("New Scholarships matching your profile !")
-#                 message.set_text("This is text body")
-#                 message.set_html(mail_message)
-#                 message.add_to(u.email)
-
-
-
-#                 # SMTP API
-#                 #========================================================#
-#                 # App Filters
-#                 filters = {
-#                     "templates": {
-#                         "settings": {
-#                             "enable": 1,
-#                             "template_id": "351fd81b-d419-4d87-80ef-9de020747724"
-#                         }
-#                     }
-#                 }
-#                 for app, contents in filters.iteritems():
-#                     for setting, value in contents['settings'].iteritems():
-#                         message.add_filter(app, setting, value)
-
-
-
-
-#                 # SEND THE MESSAGE
-#                 #========================================================#
-#                 status, msg = sg.send(message)
-
-#                 print msg
-#     return HttpResponseRedirect('/')
-
+@login_required(login_url='/login/')
 def apply_aa(request):
     return render_to_response('scholarship/vnitaa.html',RequestContext(request))
