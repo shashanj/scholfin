@@ -24,12 +24,11 @@ class Urlsetting(object):
     Queue = []
 
     def __init__(self,st):
-        del self.Queue[:]
         self.Queue.append(st)
 
     def geturl(self):
         if len(self.Queue) > 0:
-            return str(self.Queue[0])
+            return str(self.Queue.pop())
         else :
             return '/dashboard/'
 
@@ -173,6 +172,7 @@ def fbsignup(request):
 
 @csrf_exempt
 def googlesignup_process(request):
+    urltogo = ''
     import requests
     # data_url = https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=youraccess_token
     auth_code = request.POST.get('codee',False)
@@ -244,6 +244,7 @@ def googlesignup_process(request):
             b = Empty()
             b.__class__ = Urlsetting
             next_url  = b.geturl()
+            Urlsetting(next_url)
             password = access_token
             email = data['email']
             lastname = data['family_name']
@@ -282,6 +283,7 @@ def googlesignup_process(request):
 
 def fbsignup_process(request):
     code = request.GET.get('code', False)
+    urltogo = ''
     # Settings for Facebook API call
     client_id = '1497240163926202'
     redirect_uri = 'http://www.scholfin.com/fbsignup_process/'
@@ -335,6 +337,7 @@ def fbsignup_process(request):
                 b = Empty()
                 b.__class__ = Urlsetting
                 next_url  = b.geturl()
+                urltogo = next_url
                 return HttpResponseRedirect(next_url)
             else:
                 error = '* This Email-id already exits Please login Normally'
@@ -418,6 +421,7 @@ def signup_complete(request):
         b = Empty()
         b.__class__ = Urlsetting
         next_url  = b.geturl()
+        Urlsetting(next_url)
         print next_url
         option_caste = caste.objects.all
         option_state = state.objects.all
