@@ -231,3 +231,40 @@ def weekly_update(request):
             status, msg = sg.send(message)
             print msg
     return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/')
+
+
+@staff_member_required
+def scholarship_diff(request):
+    import urllib2
+    context = RequestContext(request)
+    page_title = ' The Scholarships whose page source has been changed'
+    sources = page_source.objects.select_related('scholarship').all()
+    source_schol = [x.scholarship for x in sources]
+    scholarships = scholarship.objects.all()
+    scholarship_d = []
+    for s in scholarships:
+        if s in source_schol:
+            try:
+                response = urllib2.urlopen(s.apply_link)
+                p_source = response.read()
+                if not p_source == s.page_source.source:
+                    scholarship_d.append(s)
+            except:
+                pass
+        else:
+            try:
+                response = urllib2.urlopen(s.apply_link)
+                p_source = response.read()
+                temp = page_source()
+                temp.source = p_source
+                temp.scholarship = s
+                temp.save()
+            except:
+                pass
+
+
+    context_list = {
+            'scholarships': scholarship_d,
+            'page_title' : page_title,
+            }
+    return render_to_response('custom_admin/index.html',context_list,context)

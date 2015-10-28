@@ -168,3 +168,10 @@ class MyModelAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+
+class page_source(models.Model):
+    source = models.TextField(blank=True)
+    scholarship = models.OneToOneField(scholarship, related_name='page_source')
+
+    def __unicode__ (self):
+        return self.source

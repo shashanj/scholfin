@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^dt2/' , views.deadline_type_2 , name='deadline_type_2'),
     url(r'^a0/' , views.amount_equal_0 , name='amount_equal_0'),
     url(r'^weekly_update/' , views.weekly_update , name='weekly_update'),
+    url(r'^scholarship_diff/' , views.scholarship_diff , name='scholarship_diff'),
 ]
