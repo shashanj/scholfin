@@ -88,11 +88,11 @@ def weekly_update(request):
     #print "In function for weekly updates for new scholarships"
     user = User.objects.all()
     for u in user:
-        if u.is_superuser==0 :
+        if u.is_superuser==0 or u.is_staff==0:
             print u.email
             print u.username
             
-            user_d = UserProfile.objects.filter(user__username=u.username)
+            user_d = UserProfile.objects.filter(user__email=u.email)
             user_d= user_d[0]
 
             

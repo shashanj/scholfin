@@ -469,6 +469,7 @@ def signupprocess(request):
         u_study_abroad = abroad.objects.filter(abroad_id=request.POST.get('abroad'))
         u_study_abroad = u_study_abroad[0]
         u_disability = int(request.POST.get('disability'))
+        u_college = request.POST.get('college')
 
     user_is = []
     user_is = User.objects.filter(email=u_email).count()
@@ -494,6 +495,7 @@ def signupprocess(request):
         profile.user_level = u_level
         profile.user_abroad = u_study_abroad
         profile.user_disability = u_disability
+        profile.user_income = u_college
         profile.save()
         for u in u_interest:
             profile.user_interest.add(u)

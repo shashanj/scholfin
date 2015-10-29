@@ -174,4 +174,4 @@ class page_source(models.Model):
     scholarship = models.OneToOneField(scholarship, related_name='page_source')
 
     def __unicode__ (self):
-        return self.source
+        return self.scholarship.name

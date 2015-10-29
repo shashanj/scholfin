@@ -150,12 +150,12 @@
                     <br>
                         <h3>Do you want to study abroad ?</h3>
                         <ul class="data-list floated clearfix">
-                           {% if userdetail.user_abroad_id == 0 %}
-                                <li><input name="abroad" type="radio" class="required check_radio" value="1" checked><label class="label_gender">Yes</label></li>
-                                <li><input name="abroad" type="radio" class="required check_radio" value="2"><label class="label_gender">I'm<span style="color:white">-</span>not<span style="color:white">-</span>sure</label></li>
+                           {% if userdetail.user_abroad_id == 1 %}
+                                <li><input name="abroad" type="radio" class="required check_radio" value="2"><label class="label_gender">Yes</label></li>
+                                <li><input name="abroad" type="radio" class="required check_radio" value="1" checked><label class="label_gender" >I'm<span style="color:white">-</span>not<span style="color:white">-</span>sure</label></li>
                             {% else %}
-                                <li><input name="abroad" type="radio" class="required check_radio" value="1"><label class="label_gender">Yes</label></li>
-                                <li><input name="abroad" type="radio" class="required check_radio" value="2" checked><label class="label_gender">I'm<span style="color:white">-</span>not<span style="color:white">-</span>sure</label></li>
+                                <li><input name="abroad" type="radio" class="required check_radio" value="2" checked><label class="label_gender">Yes</label></li>
+                                <li><input name="abroad" type="radio" class="required check_radio" value="1"><label class="label_gender">I'm<span style="color:white">-</span>not<span style="color:white">-</span>sure</label></li>
                             {% endif %}
                             
                         </ul>
@@ -196,6 +196,11 @@
                             {% endfor %}
                         {% endif %}
                     </ul>
+                </div>
+                <div class="col-md-12">
+                <br></br>
+                <h3>College / School</h3>
+                    <input type="text" class="required form-control" name="college" placeholder="" value="{{userdetail.user_income}}" />
                 </div>
 
 				<div class="col-md-12">
