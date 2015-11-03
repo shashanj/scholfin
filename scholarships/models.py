@@ -66,7 +66,7 @@ class scholarship(models.Model):
     name=models.CharField(max_length=250,default=' ')
     offered_by=models.CharField(max_length=250,default=' ')
     total_number_scholarship=models.IntegerField(default=0)
-    image_url = models.URLField(max_length=200, default=' ',blank=True)
+    image_url = models.URLField(max_length=200,blank=True)
     summary = models.TextField(blank=True)
     
     # foreign keys
@@ -102,8 +102,6 @@ class scholarship(models.Model):
 
     scholarship_type=models.IntegerField(default=0)
 
-    # time
-
     timestamp=models.DateTimeField(default=timezone.now(),blank=True)
 
     # application mode of scholarship
@@ -116,7 +114,6 @@ class scholarship(models.Model):
     contact_details=models.TextField(default=' ')
     apply_link=models.CharField(max_length=500,default=' ')
     additional_links=models.CharField(max_length=500,default=' ')
-
     meta_data=models.CharField(max_length=200,default=' ')
     meta_title=models.CharField(max_length=65,default=' ')
 
@@ -168,6 +165,9 @@ class MyModelAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
+    search_fields = ['name',]
+    list_filter = ['education_caste__caste_name','education_religion__religion_name','education_level__level_name','education_field__field_name','education_abroad__abroad_name','gender','disability','deadline_type','currency','scholarship_type','application_mode','education_state__state_name',]
+
 
 class page_source(models.Model):
     source = models.TextField(blank=True)

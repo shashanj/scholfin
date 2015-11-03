@@ -49,18 +49,18 @@ def login_page(request):
     state = 'please login ...'
     username = password = ''
     if request.POST:
-        username = request.POST.get('username')
-        username = username[:30]
+        email = request.POST.get('username')
+        username = email[:30]
         print username
         password = request.POST.get('password')
         
         try:
-            user = User.objects.get(username = username)
+            user = User.objects.get(email = email)
         except User.DoesNotExist:
             user = None
 
         if user is not None:
-            if user.profile.auth_type == 'basic':
+            if user.profile.auth_type == 'basic' or user.profile.auth_type == None:
                 user = authenticate(username=username, password=password)
                 if user is not None:
                     if user.is_active:
@@ -209,16 +209,20 @@ def googlesignup_process(request):
         except urllib2.URLError:
             return HttpResponseRedirect('/signup/')
 
-        username = data['email']
+        email = data['email']
+        if len(email)>30 :
+            username = email[:30]
+        else :
+            username = email
         print username
 
         try:
-            user = User.objects.get(email = username)
+            user = User.objects.get(email = email)
         except User.DoesNotExist:
             user = None
 
         if user is not None:    
-            userprofile = UserProfile.objects.get(user__email=username)
+            userprofile = UserProfile.objects.get(user__email=email)
 
             if userprofile.auth_type == 'google':
                 password = randomword(30)
@@ -314,16 +318,20 @@ def fbsignup_process(request):
         except urllib2.URLError:
             return HttpResponseRedirect('/')
 
-        username = data['email']
+        email = data['email']
+        if len(email) > 30:
+            username = email[:30]
+        else:
+            username = email
         print username
 
         try:
-            user = User.objects.get(email = username)
+            user = User.objects.get(email = email)
         except User.DoesNotExist:
             user = None
 
         if user is not None:    
-            userprofile = UserProfile.objects.get(user__email=username)
+            userprofile = UserProfile.objects.get(user__email=email)
 
             if userprofile.auth_type == 'facebook':
                 password = randomword(30)
@@ -401,7 +409,7 @@ def signup_complete(request):
         #checking username 
 
         #sl = User.objects.filter(username__iexact=username)
-        if User.objects.filter(email__iexact=username).exists() :
+        if User.objects.filter(email__iexact=email).exists() :
             error = '* This Email-id already exits'
             context={
                 'error' : error,
@@ -422,7 +430,6 @@ def signup_complete(request):
         b.__class__ = Urlsetting
         next_url  = b.geturl()
         Urlsetting(next_url)
-        print next_url
         option_caste = caste.objects.all
         option_state = state.objects.all
         option_level = level.objects.all
