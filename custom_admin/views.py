@@ -85,9 +85,16 @@ def amount_equal_0(request):
 @staff_member_required
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def weekly_update(request):
-    #print "In function for weekly updates for new scholarships"
+    import time
     user = User.objects.all()
+    sleep_count = 0
     for u in user:
+        if sleep_count>130:
+            print time.time()
+            time.sleep(60)
+            print time.time()
+            sleep_count = 0
+
         if u.is_superuser==0 or u.is_staff==0:
             print u.email
             print u.username
@@ -203,7 +210,9 @@ def weekly_update(request):
                     
                     t = sc.deadline.strftime("%B %d, %Y") # time of deadline of scholarship
                     mail_message = mail_message + mail_body_1 + 'Deadline : ' + t + mail_body_6 + am + mail_body_2 + sc.name + mail_body_3 + sc.about + mail_body_4 + link + mail_body_5
-                
+                # mail_message = '<table border="2"><tr><td> asd </td> <td> dfg </td></tr> </table>'
+                # mail_message = mail_body_1 + 'Deadline : ' + 't' + mail_body_6 + 'am' + mail_body_2 + 'sc.name' + mail_body_3 + 'sc.about' + mail_body_4 + 'link' + mail_body_5
+                # mail_message =mail_message+ mail_body_1 + 'Deadline : ' + 't' + mail_body_6 + 'am' + mail_body_2 + 'sc.name' + mail_body_3 + 'sc.about' + mail_body_4 + 'link' + mail_body_5
                 import sendgrid
                 sg_username = "scholfin"
                 sg_password = "sameer1234"
@@ -213,7 +222,7 @@ def weekly_update(request):
 
                 message.set_from("thescholfin@gmail.com")
                 message.set_subject("New Scholarships matching your profile !")
-                message.set_text("This is text body")
+                # message.set_text("This is text body")
                 message.set_html(mail_message)
                 message.add_to(u.email)
 
@@ -228,9 +237,13 @@ def weekly_update(request):
                 for app, contents in filters.iteritems():
                     for setting, value in contents['settings'].iteritems():
                         message.add_filter(app, setting, value)
-
-                status, msg = sg.send(message)
-                print msg
+                try:
+                    status, msg = sg.send(message)
+                    sleep_count +=1
+                    print msg
+                except:
+                    pass
+                
     return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/')
 
 
