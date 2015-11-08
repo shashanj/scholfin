@@ -1111,9 +1111,8 @@ def internship(request):
 @login_required(login_url='/login/')
 def apply_aa(request):
     return render_to_response('scholarship/vnitaa.html',RequestContext(request))
-
-# def resetnexturl(request):
-#     if request.POST:
-#         Urlsetting('/dashboard/')
-#         print 'reset successfull'
-#         return HttpResponse(200)
+@csrf_exempt
+def resetnexturl(request):
+    if request.POST:
+        Urlsetting('/dashboard/')
+        return HttpResponse(200)

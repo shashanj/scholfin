@@ -296,6 +296,27 @@ function signInCallback(authResult) {
     }}
 </script>
 <!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript">
+    $(window).bind('beforeunload', function(){
+        $.ajax({
+                 type:"POST",
+                 url:"/reset/",
+                 data: {
+                        'val': 'test'
+                        },
+                 success: function(){}
+            });
+    })
+    $("#123").click(function(){
+        $(window).unbind("beforeunload");
+    })
+    $("#signinButton").click(function(){
+        $(window).unbind("beforeunload");
+    })
+    $("#fbunbind").click(function(){
+        $(window).unbind("beforeunload");
+    })
+</script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 </html>
