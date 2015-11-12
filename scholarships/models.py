@@ -165,7 +165,7 @@ class MyModelAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
-    search_fields = ['name',]
+    search_fields = ['name','contact_details']
     list_filter = ['education_caste__caste_name','education_religion__religion_name','education_level__level_name','education_field__field_name','education_abroad__abroad_name','gender','disability','deadline_type','currency','scholarship_type','application_mode','education_state__state_name',]
 
 
