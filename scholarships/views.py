@@ -1113,6 +1113,7 @@ def apply_aa(request):
     return render_to_response('scholarship/vnitaa.html',RequestContext(request))
 @csrf_exempt
 def resetnexturl(request):
-    if request.POST:
-        Urlsetting('/dashboard/')
-        return HttpResponse(200)
+    if request.is_ajax:
+        if request.method == 'POST':
+            Urlsetting('/dashboard/')
+    return HttpResponse(200)
