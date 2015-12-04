@@ -105,7 +105,7 @@ def send_weekly_update(request):
         lower_bound = int(request.POST.get('lower_bound',False))
         upper_bound = int(request.POST.get('upper_bound', False))
 
-        total_users = User.objects.all().count()
+        total_users = User.objects.count()
         # total_users = 500
         if not upper_bound < total_users:
             upper_bound = total_users
@@ -268,37 +268,76 @@ def send_weekly_update(request):
 
 
 @staff_member_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def scholarship_diff(request):
+    context = RequestContext(request)
+    total_schols = scholarship.objects.count()
+    # total_users = 500
+    context_list = {
+            'total_schols': total_schols,
+            'message':'',
+            }
+    return render_to_response('custom_admin/scholarship_diff.html',context_list,context)
+
+
+@staff_member_required
+def cal_scholarship_diff(request):
     import urllib2
     context = RequestContext(request)
-    page_title = ' The Scholarships whose page source has been changed'
-    sources = page_source.objects.select_related('scholarship').all()
-    source_schol = [x.scholarship for x in sources]
-    scholarships = scholarship.objects.all()
-    scholarship_d = []
-    for s in scholarships:
-        if s in source_schol:
-            try:
-                response = urllib2.urlopen(s.apply_link)
-                p_source = response.read()
-                if not p_source == s.page_source.source:
-                    scholarship_d.append(s)
-            except:
-                pass
-        else:
-            try:
-                response = urllib2.urlopen(s.apply_link)
-                p_source = response.read()
-                temp = page_source()
-                temp.source = p_source
-                temp.scholarship = s
-                temp.save()
-            except:
-                pass
+    if request.method == 'POST':
+        lower_bound = int(request.POST.get('lower_bound',False))
+        upper_bound = int(request.POST.get('upper_bound', False))
 
+        total_schols = scholarship.objects.count()
+        print total_schols
+        # total_users = 500
+        if not upper_bound < total_schols:
+            upper_bound = total_schols
+        
+        count = 0
+        page_title = ' The Scholarships whose page source has been changed'
+        sources = page_source.objects.select_related('scholarship').all().order_by('scholarship_id')[lower_bound-1:upper_bound]
+        print sources
+        source_schol = [x.scholarship for x in sources]
+        scholarships = scholarship.objects.all().order_by('scholarship_id')[lower_bound-1:upper_bound]
+        print scholarships
+        scholarship_d = []
+        for s in scholarships:
+            print 'opo'
+            if s in source_schol:
+                print s
+                try:
+                    response = urllib2.urlopen(s.apply_link)
+                    print s.apply_link
+                    p_source = response.read()
+                    print 'bef'
+                    # print str(p_source)
+                    print type(p_source) 
+                    print type(s.page_source.source)
+                    if not p_source.decode('utf-8') == s.page_source.source:
+                        print 'aft'
+                        scholarship_d.append(s)
+                except:
+                    pass
+            else:
+                try:
+                    response = urllib2.urlopen(s.apply_link)
+                    p_source = response.read()
+                    print p_source
+                    temp = page_source()
+                    temp.source = p_source
+                    temp.scholarship = s
+                    temp.save()
+                except:
+                    pass
 
-    context_list = {
-            'scholarships': scholarship_d,
-            'page_title' : page_title,
-            }
-    return render_to_response('custom_admin/index.html',context_list,context)
+        # print scholarship_d
+        context_list = {
+                'scholarships' : scholarship_d,
+                'total_schols': total_schols,
+                'message':'Scholarships between ' + str(lower_bound) + ' to ' +str(upper_bound)
+                + ' whose source is changed are: ',
+                }
+        return render_to_response('custom_admin/scholarship_diff.html',context_list,context)
+
+    return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/')
