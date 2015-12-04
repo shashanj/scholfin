@@ -109,7 +109,7 @@ def send_weekly_update(request):
         # total_users = 500
         if not upper_bound < total_users:
             upper_bound = total_users
-        user = User.objects.all().order_by('id')[lower_bound:upper_bound+1]
+        user = User.objects.all().order_by('id')[lower_bound-1:upper_bound]
         count = 0
         for u in user:
             count+=1
