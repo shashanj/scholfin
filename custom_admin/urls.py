@@ -29,4 +29,6 @@ urlpatterns = [
     url(r'^send_weekly_update/' , views.send_weekly_update , name='send_weekly_update'),
     url(r'^scholarship_diff/' , views.scholarship_diff , name='scholarship_diff'),
     url(r'^cal_scholarship_diff/' , views.cal_scholarship_diff , name='cal_scholarship_diff'),
+    url(r'^update_scholarship_source/' , views.update_scholarship_source , name='update_scholarship_source'),
+
 ]

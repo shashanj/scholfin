@@ -341,3 +341,18 @@ def cal_scholarship_diff(request):
         return render_to_response('custom_admin/scholarship_diff.html',context_list,context)
 
     return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/')
+
+def update_scholarship_source(request):
+    context = RequestContext(request)
+    if request.method == 'POST':
+        inp = request.POST.get('id',False)
+        if inp:
+            p = page_source.objects.filter(scholarship__scholarship_id = inp)
+            response = urllib2.urlopen(p.scholarship.apply_link)
+            p_source = response.read()
+            p[0].source = p_source 
+            p[0].save
+        else:
+            return HttpResponse('error text box empty')  
+    else:
+        return render_to_response('custom_admin/scholarship_diff.html', context )
