@@ -116,9 +116,9 @@ class scholarship(models.Model):
     meta_data=models.CharField(max_length=200,default=' ')
     meta_title=models.CharField(max_length=65,default=' ')
 
-    organic_view = models.IntegerField(default=0)
-    logged_view = models.IntegerField(default=0)
-    apply_click = models.IntegerField(default=0)
+    # organic_view = models.IntegerField(default=0)
+    # logged_view = models.IntegerField(default=0)
+    # apply_click = models.IntegerField(default=0)
 
     def __unicode__ (self):
         return self.name;
