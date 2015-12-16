@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from django.core import urlresolvers
 from django.contrib.contenttypes.models import ContentType
 import re
-
 # Create your models here.
 
 class field (models.Model):
@@ -117,6 +116,10 @@ class scholarship(models.Model):
     meta_data=models.CharField(max_length=200,default=' ')
     meta_title=models.CharField(max_length=65,default=' ')
 
+    organic_view = models.IntegerField(default=0)
+    logged_view = models.IntegerField(default=0)
+    apply_click = models.IntegerField(default=0)
+
     def __unicode__ (self):
         return self.name;
 
@@ -157,10 +160,6 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
-
-
-
-
 class MyModelAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
@@ -175,3 +174,88 @@ class page_source(models.Model):
 
     def __unicode__ (self):
         return self.scholarship.name
+
+class Provider(models.Model):
+    # linking provider profile to a user
+    user = models.OneToOneField(User, related_name='provider')
+    user_type = models.IntegerField(default=0,blank=True)
+    auth_type = models.CharField(max_length=200,blank=False,default=None)
+    scholarship = models.ManyToManyField(scholarship,blank=True)
+
+    def __unicode__ (self):
+        return self.user.username
+
+class question(models.Model):
+    question_id = models.AutoField(primary_key=True)
+    question = models.CharField(max_length=1000,default=' ')
+    question_type = models.IntegerField(default=0)
+    expected_answers = models.TextField(blank=True)
+    scholarship = models.ForeignKey(scholarship,related_name='scholarship')
+
+    def __unicode__(self):
+        return self.question
+
+class answer(models.Model):
+    answer_id = models.AutoField(primary_key=True)
+    answer = models.TextField(default=' ')
+    question = models.ForeignKey(question,related_name='questionof')
+    user =  models.ForeignKey(User,related_name='answerby')
+
+    def __unicode__(self):
+        return self.user.first_name + ' answered ' + self.question.question
+
+class activity(models.Model):
+    activity_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User,related_name='activity')
+    scholarship = models.ForeignKey(scholarship,related_name='sch')
+    activity = models.TextField(blank=True)
+    timestamp=models.DateTimeField(default=timezone.now(),blank=True)
+
+    def __unicode__(self):
+        return  self.user.username + self.activity
+
+class Applicant(models.Model):
+    applicant_id = models.AutoField(primary_key=True)
+    applicant = models.ManyToManyField(User,related_name='applicant')
+    scholarship = models.OneToOneField(scholarship,related_name='appforscholarship')
+    count = models.BigIntegerField(default=0)
+
+    def __unicode__(self):
+        return self.scholarship.name
+
+class ShortList(models.Model):
+    shortlist_id = models.AutoField(primary_key=True)
+    shortlist = models.ManyToManyField(User,related_name='shortlist')
+    scholarship = models.OneToOneField(scholarship,related_name='slforscholarship')
+    count = models.BigIntegerField(default=0)
+
+    def __unicode__(self):
+        return self.scholarship.name
+
+class Selected(models.Model):
+    selected_id = models.AutoField(primary_key=True)
+    selected = models.ManyToManyField(User,related_name='selected')
+    scholarship = models.OneToOneField(scholarship,related_name='selforscholarship')
+    count = models.BigIntegerField(default=0)
+
+    def __unicode__(self):
+        return self.scholarship.name
+
+class Rejected(models.Model):
+    rejected_id = models.AutoField(primary_key=True)
+    rejected = models.ManyToManyField(User,related_name='rejected')
+    scholarship = models.OneToOneField(scholarship,related_name='rejforscholarship')
+    count = models.BigIntegerField(default=0)
+
+    def __unicode__(self):
+        return self.scholarship.name
+
+class Note(models.Model):
+    note_id = models.AutoField(primary_key=True)
+    note = models.TextField(default='')
+    scholarship = models.ForeignKey(scholarship,related_name='note')
+    by =  models.ForeignKey(User,related_name='by')
+    of = models.ForeignKey(User,related_name='of')
+
+    def __unicode__(self):
+        return self.by.email + ' took note on ' + self.of.email +' for ' + self.scholarship.name 

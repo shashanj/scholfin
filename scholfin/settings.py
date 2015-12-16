@@ -128,7 +128,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -144,7 +144,7 @@ STATIC_URL = '/static/'
 # STATIC_URL = 'http://localhost:7777/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 # STATICFILES_DIRS = (
-#    'C:\Users\shas\Downloads\jq\public/static/',
+#    'C:\Users\GAURAV\Downloads\static/',
 #  )
 '''
 CELERYBEAT_SCHEDULE = {

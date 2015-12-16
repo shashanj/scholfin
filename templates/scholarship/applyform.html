@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html charset="utf-8">
+
+<head>
+{% load staticfiles %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Validation Form</title>
+
+    <link rel="stylesheet" href="{% static "scholarship/assets/demo.css" %}">
+    <link rel="stylesheet" href="{% static "scholarship/assets/form-labels-on-top.css" %}">
+    <link rel="stylesheet" href="{% static "scholarship/assets/form-basic.css" %}">
+    <link rel="stylesheet" href="{% static "dashboardpro/css/font-awesome.css" %}">
+    <link rel="stylesheet" href="{% static "scholarship/material.css" %}">
+    <link rel="stylesheet" href="{% static "scholarship/styles.css" %}">
+    <link rel="stylesheet" href="{% static "scholarship/css/bootstrap.css" %}">
+</head>
+
+<body>
+    <header class="demo-header mdl-layout__header_viewdetail mdl-color--white mdl-color--grey-100 mdl-color-text--grey-800">
+        <div class="mdl-layout__header-row" style="background-color:#55bbea">
+        {% if userid != -1 %}
+          <a href="/dashboard/" style="color:white !important;text-decoration:none"><span class="mdl-layout-title" >ScholFin</span></a>
+         {% endif %}
+         {% if userid == -1 %}
+          <a href="/" style="color:white !important;text-decoration:none"><span class="mdl-layout-title">ScholFin</span></a>
+         {% endif %}
+          <div class="mdl-layout-spacer"></div>
+          {% if userid != -1%}
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons" style="color:white">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+            <a href="/profile/" style="text-decoration:none"><li class="mdl-menu__item" >Profile</li></a>
+            <a class="typeform-share link" href="https://scholfin.typeform.com/to/EgBAUf" data-mode="2" target="_blank" style="text-decoration:none"><li class="mdl-menu__item">Feedback
+                 </li></a>
+            <a href="/logout/" style="text-decoration:none"><li class="mdl-menu__item">Logout</li></a>
+          </ul>
+          {% endif %}
+      </header>
+
+    <div class="main-content">
+
+        <!-- You only need this form and the form-validation.css -->
+
+        <form class="form-labels-on-top" method="post" action="/submit-application/">
+        {% csrf_token %}
+            <input type="hidden" name='sch' value='{{sc.name}}'>
+            <div class="form-title-row">
+                <h1>{{sc.name}} - Application Form</h1>
+            </div>
+
+            <div class="form-row ">
+
+            {% if question %}
+                {% for ques in question %}
+                    {% if ques.question_type == 0 %}
+                        <label>
+                            <span>{{ques.question}}</span>
+                            <textarea name="{{ques.question_id}}" type='input' value='3uh'></textarea>
+                        </label>
+                    {% elif ques.question_type == 1 %}
+                        <label><span>{{ques.question}}</span></label>
+                        <div class="form-radio-buttons">
+                        {% for x in option %}
+                            {% if x.id == ques.question_id%}
+                                {% for op in x.options %}
+                                        <div>
+                                            <label>
+                                                <input type="radio" name="{{ques.question_id}}" value="{{op}}">
+                                                <span>{{op}}</span>
+                                            </label>
+                                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+
+
+                    {% elif ques.question_type == 2 %}
+                    <label>
+                    <span>{{ques.question}}</span>
+                    <select name="{{ques.question_id}}">
+                    <option>Choose an option</option>
+                    {% for x in option %}
+                            {% if x.id == ques.question_id%}
+                                {% for op in x.options %}
+                                        <option value="{{ op }}">{{op}}</option>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}       
+                    </select>
+                </label>
+
+                {% elif ques.question_type == 3 %}
+                <label class="form-checkbox">
+                    <span>{{ques.question}}</span>
+                    {% for x in option %}
+                            {% if x.id == ques.question_id%}
+                                {% for op in x.options %}
+                                    <input type="checkbox" name="{{ques.question_id}}" value="{{op}}">{{op}}
+                                    <br><br>
+                                    {% endfor %}
+                            {% endif %}
+                        {% endfor %}  
+                </label>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            </div>
+
+            <div class="form-row">
+
+                <button type="submit">Submit Form</button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <script src="{% static "scholarship/jquery.min.js" %}"></script>
+    <script src="{% static "scholarship/material.js" %}"></script>
+</body>
+
+</html>

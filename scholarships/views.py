@@ -42,6 +42,11 @@ def index(request):
     if 'userid' not in request.session:
         t = loader.get_template('scholarship/index.html')
         return HttpResponse(t.render())
+    else : 
+        userprofile = UserProfile.objects.filter(user__id=request.session['userid'])
+        if len(userprofile) == 0:
+            t = loader.get_template('scholarship/index.html')
+            return HttpResponse(t.render())
     return HttpResponseRedirect('/dashboard/')
 
 
@@ -805,8 +810,22 @@ def detail(request , scholarship_name):
         Urlsetting('/dashboard/')
     if 'userid' not in request.session:
         userid=-1
+        scholarship_s.organic_view = scholarship_s.organic_view + 1
+        scholarship_s.save()
     else:
         userid=request.session['userid']
+        scholarship_s.logged_view = scholarship_s.logged_view + 1
+        scholarship_s.save()
+        acti = activity.objects.filter(scholarship=scholarship_s).filter(user=User.objects.get(id = userid)).filter(activity=' just viewed your Scholarship')
+        if len(acti)>0:
+            acti = acti[0]
+            acti.timestamp = timezone.now()
+        else:
+            act = activity()
+            act.user = User.objects.get(id = userid)
+            act.scholarship = scholarship_s
+            act.activity = ' just viewed your Scholarship'
+            act.save()
     scholarship_s.url = scholarshipss
     return render_to_response('scholarship/details.html' , {'scholarship':scholarship_s,'userid':userid,})
 
@@ -993,10 +1012,6 @@ def old_scholarship(request):
     else:
         scholarship_d=scholarship_a
 
-
-
-
-    print 'hi'
     print len(scholarship_d)
     number_of_scholarships = 0
     amount = 0
@@ -1111,9 +1126,111 @@ def internship(request):
 @login_required(login_url='/login/')
 def apply_aa(request):
     return render_to_response('scholarship/vnitaa.html',RequestContext(request))
+
 @csrf_exempt
 def resetnexturl(request):
     if request.is_ajax:
         if request.method == 'POST':
             Urlsetting('/dashboard/')
     return HttpResponse(200)
+    
+def apply(request,scholarship_name):
+    scholarship_name = scholarship_name.replace("-","")
+    i=1
+    for x in scholarship.objects.all():
+        s_name = re.sub('[^A-Za-z0-9]+', '', x.name)
+        i=x.scholarship_id
+        if s_name == scholarship_name:
+            break
+    
+    scholarship_s = scholarship.objects.filter(pk=i)
+    scholarship_s = scholarship_s[0]
+    scholarship_s.apply_click = scholarship_s.apply_click + 1
+    scholarship_s.save()
+    questions = question.objects.filter(scholarship=scholarship_s)
+    option=[]
+    for ques in questions:
+        if len(ques.expected_answers) != 0:
+            option.append({'id': ques.question_id,'options' : ques.expected_answers.split('\n')})
+    context = {
+        'question':questions,
+        'sc':scholarship_s,
+        'option' : option,
+    }
+
+    return render_to_response('scholarship/applyform.html',context,RequestContext(request))
+
+def submit(request):
+    if request.POST:
+        scholarships = scholarship.objects.get(name = request.POST.get('sch'))
+        questions = question.objects.filter(scholarship = scholarships)
+        user = User.objects.get(id = request.session['userid'])
+        for ques in questions:
+            if ques.question_type < 3:
+                ans = request.POST.get(str(ques.question_id))
+            else:
+                ans = ''
+                listt = request.POST.getlist(str(ques.question_id))
+                for x in listt:
+                    ans = ans + str(x)
+
+            new_answer = answer()           
+            new_answer.question = ques
+            new_answer.user = user
+            new_answer.save()
+            new_answer.answer = ans           
+            new_answer.save()
+        try:
+            app = Applicant.objects.get(scholarship =  scholarships)
+            app.applicant.add(user)
+            app.count = app.count+1
+            app.save()
+        except Applicant.DoesNotExist:
+            new_app = Applicant()
+            new_app.scholarship = scholarships
+            new_app.save()
+            new_app.applicant.add(user)
+            new_app.count = 1
+            new_app.save()
+        acti = activity.objects.filter(scholarship=scholarships).filter(user=user).filter(activity=' just applied for your Scholarship')
+        if len(acti) > 0:
+            acti=acti[0]
+            acti.timestamp = timezone.now()
+        else:
+            act = activity()
+            act.user = user
+            act.scholarship = scholarships
+            act.activity = ' just applied for your Scholarship'
+            act.save()
+        # subject = "Application for " +scholarships.name + ' is successfull'
+        # messag = "Hi "+user.first_name+',\n' + 'We have received your Application for ' + scholarships.name +'.\n' + 'For further details you can contact ' + scholarships.contact_details
+
+        # import sendgrid
+        # sg_username = "scholfin"
+        # sg_password = "sameer1234"
+
+        # sg = sendgrid.SendGridClient(sg_username, sg_password)
+        # message = sendgrid.Mail()
+
+        # message.set_from("thescholfin@gmail.com")
+        # message.set_subject(subject)
+        # message.set_text("This is text body")
+        # message.set_html(messag)
+        # message.add_to(user.email)
+        # try:
+        #     status, msg = sg.send(message)
+        # except : 
+        #     print status
+
+        # message1 = sendgrid.Mail()
+        # provider = Provider.objects.get(scholarship = scholarships)
+        # subject = "New Application for " +scholarships.name + 'from ' + user.first_name 
+        # messag = "Hi "+provider.user.email+',\n' + 'You have received new your Application for ' + scholarships.name +'.\n' + 'For further tracking you can see it at your Scholfin Dashboard \n Thanks, \n Team Scholfin' 
+        # message1.set_from("thescholfin@gmail.com")
+        # message1.set_subject(subject)
+        # message1.set_text("This is text body")
+        # message1.set_html(messag)
+        # message1.add_to(provider.user.email)
+        # message1.add_to('thescholfin@gmail.com')
+        # status, msg = sg.send(message1)
+        return HttpResponseRedirect('/dashboard/')

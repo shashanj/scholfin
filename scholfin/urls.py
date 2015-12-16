@@ -20,6 +20,8 @@ from scholarships import sorting
 from scholarships import gov_pri_comp
 from scholarships.sitemaps import ScholarshipSitemap
 from scholarships.rssfeed import *
+from scholfin import settings
+
 
 sitemaps = {
     'scholarships' : ScholarshipSitemap()
@@ -60,7 +62,9 @@ urlpatterns = [
     url(r'^internship/$',views.internship,name='internship'),
     url(r'^apply/vnit-aa/$',views.apply_aa,name='vnitalumni'),
     url(r'^reset/$',views.resetnexturl,name='reset'),
+    url(r'^apply/(?P<scholarship_name>[a-z,A-Z,0-9-]+)/$',views.apply,name='apply'),
     url(r'^a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/', include('custom_admin.urls'), name='custom_admin'),
+    url(r'^provider/', include('provider.urls'), name='provider'),
+    url(r'^submit-application/', views.submit, name='submit'),
 
-    # url(r'^weekly-update/$', views.weekly_update , name='weekly-update'),
 ]

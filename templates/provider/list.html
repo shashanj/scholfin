@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>ScholFin | All Scholarship</title>  
+     {% load staticfiles %}
+  <!-- Meta tags favicon-->
+  <link rel="shortcut icon" type="image/png" href="favicon.png" />
+ 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="stylesheet" href="{% static "dashboardpro/css/bootstrap.css" %}"  />
+    <!-- FONT AWESOME ICONS  -->
+    <link rel="stylesheet" href="{% static "dashboardpro/css/font-awesome.css"%}"  />
+    <!-- CUSTOM STYLE  -->
+    <link rel="stylesheet" href="{% static "dashboardpro/css/style.css"%}" />
+    <script src="{% static "dashboardpro/js/jquery-1.11.1.js" %}"></script>
+
+
+    <link rel="stylesheet" href="{% static "/static/viewdetail/material.min.css" %}">    
+    <link rel="stylesheet" href="{% static "/static/viewdetail/styles.css" %}">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    </style>
+  </head>
+  <body  class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+  <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <strong>Email: </strong>info@scholfin.com
+                    &nbsp;&nbsp;
+                    <strong>Support: </strong>+89-83-171-548
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <!-- HEADER END-->
+    <div class="navbar navbar-inverse set-radius-zero">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/provider/">
+
+                    <h3 style="color:white; margin-left:30px">ScholFin</h3>
+                    <!-- <img src="{% static "provider/images/Scholfin1.png"%}" width="200" height="100" alt="Scholfin"/> -->
+                </a>
+
+            </div>
+
+            <div class="left-div">
+                <div class="user-settings-wrapper">
+                    <ul class="nav">
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                <span class="glyphicon glyphicon-user" style="font-size: 25px;"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-settings">
+                                <div class="media">
+                                    <!-- <a class="media-left" href="#">
+                                        <img src="{% static "dashboardpro/img/64-64.jpg"%}" alt="" class="img-rounded" />
+                                    </a> -->
+                                    <div class="media-body">
+                                        <h4 class="media-heading">{{pro.first_name}} {{pro.last_name}}</h4>
+                                        <h5>{{scholarship.offered_by}}</h5>
+                                    </div>
+                                </div>
+                                <hr />
+                                <h5><strong>Email : </strong></h5>
+                                {{pro.email}}
+                                <hr />
+                                <a href="/provider/change-password/" class="btn btn-info btn-sm">Change Password</a><a href="/provider/logout" class="btn btn-danger btn-sm">Logout</a>
+
+                            </div>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="menu-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="navbar-collapse collapse ">
+                        <ul id="menu-top" class="nav navbar-nav navbar-right">
+                            <li><a style='visibility:hidden'>Dasgboard</a></li>
+                            <li><a ></a></li>
+                            <li><a ></a></li>
+                            <li><a ></a></li>
+                            <li><a ></a></li>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" > 
+
+      	<main class="mdl-layout__content">
+        	<div class="mdl-layout__tab-panel is-active" id="overview">
+		        {% if scholarship %}
+					{% for sch in scholarship %}
+						<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+		            		<div class="mdl-card mdl-cell mdl-cell--12-col">
+		              			<div class="mdl-card__supporting-text" >
+		                			<h4><i class="fa fa-graduation-cap"></i>&nbsp;{{sch.name}} <span style='float:right'> <i class="fa fa-edit">&nbsp;Scholarship Offered</i> = {{sch.total_number_scholarship}}</span></h4>
+		                				
+						                Deadline :   {{ sch.deadline| date}}
+						                Status : {{sch.status|title}}<br>
+						                Application Received: {{sch.app}}<br>
+						                Amount : Rs {{sch.amount}}<br>
+						                <a href='/scholarship-details/{{sch.url}}' target='_blank'>View Sholarship </a>
+		        				</div>
+					              <div class="mdl-card__actions">
+					                <a href="/provider/stats/{{sch.url}}" class="mdl-button">View Stats</a>
+					              </div>
+		            		</div>
+		          		</section>
+          			{% endfor %}
+				{% endif %}
+    		</div>
+      	</main>
+    <!-- BOOTSTRAP SCRIPTS  -->
+      <!-- CONTENT-WRAPPER SECTION END-->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    &copy; 2015 Scholfin | By : <a href="http://www.scholfin.com/" target="_blank">DesignScholFin</a>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+    <!-- FOOTER SECTION END-->
+    <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+    <!-- CORE JQUERY SCRIPTS -->
+    <!-- BOOTSTRAP SCRIPTS  -->
+    </div>
+
+    <script src="{% static "scholarship/material.js" %}"></script>
+    <script src="{% static "scholarship/js/bootstrap.min.js" %}"></script>
+
+  </body>
+</html>
