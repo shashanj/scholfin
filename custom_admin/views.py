@@ -343,6 +343,7 @@ def cal_scholarship_diff(request):
     return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/')
 
 def update_scholarship_source(request):
+    import urllib2
     context = RequestContext(request)
     if request.method == 'POST':
         inp = request.POST.get('id',False)
