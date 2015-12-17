@@ -816,16 +816,16 @@ def detail(request , scholarship_name):
         userid=request.session['userid']
         scholarship_s.logged_view = scholarship_s.logged_view + 1
         scholarship_s.save()
-        acti = activity.objects.filter(scholarship=scholarship_s).filter(user=User.objects.get(id = userid)).filter(activity=' just viewed your Scholarship')
-        if len(acti)>0:
-            acti = acti[0]
-            acti.timestamp = timezone.now()
-        else:
-            act = activity()
-            act.user = User.objects.get(id = userid)
-            act.scholarship = scholarship_s
-            act.activity = ' just viewed your Scholarship'
-            act.save()
+        # acti = activity.objects.filter(scholarship=scholarship_s).filter(user=User.objects.get(id = userid)).filter(activity=' just viewed your Scholarship')
+        # if len(acti)>0:
+        #     acti = acti[0]
+        #     acti.timestamp = timezone.now()
+        # else:
+        #     act = activity()
+        #     act.user = User.objects.get(id = userid)
+        #     act.scholarship = scholarship_s
+        #     act.activity = ' just viewed your Scholarship'
+        #     act.save()
     scholarship_s.url = scholarshipss
     return render_to_response('scholarship/details.html' , {'scholarship':scholarship_s,'userid':userid,})
 
