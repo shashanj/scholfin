@@ -81,7 +81,7 @@ def login_page(request):
                 else:
                     state = 'your username and/or password was wrong'
             else: 
-                state = 'No such user exists'
+                state = 'Login with ' + user.profile.auth_type
         else:
             state = 'No such user exists'
     # t=loader.get_template('scholarship/login.html');
@@ -816,16 +816,16 @@ def detail(request , scholarship_name):
         userid=request.session['userid']
         scholarship_s.logged_view = scholarship_s.logged_view + 1
         scholarship_s.save()
-        # acti = activity.objects.filter(scholarship=scholarship_s).filter(user=User.objects.get(id = userid)).filter(activity=' just viewed your Scholarship')
-        # if len(acti)>0:
-        #     acti = acti[0]
-        #     acti.timestamp = timezone.now()
-        # else:
-        #     act = activity()
-        #     act.user = User.objects.get(id = userid)
-        #     act.scholarship = scholarship_s
-        #     act.activity = ' just viewed your Scholarship'
-        #     act.save()
+        acti = activity.objects.filter(scholarship=scholarship_s).filter(user=User.objects.get(id = userid)).filter(activity=' just viewed your Scholarship')
+        if len(acti)>0:
+            acti = acti[0]
+            acti.timestamp = timezone.now()
+        else:
+            act = activity()
+            act.user = User.objects.get(id = userid)
+            act.scholarship = scholarship_s
+            act.activity = ' just viewed your Scholarship'
+            act.save()
     scholarship_s.url = scholarshipss
     return render_to_response('scholarship/details.html' , {'scholarship':scholarship_s,'userid':userid,})
 
@@ -1202,35 +1202,35 @@ def submit(request):
             act.scholarship = scholarships
             act.activity = ' just applied for your Scholarship'
             act.save()
-        # subject = "Application for " +scholarships.name + ' is successfull'
-        # messag = "Hi "+user.first_name+',\n' + 'We have received your Application for ' + scholarships.name +'.\n' + 'For further details you can contact ' + scholarships.contact_details
+        subject = "Application for " +scholarships.name + ' is successfull'
+        messag = "Hi "+user.first_name+',\n' + 'We have received your Application for ' + scholarships.name +'.\n' + 'For further details you can contact ' + scholarships.contact_details
 
-        # import sendgrid
-        # sg_username = "scholfin"
-        # sg_password = "sameer1234"
+        import sendgrid
+        sg_username = "scholfin"
+        sg_password = "sameer1234"
 
-        # sg = sendgrid.SendGridClient(sg_username, sg_password)
-        # message = sendgrid.Mail()
+        sg = sendgrid.SendGridClient(sg_username, sg_password)
+        message = sendgrid.Mail()
 
-        # message.set_from("thescholfin@gmail.com")
-        # message.set_subject(subject)
-        # message.set_text("This is text body")
-        # message.set_html(messag)
-        # message.add_to(user.email)
-        # try:
-        #     status, msg = sg.send(message)
-        # except : 
-        #     print status
+        message.set_from("thescholfin@gmail.com")
+        message.set_subject(subject)
+        message.set_text("This is text body")
+        message.set_html(messag)
+        message.add_to(user.email)
+        try:
+            status, msg = sg.send(message)
+        except : 
+            print status
 
-        # message1 = sendgrid.Mail()
-        # provider = Provider.objects.get(scholarship = scholarships)
-        # subject = "New Application for " +scholarships.name + 'from ' + user.first_name 
-        # messag = "Hi "+provider.user.email+',\n' + 'You have received new your Application for ' + scholarships.name +'.\n' + 'For further tracking you can see it at your Scholfin Dashboard \n Thanks, \n Team Scholfin' 
-        # message1.set_from("thescholfin@gmail.com")
-        # message1.set_subject(subject)
-        # message1.set_text("This is text body")
-        # message1.set_html(messag)
-        # message1.add_to(provider.user.email)
-        # message1.add_to('thescholfin@gmail.com')
-        # status, msg = sg.send(message1)
+        message1 = sendgrid.Mail()
+        provider = Provider.objects.get(scholarship = scholarships)
+        subject = "New Application for " +scholarships.name + 'from ' + user.first_name 
+        messag = "Hi "+provider.user.email+',\n' + 'You have received new your Application for ' + scholarships.name +'.\n' + 'For further tracking you can see it at your Scholfin Dashboard \n Thanks, \n Team Scholfin' 
+        message1.set_from("thescholfin@gmail.com")
+        message1.set_subject(subject)
+        message1.set_text("This is text body")
+        message1.set_html(messag)
+        message1.add_to(provider.user.email)
+        message1.add_to('thescholfin@gmail.com')
+        status, msg = sg.send(message1)
         return HttpResponseRedirect('/dashboard/')
