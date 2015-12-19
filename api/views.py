@@ -33,7 +33,7 @@ def csv_to_model(file_path):
         for row in reader:
             count += 1
             print count
-            if count != 1 and count < 100:
+            if count != 1:
                 data = row[3].split(' (')[0]
                 short_name = ''
                 s_list = data.upper().split()
