@@ -65,6 +65,7 @@ urlpatterns = [
     url(r'^apply/(?P<scholarship_name>[a-z,A-Z,0-9-]+)/$',views.apply,name='apply'),
     url(r'^a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/', include('custom_admin.urls'), name='custom_admin'),
     url(r'^provider/', include('provider.urls'), name='provider'),
+    url(r'^api/', include('api.urls'), name='api'),
     url(r'^submit-application/', views.submit, name='submit'),
 
 ]
