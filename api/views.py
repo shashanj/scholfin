@@ -10,7 +10,7 @@ def getInstitutes(request):
         print q
         results = []
         name_json = ''
-        listt = Institute.objects.filter(Q(name__startswith=q) | Q(short_name__startswith=q))
+        listt = Institute.objects.filter(Q(name__istartswith=q) | Q(short_name__istartswith=q))
         for institute in listt:
             name_json = institute.name
             results.append(name_json)
@@ -34,6 +34,8 @@ def csv_to_model(file_path):
             count += 1
             print count
             if count != 1:
+                state = row[0]
+                district = row[1]
                 data = row[3].split(' (')[0]
                 short_name = ''
                 s_list = data.upper().split()
@@ -42,7 +44,7 @@ def csv_to_model(file_path):
                     if i.lower() not in exclude_list:
                         short_name += i[0]
 
-                institute = Institute(name = data, short_name = short_name)
+                institute = Institute(name = data, short_name = short_name, state = state, district = district)
                 institute.save()
     finally:
         f.close()
