@@ -36,7 +36,12 @@ def csv_to_model(file_path):
             if count != 1:
                 state = row[0]
                 district = row[1]
-                data = row[3].split(' (')[0]
+                
+                data = row[10].strip()
+                if data == 'NA':
+                    data = row[3]
+
+                data = data.split(' (')[0]
                 short_name = ''
                 s_list = data.upper().split()
                 for i in s_list:
