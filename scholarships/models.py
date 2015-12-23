@@ -148,7 +148,7 @@ class UserProfile(models.Model):
     user_level = models.ForeignKey(level)
     user_caste = models.ForeignKey(caste)
     user_religion = models.ForeignKey(religion)
-    user_income = models.CharField(max_length=200,blank=False)
+    user_income = models.CharField(max_length=300,blank=False)
     user_interest=models.ManyToManyField(interest,blank=True)
     user_type = models.CharField(max_length=200,blank=True)
     user_abroad = models.ForeignKey(abroad)

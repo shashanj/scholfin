@@ -1,8 +1,8 @@
 from django.db import models
 
 class Institute(models.Model):
-	institute_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=150)
+    institute_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=300)
     short_name = models.CharField(max_length=20)
     state = models.CharField(max_length=50)
     district = models.CharField(max_length=50)

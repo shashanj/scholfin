@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.db.models import Q
+from django.core.exceptions import ValidationError
 
 from models import Institute
 
@@ -24,7 +25,8 @@ def getInstitutes(request):
 
 #Helper Function to save csv data to django model
 def csv_to_model(file_path):
-    import csv
+    import csv, json
+    master = {'err':[]}
     exclude_list = ['of', 'and', '&', ',', ' ', '']
     f = open(file_path, 'rt')
     count = 0
@@ -37,6 +39,7 @@ def csv_to_model(file_path):
                 state = row[0]
                 district = row[1]
                 
+                data = ''
                 data = row[10].strip()
                 if data == 'NA':
                     data = row[3]
@@ -45,11 +48,20 @@ def csv_to_model(file_path):
                 short_name = ''
                 s_list = data.upper().split()
                 for i in s_list:
-                    print i
+                    # print i
                     if i.lower() not in exclude_list:
                         short_name += i[0]
 
                 institute = Institute(name = data, short_name = short_name, state = state, district = district)
-                institute.save()
+                try:
+                    institute.save()
+                except:
+                    print 'not saved' + str(count)
+                    print data
+                    master['err'].append(count)
+    
     finally:
         f.close()
+        with open('failed.json', 'w') as f:
+            json.dump(master, f, indent=4)
+            f.close()
