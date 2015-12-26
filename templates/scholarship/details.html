@@ -141,7 +141,7 @@
               <div class="mdl-card__supporting-text" >
                 <h4><i class="material-icons">group</i>&nbsp;Eligibility</h4>
                 <span itemprop="audience">
-                  {{ scholarship.eligibility| linebreaksbr}}
+                  {{ scholarship.eligibility| safe}}
                 </span>
         </div>
         {% if userid != -1 %}
@@ -170,7 +170,7 @@
               <div class="mdl-card__supporting-text">
                 <h4><i class="material-icons">school</i>&nbsp;About</h4>
                 <span itemprop="about description">
-        {{scholarship.about| linebreaksbr}}
+        {{scholarship.about| safe}}
         </span>
         </div>
               <div class="mdl-card__actions">
@@ -230,7 +230,7 @@
                 </div>
                 <div  class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>Deadline</h5>
-                  {{ scholarship.deadline_details| linebreaksbr}}
+                  {{ scholarship.deadline_details| safe}}
                 </div>
                 <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
                    {% endif %}
@@ -239,7 +239,7 @@
                 </div>
                 <div  class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>Other Benifits</h5>
-                  {{ scholarship.other_benefits| linebreaksbr }}
+                  {{ scholarship.other_benefits| safe }}
                 </div>
                 {% endif %}               
               </div>
@@ -259,7 +259,7 @@
               <div class="mdl-card__supporting-text" itemscope itemtype="https://schema.org/AchieveAction">
                 <h4><i class="material-icons">assignment</i>&nbsp;<span itemprop="name">Procedure </span></h4>
                 <span itemprop="description">
-                    {{ scholarship.procedure| linebreaksbr }}
+                    {{ scholarship.procedure| safe }}
                 </span>
         </div>
          {% if userid != -1 %}
@@ -282,7 +282,7 @@
               <div class="mdl-card__supporting-text" itemscope itemtype="https://schema.org/Organization">
                 <h4><i class="material-icons">perm_phone_msg</i>&nbsp;Contact details</h4>
         <span itemprop="address">
-                      {{ scholarship.contact_details| linebreaksbr}}
+                      {{ scholarship.contact_details| safe}}
         </span>
         </div>
         {% if scholarship.additional_links != ' ' %}

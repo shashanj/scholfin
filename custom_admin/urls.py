@@ -30,5 +30,5 @@ urlpatterns = [
     url(r'^scholarship_diff/' , views.scholarship_diff , name='scholarship_diff'),
     url(r'^cal_scholarship_diff/' , views.cal_scholarship_diff , name='cal_scholarship_diff'),
     url(r'^update_scholarship_source/' , views.update_scholarship_source , name='update_scholarship_source'),
-
+    url(r'^scholarships/add_scholarship/' , views.add_scholarship , name='add_scholarship'),
 ]

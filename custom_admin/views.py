@@ -12,6 +12,8 @@ import re
 from datetime import datetime,timedelta
 from django.core.mail import send_mail
 
+from forms import ScholarshipForm
+
 @staff_member_required
 def index(request):
     context = RequestContext(request)
@@ -342,6 +344,7 @@ def cal_scholarship_diff(request):
 
     return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/')
 
+@staff_member_required
 def update_scholarship_source(request):
     import urllib2
     context = RequestContext(request)
@@ -349,7 +352,7 @@ def update_scholarship_source(request):
         inp = request.POST.get('id',False)
         if inp:
             p = page_source.objects.filter(scholarship__scholarship_id = inp)
-            response = urllib2.urlopen(p.scholarship.apply_link)
+            response = urllib2.urlopen(p[0].scholarship.apply_link)
             p_source = response.read()
             p[0].source = p_source 
             p[0].save
@@ -357,3 +360,13 @@ def update_scholarship_source(request):
             return HttpResponse('error text box empty')  
     else:
         return render_to_response('custom_admin/scholarship_diff.html', context )
+
+@staff_member_required
+def add_scholarship(request):
+    context = RequestContext(request)
+    form = ScholarshipForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/scholarships')
+    data = {'form': form}
+    return render_to_response('custom_admin/add_scholarship.html', data, context )
