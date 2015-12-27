@@ -367,6 +367,27 @@ def add_scholarship(request):
     form = ScholarshipForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/scholarships')
+        return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/scholarships/view/')
+    data = {'form': form}
+    return render_to_response('custom_admin/add_scholarship.html', data, context )
+
+@staff_member_required
+def view_scholarships(request):
+    context = RequestContext(request)
+    scholarships = scholarship.objects.all()
+    context_list = {
+            'scholarships': scholarships,
+            }
+    return render_to_response('custom_admin/view_scholarships.html',context_list,context)
+
+@staff_member_required
+def edit_scholarship(request, scholarship_id):
+    from django.shortcuts import get_object_or_404
+    context = RequestContext(request)
+    instance = get_object_or_404(scholarship, scholarship_id=scholarship_id)
+    form = ScholarshipForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/scholarships/view/')
     data = {'form': form}
     return render_to_response('custom_admin/add_scholarship.html', data, context )
