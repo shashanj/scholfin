@@ -101,8 +101,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'scholfin.wsgi.application'
 
 
-Database
-https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+# Database
+# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
     'default': {

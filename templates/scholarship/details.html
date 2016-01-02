@@ -116,9 +116,17 @@
         </div>
         <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
           <h3 style="text-align:center"> <span itemprop="name headline">{{ scholarship.name }}</span></h3>
-           {% if scholarship.total_number_scholarship > 0 %}
+
+          {% if scholarship.display_total_number_scholarship.strip %}
+            <h4 style="text-align:center">Total Scholarships - {{ scholarship.total_number_scholarship }}</h4>
+
+          {% else %}
+            {% if scholarship.total_number_scholarship > 0 %}
             <h4 style="text-align:center">Total Scholarships - {{ scholarship.total_number_scholarship }}</h4>
             {% endif %}
+
+          {% endif %}
+
       </div>
         <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
        
@@ -386,8 +394,10 @@
                             ₹{{ scholarship.amount  }} YEARLY
                         {% endif %}
                       {% endif %}
-                      {% elif scholarship.amount == 0  %}
-                         VARIES
+                      <!-- {% elif scholarship.amount == 0  %}
+                         VARIES -->
+                      {% else %}
+                        {{ scholarship.display_amount  }}
                       {% endif %}
               </span></h3>
             </div>

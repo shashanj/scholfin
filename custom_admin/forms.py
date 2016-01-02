@@ -12,4 +12,5 @@ class ScholarshipForm(forms.ModelForm):
             'education_level': forms.CheckboxSelectMultiple,
             'education_state': forms.CheckboxSelectMultiple,
             'education_abroad': forms.CheckboxSelectMultiple,
+            'document_required': forms.CheckboxSelectMultiple,
         }

@@ -37,6 +37,14 @@ class level(models.Model):
     def __unicode__(self):
         return self.level_name
 
+
+class document(models.Model):
+    document_id=models.AutoField(primary_key=True)
+    document_name=models.CharField(max_length=250,default=' ')
+
+    def __unicode__(self):
+        return self.document_name
+
 class state(models.Model):
     state_id=models.AutoField(primary_key=True)
     state_name=models.CharField(max_length=250,default=' ')
@@ -65,6 +73,7 @@ class scholarship(models.Model):
     name=models.CharField(max_length=250,default=' ')
     offered_by=models.CharField(max_length=250,default=' ')
     total_number_scholarship=models.IntegerField(default=0)
+    display_total_number_scholarship = models.CharField(max_length=200,default=' ')
     image_url = models.URLField(max_length=200,blank=True)
     summary = models.TextField(blank=True)
     
@@ -77,12 +86,14 @@ class scholarship(models.Model):
     education_level=models.ManyToManyField(level)
     education_state=models.ManyToManyField(state)
     education_abroad=models.ManyToManyField(abroad)
+    document_required=models.ManyToManyField(document)
 
     # other filters
 
     gender=models.IntegerField(default=0)
     disability=models.IntegerField(default=0)
     income=models.IntegerField(default=0)
+    display_income = models.CharField(max_length=200,default=' ')
 
     #deadline details
 
@@ -94,6 +105,7 @@ class scholarship(models.Model):
     amount_frequency=models.IntegerField(default=0)
     amount_period=models.IntegerField(default=0)
     amount=models.IntegerField(default=0)
+    display_amount = models.CharField(max_length=200,default=' ')
     other_benefits=models.TextField(default=' ')
     currency=models.IntegerField(default=0)
 
