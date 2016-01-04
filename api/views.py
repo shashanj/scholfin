@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 
 from models import Institute
 
+
 def getInstitutes(request):
     import json
     if request.is_ajax():
@@ -65,3 +66,24 @@ def csv_to_model(file_path):
         with open('failed.json', 'w') as f:
             json.dump(master, f, indent=4)
             f.close()
+
+def getScholarships(request):
+    import json
+    if request.is_ajax():
+        from scholarships.models import scholarship
+        q = request.GET.get('term', False)
+        print q
+        results = []
+        name_json = ''
+        listt = scholarship.objects.filter(Q(name__istartswith=q) | Q(name__icontains=q))
+        for scholarship in listt:
+            name_json = scholarship.name
+            results.append(name_json)
+        data = json.dumps(results)
+        print data
+    else:
+        data = 'fail'
+        print data
+
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
