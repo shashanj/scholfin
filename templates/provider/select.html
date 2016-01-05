@@ -16,8 +16,11 @@
     <!-- FONT AWESOME ICONS  -->
     <link rel="stylesheet" href="{% static "dashboardpro/css/font-awesome.css"%}"  />
     <!-- CUSTOM STYLE  -->
-    <link rel="stylesheet" href="{% static "dashboardpro/css/style.css"%}" />
+    <link rel="stylesheet" href="{% static "dashboardpro/css/style.css"%}" />    
     <script src="{% static "dashboardpro/js/jquery-1.11.1.js" %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-sanitize.min.js"></script>
+    <script src="{% static "provider/scripts/ng-csv.js" %}"></script>
     <style type="text/css">
     ul li{
         display: inline-block;
@@ -115,9 +118,10 @@
     <!-- MENU SECTION END-->
     <div class="content-wrapper">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row" ng-app='myapp'>
+                <div class="col-md-12" ng-controller='myctrl'>
                     <h4 class="page-head-line">{{scholarship.name}}</h4>
+                    <button class="btn btn-default" ng-csv="getArray" csv-header = "getHeader" filename="Selected.csv" field-separator="," decimal-separator="." lazy-load="true">Export to CSV</button>
                 </div>
 
             </div>
@@ -310,6 +314,33 @@
 
     <!-- FOOTER SECTION END-->
     <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+        <script type="text/javascript">
+
+    var myapp = angular.module('myapp', ["ngSanitize", "ngCsv"]);
+
+    myapp.controller('myctrl', function ($scope) {
+        sch = window.location.pathname
+        sch = sch.substr(sch.lastIndexOf('/')+1,sch.lenght)
+        $.ajax({
+                 type:"GET",
+                 url:"/provider/download/",
+                 data: {
+                        'val': sch,
+                        'type' : 'select',
+                        },
+                 success: function(data){
+                    data  = JSON.parse(data)
+                    $scope.filename = "Selected";
+                    $scope.getArray = []
+                    $scope.getHeader = Object.keys(data[0])
+                    for (var i=0; i< data.length;i++){
+                        $scope.getArray.push(data[i])
+                    };
+                 }
+             })
+
+    });
+    </script>
     <!-- CORE JQUERY SCRIPTS -->
     <!-- BOOTSTRAP SCRIPTS  -->
     <script src="{% static "dashboardpro/js/bootstrap.js" %}"></script>

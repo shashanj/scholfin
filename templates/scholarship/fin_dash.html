@@ -66,6 +66,27 @@
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-title">ScholFin</span>
           <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+              <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+              <form method="POST" action='/searchsch/'>{% csrf_token %}
+                <input class="mdl-textfield__input institutes" type="text" id="search" name="sch" >
+                <ul id = 'someElem'></ul>
+                <script type="text/javascript">
+                  $(function() {
+                    $(".institutes").autocomplete({
+                      source: "/api/get_scholarships/",
+                      minLength: 2,
+                      appendTo: "#someElem",
+                    });
+                  });
+                </script>
+              </form>
+            </div>
+            
+          </div>
           <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
             <i class="material-icons">more_vert</i>
           </button>
@@ -145,7 +166,7 @@
                 </form>
               
               </li>
-
+<!-- 
               <div class="col-md-12">
 
                 <script type="text/javascript">
@@ -160,7 +181,7 @@
                 <h4></h4>
                     <input type="text" class="required form-control" name="college" placeholder="Name Of Scholarship" id="institutes" />
                 </div>
-              </div>
+              </div> -->
 
     {% if scholarships %}
     {% for scholarship in scholarships %}
@@ -234,10 +255,10 @@
 	                                  	₹{{ scholarship.amount  }} YEARLY
 	                                {% endif %}
                                   {% endif %}
-                              <!-- {% elif scholarship.amount == 0  %}
-                                 VARIES -->
+                              {% elif scholarship.amount == 0  %}
+                                 VARIES
                                  {% else %}
-                        {{ scholarship.display_amount  }}
+                        <!-- {{ scholarship.display_amount  }} -->
                               {% endif %}
                           </span>
                       </div>

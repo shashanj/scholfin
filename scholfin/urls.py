@@ -67,5 +67,6 @@ urlpatterns = [
     url(r'^provider/', include('provider.urls'), name='provider'),
     url(r'^api/', include('api.urls'), name='api'),
     url(r'^submit-application/', views.submit, name='submit'),
+    url(r'^searchsch/', views.schresult, name='result'),
 
 ]

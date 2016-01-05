@@ -1234,3 +1234,12 @@ def submit(request):
         message1.add_to('thescholfin@gmail.com')
         status, msg = sg.send(message1)
         return HttpResponseRedirect('/dashboard/')
+
+def schresult(request):
+    sch = request.POST.get('sch')
+    print sch
+    x = re.sub('[^A-Za-z0-9]+',' ',sch)
+    x = x.strip(' ')
+    x = re.sub('[^A-Za-z0-9]+','-',x)
+    
+    return HttpResponseRedirect('/scholarship-details/'+x)

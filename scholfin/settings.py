@@ -146,8 +146,8 @@ STATIC_URL = '/static/'
 # STATIC_URL = 'http://localhost:7777/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 # STATICFILES_DIRS = (
-   # 'C:\Users\GAURAV\Downloads\static/',
- # )
+#    'C:\Users\GAURAV\Downloads\static/',
+#  )
 '''
 CELERYBEAT_SCHEDULE = {
     'weekly-notifications': {

@@ -755,10 +755,12 @@ def shortlist(request,scholarship_name):
             usr.notes = notes.get(of = usr.user).note
         except:
             usr.notes = ''
-        if Selected.objects.filter(scholarship = scholarship_s).filter(selected = usr.user).exists():
-            usr.show = 0
-        else:
-            usr.show = 1 
+        if Selected.objects.filter(scholarship = scholarship_s).filter(selected__id = usr.user.id).exists():
+            usr.level = 'selected'
+        elif ShortList.objects.filter(scholarship = scholarship_s).filter(shortlist__id = usr.user.id).exists():
+            usr.level = 'shortlisted'
+        elif Rejected.objects.filter(scholarship = scholarship_s).filter(rejected__id = usr.user.id).exists():
+            usr.level = 'rejected'
     context = {
         'scholarship' : scholarship_s,
         'url' : url,
@@ -944,6 +946,12 @@ def task(request):
                 usr.notes = notes.get(of = usr.user).note
             except:
                 usr.notes = ''
+            if Selected.objects.filter(scholarship = scholarship_s).filter(selected__id = usr.user.id).exists():
+                usr.level = 'selected'
+            elif ShortList.objects.filter(scholarship = scholarship_s).filter(shortlist__id = usr.user.id).exists():
+                usr.level = 'shortlisted'
+            elif Rejected.objects.filter(scholarship = scholarship_s).filter(rejected__id = usr.user.id).exists():
+                usr.level = 'rejected'
         context = {
             'scholarship' : scholarship_s,
             'url' : url,
@@ -1132,5 +1140,73 @@ def unreject(request):
             'pro' : User.objects.get(id = request.session['userid'])
         }
         return render_to_response('provider/reject.html',context,RequestContext(request))
+
+def genfiles(request):
+    if request.is_ajax():
+        scholarship_name = request.GET.get('val')      
+        scholarship_name = scholarship_name.replace("-","")
+        i=1
+        for x in scholarship.objects.all():
+            s_name = re.sub('[^A-Za-z0-9]+', '', x.name)
+            i=x.scholarship_id
+            if s_name == scholarship_name:
+                break   
+        scholarship_s = scholarship.objects.filter(pk=i)
+        scholarship_s = scholarship_s[0]
+        typee = str(request.GET.get('type'))
+        if typee == 'applicant':
+            app = Applicant.objects.filter(scholarship__name = scholarship_s).values('applicant')
+        elif typee == 'shortlist':
+            app = ShortList.objects.filter(scholarship__name = scholarship_s).values('shortlist')
+        elif typee== 'select' :
+            app = Selected.objects.filter(scholarship__name = scholarship_s).values('selected')
+
+
+        prof = UserProfile.objects.filter(user__in = app)
+        ques = question.objects.filter(scholarship = scholarship_s)
+        listt = []
+        for appl in prof:
+            dictt = {}
+            for x in ques : 
+                ans = answer.objects.filter(user = appl.user).filter(question=x)[0]
+                ans = str(ans.answer)
+                dictt[str(x.question.strip())] = ans.strip()
+            if appl.user_disability == 0:
+                dis =  'NO'
+            else :
+                dis = 'YES'
+            if appl.user_gender == 0:
+                gender =  'Male'
+            else :
+                gender = 'Female'
+            if appl.user_income is None :
+                coll = 'NA'
+            else:
+                coll = str(appl.user_income)
+
+
+            name = str(appl.user.first_name) + ' ' + str(appl.user.last_name)
+            caste = str(appl.user_caste)
+            religion = str(appl.user_religion)
+            field = str(appl.user_field)
+            level  = str(appl.user_level)
+            state = str(appl.user_state)
+            email = str(appl.user.email)
+            dictt['Gender'] = gender
+            dictt['Disability'] = dis
+            dictt["Education caste"] = caste
+            dictt["religion"] = religion
+            dictt["Education field"] = field
+            dictt["Education level"] = level
+            dictt["Education state"] = state
+            dictt["College"] = coll
+            dictt["Email"] = email             
+            dictt["Name"] =  name
+            
+
+            listt.append(dictt)
+            print dictt
+        import json
+        return HttpResponse(json.dumps(listt))
 
 

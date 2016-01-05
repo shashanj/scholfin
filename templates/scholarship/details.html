@@ -116,17 +116,9 @@
         </div>
         <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
           <h3 style="text-align:center"> <span itemprop="name headline">{{ scholarship.name }}</span></h3>
-
-          {% if scholarship.display_total_number_scholarship.strip %}
-            <h4 style="text-align:center">Total Scholarships - {{ scholarship.total_number_scholarship }}</h4>
-
-          {% else %}
-            {% if scholarship.total_number_scholarship > 0 %}
+           {% if scholarship.total_number_scholarship > 0 %}
             <h4 style="text-align:center">Total Scholarships - {{ scholarship.total_number_scholarship }}</h4>
             {% endif %}
-
-          {% endif %}
-
       </div>
         <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
        
@@ -149,7 +141,7 @@
               <div class="mdl-card__supporting-text" >
                 <h4><i class="material-icons">group</i>&nbsp;Eligibility</h4>
                 <span itemprop="audience">
-                  {{ scholarship.eligibility| safe}}
+                  {{ scholarship.eligibility| linebreaksbr}}
                 </span>
         </div>
         {% if userid != -1 %}
@@ -178,7 +170,7 @@
               <div class="mdl-card__supporting-text">
                 <h4><i class="material-icons">school</i>&nbsp;About</h4>
                 <span itemprop="about description">
-        {{scholarship.about| safe}}
+        {{scholarship.about| linebreaksbr}}
         </span>
         </div>
               <div class="mdl-card__actions">
@@ -238,7 +230,7 @@
                 </div>
                 <div  class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>Deadline</h5>
-                  {{ scholarship.deadline_details| safe}}
+                  {{ scholarship.deadline_details| linebreaksbr}}
                 </div>
                 <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
                    {% endif %}
@@ -247,7 +239,7 @@
                 </div>
                 <div  class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>Other Benifits</h5>
-                  {{ scholarship.other_benefits| safe }}
+                  {{ scholarship.other_benefits| linebreaksbr }}
                 </div>
                 {% endif %}               
               </div>
@@ -267,7 +259,7 @@
               <div class="mdl-card__supporting-text" itemscope itemtype="https://schema.org/AchieveAction">
                 <h4><i class="material-icons">assignment</i>&nbsp;<span itemprop="name">Procedure </span></h4>
                 <span itemprop="description">
-                    {{ scholarship.procedure| safe }}
+                    {{ scholarship.procedure| linebreaksbr }}
                 </span>
         </div>
          {% if userid != -1 %}
@@ -290,7 +282,7 @@
               <div class="mdl-card__supporting-text" itemscope itemtype="https://schema.org/Organization">
                 <h4><i class="material-icons">perm_phone_msg</i>&nbsp;Contact details</h4>
         <span itemprop="address">
-                      {{ scholarship.contact_details| safe}}
+                      {{ scholarship.contact_details| linebreaksbr}}
         </span>
         </div>
         {% if scholarship.additional_links != ' ' %}
@@ -394,10 +386,8 @@
                             ₹{{ scholarship.amount  }} YEARLY
                         {% endif %}
                       {% endif %}
-                      <!-- {% elif scholarship.amount == 0  %}
-                         VARIES -->
-                      {% else %}
-                        {{ scholarship.display_amount  }}
+                      {% elif scholarship.amount == 0  %}
+                         VARIES
                       {% endif %}
               </span></h3>
             </div>
