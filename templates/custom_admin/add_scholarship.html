@@ -26,6 +26,31 @@
     <!--
     <link rel="canonical" href="http://www.example.com/">
     -->
+
+    <!-- Date Picker -->
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+      <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+      <script>
+        $(function() {
+          $( "#id_deadline_0" ).datepicker();
+          $('#id_deadline_1').timepicker({ 'timeFormat': 'H:i:s' });
+        });
+
+      </script>
+
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.9/jquery.timepicker.css">
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.9/jquery.timepicker.min.css">
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.9/jquery.timepicker.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.9/jquery.timepicker.min.js"></script>
+      <script>
+        $(function() {
+          $('#id_deadline_1').timepicker({ 'timeFormat': 'H:i:s' });
+        });
+
+      </script>
+      
+  <!--   -->
     {% load staticfiles %}
     <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -219,6 +244,7 @@
       <main class="mdl-layout__content mdl-color--grey-100">
       <div align="justify" style="padding:90px;padding-top:30px;">
       {% load bootstrap %}
+      
      <form method="POST">
       {% csrf_token %}
       {{ form|bootstrap }}

@@ -13,4 +13,5 @@ class ScholarshipForm(forms.ModelForm):
             'education_state': forms.CheckboxSelectMultiple,
             'education_abroad': forms.CheckboxSelectMultiple,
             'document_required': forms.CheckboxSelectMultiple,
+            'deadline' : forms.SplitDateTimeWidget,
         }
