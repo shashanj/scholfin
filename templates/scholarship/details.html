@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="{{ scholarship.meta_data }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> {{ scholarship.meta_title }}</title>  
+    <title> {{ scholarship.meta_title| safe }}</title>  
      {% load staticfiles %}
   <!-- Open graph data Meta tags Facebook-->
   <meta property="og:title" content="{{ scholarship.meta_title }}" />
   <meta property="og:site_name" content="ScholFin.com"/>
   <meta property="og:url" content="{{ scholarship.url }} " />
   <meta property="og:type" content="website" />
-  <meta property="og:description" content="{{ scholarship.meta_data }}" />
+  <meta property="og:description" content="{{ scholarship.meta_data|safe }}" />
   {% if scholarship.name == "ScholFin Diwali Scholarship" %}
   <meta property="og:image" content="http://res.cloudinary.com/scholfin/image/upload/v1447180365/Scholfindiwali_cizzmh.jpg" />
   {% else %}
@@ -25,7 +25,7 @@
   <meta name="twitter:site" content="@nytimes">
   <meta name="twitter:creator" content="@myscholfin">
   <meta name="twitter:title" content="{{ scholarship.meta_title }}">
-  <meta name="twitter:description" content="{{ scholarship.meta_data }}">
+  <meta name="twitter:description" content="{{ scholarship.meta_data|safe }}">
   <meta name="twitter:image" content="{% static "scholarship/images/scholfin.png"}">
   
   <!-- Meta tags favicon-->
@@ -141,7 +141,7 @@
               <div class="mdl-card__supporting-text" >
                 <h4><i class="material-icons">group</i>&nbsp;Eligibility</h4>
                 <span itemprop="audience">
-                {% if '<p>' in scholarship.eligibility %}
+                {% if '<' in scholarship.eligibility and '>' in scholarship.eligibility%}
                   {{ scholarship.eligibility| safe}}
                 {% else %}
                   {{ scholarship.eligibility| linebreaksbr}}
@@ -175,7 +175,7 @@
                 <h4><i class="material-icons">school</i>&nbsp;About</h4>
                 <span itemprop="about description">
 
-        {% if '<p>' in scholarship.about %}
+        {% if '<' in scholarship.about and '>' in scholarship.about%}
           {{ scholarship.about| safe}}
         {% else %}
           {{ scholarship.about| linebreaksbr}}
@@ -239,7 +239,7 @@
                 </div>
                 <div  class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>Deadline</h5>
-                  {% if '<p>' in scholarship.deadline_details %}
+                  {% if '<' in scholarship.deadline_details and '>' in scholarship.deadline_details %}
                     {{ scholarship.deadline_details| safe}}
                   {% else %}
                     {{ scholarship.deadline_details| linebreaksbr}}
@@ -252,7 +252,7 @@
                 </div>
                 <div  class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>Other Benifits</h5>                  
-                  {% if '<p>' in scholarship.other_benefits %}
+                  {% if '<' in scholarship.other_benefits and '>' in scholarship.other_benefits %}
                     {{ scholarship.other_benefits| safe}}
                   {% else %}
                     {{ scholarship.other_benefits| linebreaksbr}}
@@ -276,7 +276,7 @@
               <div class="mdl-card__supporting-text" itemscope itemtype="https://schema.org/AchieveAction">
                 <h4><i class="material-icons">assignment</i>&nbsp;<span itemprop="name">Procedure </span></h4>
                 <span itemprop="description">
-                    {% if '<p>' in scholarship.procedure %}
+                    {% if '<' in scholarship.procedure and '>' in scholarship.procedure %}
                       {{ scholarship.procedure| safe}}
                     {% else %}
                       {{ scholarship.procedure| linebreaksbr}}
@@ -303,7 +303,7 @@
               <div class="mdl-card__supporting-text" itemscope itemtype="https://schema.org/Organization">
                 <h4><i class="material-icons">perm_phone_msg</i>&nbsp;Contact details</h4>
         <span itemprop="address">
-                      {% if '<p>' in scholarship.contact_details %}
+                      {% if '<' in scholarship.contact_details and '>' in scholarship.contact_details %}
                         {{ scholarship.contact_details| safe}}
                       {% else %}
                         {{ scholarship.contact_details| linebreaksbr}}
