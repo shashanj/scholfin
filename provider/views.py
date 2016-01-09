@@ -1209,4 +1209,50 @@ def genfiles(request):
         import json
         return HttpResponse(json.dumps(listt))
 
+    elif request.POST :
+        import reportlab
+        from reportlab.pdfgen import canvas
+        from reportlab.lib.units import inch
+        # Create the HttpResponse object with the appropriate PDF headers.
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+
+        # Create the PDF object, using the response object as its "file."
+        p = canvas.Canvas(response)
+
+        # Draw things on the PDF. Here's where the PDF generation happens.
+        # See the ReportLab documentation for the full list of functionality.
+        p.translate(inch,inch)
+        # define a large font
+        p.setFont("Helvetica", 14)
+        # choose some colors
+        p.setStrokeColorRGB(0.2,0.5,0.3)
+        p.setFillColorRGB(1,0,1)
+        # draw some lines
+        p.line(0,0,0,1.7*inch)
+        p.line(0,0,1*inch,0)
+        # draw a rectangle
+        p.rect(0.2*inch,0.2*inch,1*inch,1.5*inch, fill=1)
+        # make text go straight up
+        p.rotate(90)
+        # change color
+        p.setFillColorRGB(0,0,0.77)
+        # say hello (note after rotate the y coord needs to be negative!)
+        p.drawString(0.3*inch, -inch, "Hello World")
+
+
+        # Close the PDF object cleanly, and we're done.
+        p.showPage()
+        p.save()
+        return response
+        # import csv
+        # response = HttpResponse(content_type='text/csv')
+        # response['Content-Disposition'] = 'attachment; filename="somefilename.xlsx"'
+
+        # writer = csv.writer(response)
+        # writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
+        # writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+
+        # return response
+
 

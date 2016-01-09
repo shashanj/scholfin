@@ -6,26 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="{{ scholarship.meta_data }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> {{ scholarship.meta_title| safe }}</title>  
+    <title> {{ scholarship.meta_title| linebreaksbr }}</title>  
      {% load staticfiles %}
   <!-- Open graph data Meta tags Facebook-->
   <meta property="og:title" content="{{ scholarship.meta_title }}" />
   <meta property="og:site_name" content="ScholFin.com"/>
   <meta property="og:url" content="{{ scholarship.url }} " />
   <meta property="og:type" content="website" />
-  <meta property="og:description" content="{{ scholarship.meta_data|safe }}" />
-  {% if scholarship.name == "ScholFin Diwali Scholarship" %}
-  <meta property="og:image" content="http://res.cloudinary.com/scholfin/image/upload/v1447180365/Scholfindiwali_cizzmh.jpg" />
-  {% else %}
+  <meta property="og:description" content="{{ scholarship.meta_data|linebreaksbr }}" />
   <meta property="og:image" content="{% static "scholarship/images/scholfin.png" %}" />
-  {% endif %}
   
   <!-- Meta tags Twitter-->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@nytimes">
   <meta name="twitter:creator" content="@myscholfin">
   <meta name="twitter:title" content="{{ scholarship.meta_title }}">
-  <meta name="twitter:description" content="{{ scholarship.meta_data|safe }}">
+  <meta name="twitter:description" content="{{ scholarship.meta_data|linebreaksbr }}">
   <meta name="twitter:image" content="{% static "scholarship/images/scholfin.png"}">
   
   <!-- Meta tags favicon-->
@@ -116,9 +112,13 @@
         </div>
         <div class=" mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
           <h3 style="text-align:center"> <span itemprop="name headline">{{ scholarship.name }}</span></h3>
-           {% if scholarship.total_number_scholarship > 0 %}
+          {% if scholarship.display_total_number_scholarship != ' ' %}
+            <h4 style="text-align:center">Total Scholarships - {{ scholarship.display_total_number_scholarship }}</h4>
+          {% elif scholarship.total_number_scholarship > 0 %}
             <h4 style="text-align:center">Total Scholarships - {{ scholarship.total_number_scholarship }}</h4>
-            {% endif %}
+          {% endif %}
+
+
       </div>
         <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--12-col-phone">
        
@@ -229,11 +229,12 @@
       
       
           <section  class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-            {% if scholarship.deadline_details or scholarship.other_benefits != ' ' %}
+            {% if scholarship.deadline_details != ' ' or scholarship.other_benefits != ' ' %}
             <div class="mdl-card mdl-cell mdl-cell--12-col">
               <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
-                {% if scholarship.deadline_details != " " %}
+                
                 <h4 class="mdl-cell mdl-cell--12-col"><i class="material-icons">info</i>&nbsp;Details</h4>
+                {% if scholarship.deadline_details != " " %}
                 <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
                   <div class=" visible-lg visible-md section__circle-container__circle " style="background-color:#336699"></div>
                 </div>
@@ -245,8 +246,9 @@
                     {{ scholarship.deadline_details| linebreaksbr}}
                   {% endif %}
                 </div>
+                {% endif %}
                 <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
-                   {% endif %}
+                   
                 {% if scholarship.other_benefits != " " %}
                   <div class=" visible-lg visible-md section__circle-container__circle " style="background-color:#336699"></div>
                 </div>
@@ -347,7 +349,9 @@
               <h3><span itemprop= "name"> Amount </span></h3>
         <p style="display:none"> <span itemprop="currency" > INR  </span></p>
               <h3><span itemprop="amount"> 
-                  {% if scholarship.amount  %}
+              {% if scholarship.display_amount != ' ' %}
+                {{scholarship.display_amount}}
+                  {% elif scholarship.amount  %}
                       {% if scholarship.amount_frequency == 0 %}
                         {% if scholarship.currency == 0 %}
                             ₹{{ scholarship.amount  }}

@@ -74,8 +74,7 @@ class scholarship(models.Model):
     offered_by=models.CharField(max_length=250,default=' ')
     total_number_scholarship=models.IntegerField(default=0)
     display_total_number_scholarship = models.CharField(max_length=200,default=' ')
-    image_url = models.URLField(max_length=200,blank=True)
-    summary = models.TextField(blank=True)
+
     
     # foreign keys
     # emails = models.ManyToManyField(scholarship_emails)
@@ -87,7 +86,6 @@ class scholarship(models.Model):
     education_state=models.ManyToManyField(state)
     education_abroad=models.ManyToManyField(abroad)
     document_required=models.ManyToManyField(document, blank=True)
-    provider_email = models.EmailField(blank=True)
     # other filters
 
     gender=models.IntegerField(default=0)
@@ -98,7 +96,7 @@ class scholarship(models.Model):
     #deadline details
 
     deadline=models.DateTimeField(blank=True,default=timezone.now())
-    deadline_details=models.TextField(default=' ')
+    deadline_details=models.TextField(default=' ', blank=True)
     deadline_type=models.IntegerField(default=0)
 
     # amount
@@ -106,7 +104,7 @@ class scholarship(models.Model):
     amount_period=models.IntegerField(default=0)
     amount=models.IntegerField(default=0)
     display_amount = models.CharField(max_length=200,default=' ')
-    other_benefits=models.TextField(default=' ')
+    other_benefits=models.TextField(default=' ', blank=True)
     currency=models.IntegerField(default=0)
 
     # type govt,trust,competitions
@@ -120,13 +118,21 @@ class scholarship(models.Model):
     application_mode=models.IntegerField(default=0)
 
     eligibility=models.TextField(default=' ')
-    about=models.TextField(default=' ')
     procedure=models.TextField(default=' ')
+
     contact_details=models.TextField(default=' ')
+    provider_email = models.EmailField(blank=True)
+
     apply_link=models.CharField(max_length=500,default=' ')
-    additional_links=models.CharField(max_length=500,default=' ')
+    additional_links=models.CharField(max_length=500,default=' ', blank=True)
+    image_url = models.URLField(max_length=200,blank=True)
+    
+    about=models.TextField(default=' ')
+    summary = models.TextField(blank=True)              
+
     meta_data=models.CharField(max_length=200,default=' ')
     meta_title=models.CharField(max_length=65,default=' ')
+
 
     organic_view = models.IntegerField(default=0)
     logged_view = models.IntegerField(default=0)
