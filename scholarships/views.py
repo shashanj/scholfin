@@ -1223,7 +1223,7 @@ def submit(request):
             print status
 
         message1 = sendgrid.Mail()
-        provider = Provider.objects.get(scholarship = scholarships)
+        provider = Provider.objects.filter(scholarship = scholarships)[0]
         subject = "New Application for " +scholarships.name + 'from ' + user.first_name 
         messag = "Hi "+provider.user.email+',\n' + 'You have received new your Application for ' + scholarships.name +'.\n' + 'For further tracking you can see it at your Scholfin Dashboard \n Thanks, \n Team Scholfin' 
         message1.set_from("thescholfin@gmail.com")
