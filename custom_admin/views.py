@@ -364,7 +364,7 @@ def update_scholarship_source(request):
 @staff_member_required
 def add_scholarship(request):
     context = RequestContext(request)
-    form = ScholarshipForm(request.POST or None)
+    form = ScholarshipForm(request.POST or None, initial={'display_income': 'Test'})
     if form.is_valid():
         form.save()
         return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/scholarships/view/')

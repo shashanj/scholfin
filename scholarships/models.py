@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.core import urlresolvers
 from django.contrib.contenttypes.models import ContentType
 import re
+from api.models import Institute
 # Create your models here.
 
 class field (models.Model):
@@ -86,6 +87,7 @@ class scholarship(models.Model):
     education_state=models.ManyToManyField(state)
     education_abroad=models.ManyToManyField(abroad)
     document_required=models.ManyToManyField(document, blank=True)
+    allowed_colleges = models.ManyToManyField(Institute, blank=True)
     # other filters
 
     gender=models.IntegerField(default=0)
