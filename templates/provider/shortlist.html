@@ -43,7 +43,7 @@
                 <div class="col-md-12">
                     <strong>Email: </strong>info@scholfin.com
                     &nbsp;&nbsp;
-                    <strong>Support: </strong>+89-83-171-548
+                    <strong>Support: </strong>+91-95-037-48792
                 </div>
 
             </div>
@@ -88,7 +88,7 @@
                                 <h5><strong>Email : </strong></h5>
                                 {{pro.email}}
                                 <hr />
-                                <a href="/provider/change-password/" class="btn btn-info btn-sm">Change Password</a><a href="/provider/logout" class="btn btn-danger btn-sm">Logout</a>
+                                <a href="/provider/change-password/" class="btn btn-info btn-sm">Change Password</a><a href="/provider/logout" style='margin-top:8px' class="btn btn-danger btn-sm">Logout</a>
 
                             </div>
                         </li>
@@ -123,8 +123,8 @@
         <div class="container">
             <div class="row" ng-app='myapp'>
                 <div class="col-md-12" ng-controller='myctrl'>
-                    <h4 class="page-head-line">{{scholarship.name}}</h4>
-                    <button class="btn btn-default" ng-csv="getArray" csv-header = "getHeader" filename="Shortlisted.csv" field-separator="," decimal-separator="." lazy-load="true">Export to CSV</button>
+                    <h4 class="page-head-line">{{scholarship.name}} <button style='float:right' class="btn btn-default" ng-csv="getArray" csv-header = "getHeader" filename="Shortlisted.csv" field-separator="," decimal-separator="." lazy-load="true">Export Shortlist to CSV</button></h4>
+                    
                 </div>
 
             </div>
@@ -208,7 +208,7 @@
                                     {% if applicant.answ %}
                                     {% for answers in applicant.answ %}
                                         <span style='font-style:italic'><strong>Q{{forloop.counter}}. {{answers.question}}</strong></span>
-                                        <p>{{answers.answer}}</p>
+                                        <p>{{answers.answer | linebreaksbr}}</p>
                                     {% endfor %}
                                     {% endif %}
 

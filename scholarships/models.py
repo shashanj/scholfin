@@ -87,7 +87,7 @@ class scholarship(models.Model):
     education_state=models.ManyToManyField(state)
     education_abroad=models.ManyToManyField(abroad)
     document_required=models.ManyToManyField(document, blank=True)
-    allowed_colleges = models.ManyToManyField(Institute, blank=True)
+    # allowed_colleges = models.ManyToManyField(Institute, blank=True)
     # other filters
 
     gender=models.IntegerField(default=0)

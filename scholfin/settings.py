@@ -109,8 +109,8 @@ DATABASES = {
          'ENGINE': 'django.db.backends.mysql',
          'NAME': 'scholfin2',
  	'USER': 'root',
- 	# 'PASSWORD': '9308513225',
-    'PASSWORD': 'mysql',
+ 	'PASSWORD': '9308513225',
+    # 'PASSWORD': 'mysql',
  	'HOST': 'localhost',
  	'PORT': '',
      }
@@ -145,9 +145,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # STATIC_URL = 'http://localhost:7777/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-STATICFILES_DIRS = (
-   'C:\Users\GAURAV\Downloads\static/',
- )
+# STATICFILES_DIRS = (
+#    'C:\Users\GAURAV\Downloads\static/',
+#  )
 '''
 CELERYBEAT_SCHEDULE = {
     'weekly-notifications': {

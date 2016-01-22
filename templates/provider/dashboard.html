@@ -33,7 +33,7 @@
                 <div class="col-md-12">
                     <strong>Email: </strong>info@scholfin.com
                     &nbsp;&nbsp;
-                    <strong>Support: </strong>+89-83-171-548
+                    <strong>Support: </strong>+91-95-037-48792
                 </div>
 
             </div>
@@ -78,7 +78,7 @@
                                 <h5><strong>Email : </strong></h5>
                                 {{pro.email}}
                                 <hr />
-                                <a href="/provider/change-password/" class="btn btn-info btn-sm">Change Password</a><a href="/provider/logout" class="btn btn-danger btn-sm">Logout</a>
+                                <a href="/provider/change-password/" class="btn btn-info btn-sm">Change Password</a><a href="/provider/logout" style='margin-top:8px' class="btn btn-danger btn-sm">Logout</a>
 
                             </div>
                         </li>
@@ -129,7 +129,7 @@
                     </div>
                 {% else %}
                     <div class="alert alert-danger">
-                        This scholarship is not active and the last date was {{scholarship.deadline}}
+                        This scholarship is not active and the last date was {{scholarship.deadline | date }}
                         <br>
                         Number of Days past are = {{date}}
                     </div>
@@ -148,7 +148,7 @@
   </div>
                            
 </div>
-                         <h5>Displayed On Dashboard </h5>
+                         <h5> Eligible Students </h5>
                     </div>
                 </div>
                  <div class="col-md-3 col-sm-3 col-xs-6">
@@ -161,7 +161,7 @@
   </div>
                            
 </div>
-                         <h5> Viewed By Users </h5>
+                         <h5> Number of Views </h5>
                     </div>
                 </div>
                  <div class="col-md-3 col-sm-3 col-xs-6">
@@ -396,14 +396,11 @@
                         <label>Enter Team Member Email : </label>
                         <input type="text" class="form-control" name='members' placeholder='members seperated by ; ' value="" required/>
                         <label>Enter Message : </label>
-                        <textarea rows="7" class="form-control" name='mess'></textarea>
+                        <textarea rows="9" class="form-control" name='mess'></textarea>
                         <hr />
                         <button type='submit' class="btn btn-warning"><span class="glyphicon glyphicon-envelope"></span> Send Invitaion </button>&nbsp;
                     </div>
                 </form>
-                    <div class="panel-footer text-muted">
-                        <strong>Note : </strong>Please note that registered members if ScholFin can join.
-                    </div>
                 </div>
                      </div>
                 </div>
