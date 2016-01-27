@@ -547,13 +547,16 @@ def response(request,scholarship_name):
         else:
             usr.level = 'not decided yet'
 
-
+    doclist = document.objects.filter(scholarship = scholarship_s)
+    for  usr in prof :
+        usr.docs = UserDocuments.objects.filter(user = usr).filter(docs__in= doclist)
+        
 
     context = {
         'scholarship' : scholarship_s,
         'prof' : prof,
         'url' : url,
-        'pro' : User.objects.get(id = request.session['userid'])
+        'pro' : User.objects.get(id = request.session['userid']),
     }
     
     return render_to_response('provider/response.html',context,RequestContext(request))
@@ -721,6 +724,10 @@ def action(request):
                 usr.level = 'rejected'
             else:
                 usr.level = 'not decided yet'
+        doclist = document.objects.filter(scholarship = scholarship_s)
+        for  usr in prof :
+            usr.docs = UserDocuments.objects.filter(user = usr).filter(docs__in= doclist)
+
         context = {
             'scholarship' : scholarship_s,
             'prof' : prof,
@@ -761,6 +768,12 @@ def shortlist(request,scholarship_name):
             usr.level = 'shortlisted'
         elif Rejected.objects.filter(scholarship = scholarship_s).filter(rejected__id = usr.user.id).exists():
             usr.level = 'rejected'
+
+    doclist = document.objects.filter(scholarship = scholarship_s)
+    for  usr in prof :
+        usr.docs = UserDocuments.objects.filter(user = usr).filter(docs__in= doclist)
+        
+
     context = {
         'scholarship' : scholarship_s,
         'url' : url,
@@ -952,6 +965,10 @@ def task(request):
                 usr.level = 'shortlisted'
             elif Rejected.objects.filter(scholarship = scholarship_s).filter(rejected__id = usr.user.id).exists():
                 usr.level = 'rejected'
+        doclist = document.objects.filter(scholarship = scholarship_s)
+        for  usr in prof :
+            usr.docs = UserDocuments.objects.filter(user = usr).filter(docs__in= doclist)
+            
         context = {
             'scholarship' : scholarship_s,
             'url' : url,
@@ -986,6 +1003,9 @@ def select(request,scholarship_name):
             usr.notes = notes.get(of = usr.user).note
         except:
             usr.notes = ''
+    for  usr in prof :
+            usr.docs = UserDocuments.objects.filter(user = usr).filter(docs__in= doclist)
+
     context = {
         'scholarship' : scholarship_s,
         'url' : url,
@@ -1086,6 +1106,10 @@ def selected(request):
                 usr.notes = notes.get(of = usr.user).note
             except:
                 usr.notes = ''
+
+        for  usr in prof :
+            usr.docs = UserDocuments.objects.filter(user = usr).filter(docs__in= doclist)
+            
         context = {
             'scholarship' : scholarship_s,
             'url' : url,

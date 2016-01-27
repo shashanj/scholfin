@@ -50,6 +50,12 @@ EMAIL_HOST_PASSWORD = 'sameer1234'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = False
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_S3_SECURE_URLS = False       # use http instead of https
+AWS_QUERYSTRING_AUTH = False     # don't add complex authentication-related query parameters for requests
+AWS_S3_ACCESS_KEY_ID = 'AKIAJDKJDYY6DIOHBIHQ'     # enter your access key id
+AWS_S3_SECRET_ACCESS_KEY = 'AZ8D0DEaca9RmqiOwdlI+MyRdBx8ci729jFTlYii' # enter your secret access key
+AWS_STORAGE_BUCKET_NAME = 'scholfin-user-document'
 
 
 # Application definition
@@ -66,6 +72,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'api',
     'bootstrapform',
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -109,8 +116,8 @@ DATABASES = {
          'ENGINE': 'django.db.backends.mysql',
          'NAME': 'scholfin2',
  	'USER': 'root',
- 	'PASSWORD': '9308513225',
-    # 'PASSWORD': 'mysql',
+ 	# 'PASSWORD': '9308513225',
+    'PASSWORD': 'mysql',
  	'HOST': 'localhost',
  	'PORT': '',
      }
@@ -145,9 +152,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # STATIC_URL = 'http://localhost:7777/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-# STATICFILES_DIRS = (
-#    'C:\Users\GAURAV\Downloads\static/',
-#  )
+STATICFILES_DIRS = (
+   'C:\Users\GAURAV\Downloads\static/',
+ )
 '''
 CELERYBEAT_SCHEDULE = {
     'weekly-notifications': {

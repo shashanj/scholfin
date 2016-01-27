@@ -175,10 +175,19 @@ class UserProfile(models.Model):
     user_field = models.ForeignKey(field)
     user_gender = models.IntegerField(blank=False)
     user_disability = models.IntegerField(blank=False)
-
+    user_documents = models.ManyToManyField(document,through='UserDocuments',blank=True)
 
     def __unicode__(self):
         return self.user.username
+
+class UserDocuments(models.Model):
+    user = models.ForeignKey(UserProfile)
+    docs = models.ForeignKey(document)
+    files = models.FileField(upload_to='files', blank=True)
+
+    def __unicode__(self):
+        return self.user.user.username + ' uploaded ' + self.docs.document_name
+
 
 class MyModelAdmin(admin.ModelAdmin):
     formfield_overrides = {

@@ -224,7 +224,15 @@
                                         <li class='col-md-6'>Disability : Yes</li>
                                         {% endif %}
                                     </ul>
-                                    
+                                    {% if applicant.docs %}
+                                    <h4>Documents Required</h4>
+                                    <ul>
+                                        {% for doc in applicant.docs %}
+                                            <li class='col-md-6'>{{doc.docs.document_name }} : 
+                                            <a href="{{doc.files.url}}">{{doc.user.user.first_name}} - {{doc.docs.document_name}}</a></li>
+                                        {% endfor %}
+                                    {% endif %}
+                                    </ul>
                                 </div>
                             {% if applicant.act == 2 %}
                                 <div class="tab-pane fade active in" id="messages_{{forloop.counter}}">

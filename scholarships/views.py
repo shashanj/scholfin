@@ -14,6 +14,7 @@ from scholarships.models import *
 from django.contrib.auth.hashers import make_password
 from datetime import datetime,timedelta
 from django.core.mail import send_mail
+from django.core.files.storage import default_storage as storage
 
 
 # Create your views here.
@@ -849,6 +850,7 @@ def profilepage(request):
         for inter in inters:
             if(i == inter ):
                 i.bc = 1
+    user_doc = UserDocuments.objects.filter(user =  userdetail)
     context_list = {'castes': option_caste,
                     'states': option_state,
                     'levels': option_level,
@@ -857,6 +859,7 @@ def profilepage(request):
                     'interests': op,
                     'abroads': option_abroad,
                     'userdetail' : userdetail,
+                    'user_doc' : user_doc
                     }
     return render_to_response('scholarship/profile.html', context_list, RequestContext(request))
 
@@ -1148,6 +1151,7 @@ def apply(request,scholarship_name):
     scholarship_s.apply_click = scholarship_s.apply_click + 1
     scholarship_s.save()
     questions = question.objects.filter(scholarship=scholarship_s)
+    scholarship_s.docs =  document.objects.filter(scholarship = scholarship_s)
     option=[]
     for ques in questions:
         if len(ques.expected_answers) != 0:
@@ -1202,8 +1206,18 @@ def submit(request):
             act.scholarship = scholarships
             act.activity = ' just applied for your Scholarship'
             act.save()
+
+        if not UserDocuments.objects.filter(user = UserProfile.objects.get(user = user)).filter(docs__in = document.objects.filter(scholarship = scholarships)).exists():
+            if len(request.FILES.getlist('file')) > 0 :
+                for i in range (1, len(document.objects.filter(scholarship = scholarships))+1):
+                    doc =  UserDocuments()
+                    doc.user = UserProfile.objects.get(user = user)
+                    doc.docs = document.objects.filter(scholarship = scholarships)[i-1]
+                    doc.files = request.FILES.getlist('file')[i-1]
+                    doc.save()
+
         subject = "Application for " +scholarships.name + ' is successfull'
-        messag = "Hi "+user.first_name+',\n' + 'We have received your Application for ' + scholarships.name +'.\n' + 'For further details you can contact ' + scholarships.contact_details
+        messag = "Hi "+user.first_name+',<br>' + 'We have received your Application for ' + scholarships.name +'.<br>' + 'For further details you can contact ' +'<br>' + scholarships.contact_details
 
         import sendgrid
         sg_username = "scholfin"
@@ -1225,7 +1239,7 @@ def submit(request):
         message1 = sendgrid.Mail()
         provider = Provider.objects.filter(scholarship = scholarships)[0]
         subject = "New Application for " +scholarships.name + 'from ' + user.first_name 
-        messag = "Hi "+provider.user.email+',\n' + 'You have received new your Application for ' + scholarships.name +'.\n' + 'For further tracking you can see it at your Scholfin Dashboard \n Thanks, \n Team Scholfin' 
+        messag = "Hi "+provider.user.email+',<br><br>' + 'You have received new your Application for ' + scholarships.name +'.<br>' + 'For further tracking you should visit the Scholfin here www.scholfin.com/provider/ <br><br> Thanks, <br> Team Scholfin' 
         message1.set_from("thescholfin@gmail.com")
         message1.set_subject(subject)
         message1.set_text("This is text body")
@@ -1244,10 +1258,9 @@ def submit(request):
         TWILIO_AUTH_TOKEN = 'a8cdd8ca582217f31593b093c6851045'
         client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
         message = client.messages.create(to="+919167333093", from_="+12516470722",
-                                body="You have successfully applied for " +scholarships.name )
+                                body="You have successfully applied for " + scholarships.name )
 
-        message = client.messages.create(to="+919503748792", from_="+12516470722",
-                                body="You have received applicantion form " +user.first_name +' for ' + scholarships.name )
+        message = client.messages.create(to="+919503748792", from_="+12516470722",body="You have received applicantion from " +user.first_name +' for ' + scholarships.name + '\n' + 'Regards Scholfin ')
         print 'sms sent'
         return HttpResponseRedirect('/dashboard/')
 

@@ -267,6 +267,18 @@
                         {% endif %}
                     </ul>
                 </div>
+                <div class="col-md-12">
+                <h3>Docunents Uploaded</h3>
+                    <ul class="data-list floated disability clearfix">
+                    {% if user_doc %}
+                    {% for doc in user_doc%}
+                        <li class="col-md-6">
+                            {{doc.docs.document_name}} : <a href="{{doc.files.url}}">{{doc.files}}</a>
+                        </li>
+                    {% endfor%}
+                    {% endif %}
+                    </ul>
+                </div>
 
 			</div><!-- end step -->
 			<div class="submit step" id="complete">

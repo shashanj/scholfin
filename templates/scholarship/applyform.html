@@ -45,7 +45,7 @@
 
         <!-- You only need this form and the form-validation.css -->
 
-        <form class="form-labels-on-top" method="post" action="/submit-application/">
+        <form enctype="multipart/form-data" class="form-labels-on-top" method="POST" action="/submit-application/" >
         {% csrf_token %}
             <input type="hidden" name='sch' value='{{sc.name}}'>
             <div class="form-title-row">
@@ -109,8 +109,22 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
+            {% if sc.docs %}
+            <br>
+            <br>
+                {% for doc in sc.docs %}
+                <label>
+                    <span>{{doc}} : </span>
+                    <input type="file" name="file" >          
+                </label>
+                <br>
+                <br>
+                {% endfor %}
+
+            {%endif%}
             </div>
 
+            
             <div class="form-row">
 
                 <button type="submit">Submit Form</button>

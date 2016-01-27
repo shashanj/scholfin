@@ -45,4 +45,5 @@ admin.site.register(ShortList)
 admin.site.register(Selected)
 admin.site.register(Rejected)
 admin.site.register(Note)
+admin.site.register(UserDocuments)
 
