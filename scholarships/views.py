@@ -1170,7 +1170,7 @@ def submit(request):
         questions = question.objects.filter(scholarship = scholarships)
         user = User.objects.get(id = request.session['userid'])
         for ques in questions:
-            if ques.question_type < 3:
+            if ques.question_type < 3  or ques.question_type == 4:
                 ans = request.POST.get(str(ques.question_id))
             else:
                 ans = ''
