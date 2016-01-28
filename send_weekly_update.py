@@ -158,8 +158,8 @@ for u in user:
         if len(mail_message) == 0:
             mail_message = '<table border="2"><tr><td></td> <td></td></tr> </table>'
         message.set_html(mail_message)
-        message.add_to(u.email)
-        #message.add_to('palanshagarwal@gmail.com')
+        # message.add_to(u.email)
+        message.add_to('palanshagarwal@gmail.com')
 
         filters = {
             "templates": {
