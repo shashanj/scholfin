@@ -32,11 +32,11 @@ for u in user:
 
     count+=1
     if u.is_superuser==1 or u.is_staff==1:
-        print 'user'
-        print u.email
-        print u.username
-        
-        user_d = UserProfile.objects.filter(user__email=u.email)
+        # print 'user'
+        # print u.email
+        # print u.username
+        em = 'palanshagarwal@gmail.com'
+        user_d = UserProfile.objects.filter(user__email=em)
         if len(user_d)!=0 :
             user_d = user_d[0]
 
@@ -143,7 +143,7 @@ for u in user:
                 t = sc.deadline.strftime("%B %d, %Y") # time of deadline of scholarship
                 mail_message = mail_message + mail_body_1 + 'Deadline : ' + t + mail_body_6 + am + mail_body_2 + sc.name + mail_body_3 + sc.about + mail_body_4 + link + mail_body_5
             
-        mail_message = '<table border="2"><tr><td> asd </td> <td> dfg </td></tr> </table>'
+        # mail_message = '<table border="2"><tr><td> asd </td> <td> dfg </td></tr> </table>'
         # mail_message = mail_body_1 + 'Deadline : ' + 't' + mail_body_6 + 'am' + mail_body_2 + 'sc.name' + mail_body_3 + 'sc.about' + mail_body_4 + 'link' + mail_body_5
         # mail_message =mail_message+ mail_body_1 + 'Deadline : ' + 't' + mail_body_6 + 'am' + mail_body_2 + 'sc.name' + mail_body_3 + 'sc.about' + mail_body_4 + 'link' + mail_body_5
         import sendgrid
@@ -160,6 +160,7 @@ for u in user:
         message.set_html(mail_message)
         # message.add_to(u.email)
         message.add_to('palanshagarwal@gmail.com')
+        message.add_to('thescholfin@gmail.com')
 
         filters = {
             "templates": {
