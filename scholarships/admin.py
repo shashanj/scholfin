@@ -10,8 +10,8 @@ class loggedcountAdmin(admin.ModelAdmin):
 
 class UserProfileAdmin(admin.ModelAdmin):
 	search_fields = ['user__email','user_income',]
-	list_display = ['user','user_level','user_field','get_date_joined','get_last_login']
-	list_filter = ['user_field__field_name','user_level__level_name','user_caste__caste_name','user_religion__religion_name','user_abroad__abroad_name','user_gender','user_income','user_disability','user_state__state_name']
+	list_display = ['user','user_type','user_income','get_date_joined','get_last_login',]
+	list_filter = ['user_field__field_name','user_level__level_name','user_caste__caste_name','user_religion__religion_name','user_abroad__abroad_name','user_gender','user_type','user_disability','user_state__state_name']
 	
 	def get_last_login(self,obj):
 		return obj.user.last_login

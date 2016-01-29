@@ -311,9 +311,14 @@ a.getstarted:hover{
             <div class="btn-responsive-menu"> <span class="bar"></span> <span class="bar"></span> <span class="bar"></span> </div>
             <nav class="col-md-8 col-xs-9" id="top-nav">
             	<ul>
+              {% if next %}
+                    <li><a href="/logins/next={{next}}">Login</a></li>
+                    <li><a href="/signup/next={{next}}" id="purchase">Sign Up</a></li>
+              {% else %}
                     <li><a href="/login/">Login</a></li>
                     <li><a href="/signup/" id="purchase">Sign Up</a></li>
                </ul>
+              {% endif %}
             </nav><!-- End Nav -->
 
             
@@ -337,7 +342,11 @@ a.getstarted:hover{
 						<br>
 					<div class="row ">
             <div class="col-xs-12">
+            {% if next %}
+            <a class="getstarted" href="/signup/next={{next}}">GET<span style="color:#ffc107">i</span>STARTED</a>
+            {% else %}
             <a class="getstarted" href="/signup/">GET<span style="color:#ffc107">i</span>STARTED</a>
+            {% endif %}
           </div>
           </div>
 					</div>
@@ -437,8 +446,11 @@ a.getstarted:hover{
     <br>
 	<br>
     <div class="row ">
-      
-				<a class="getstarted again" href="/signup/">GET<span style="color:#ffc107">i</span>STARTED</a>
+      {% if next %}
+				<a class="getstarted again" href="/signup/next={{next}}">GET<span style="color:#ffc107">i</span>STARTED</a>
+      {% else %}
+      <a class="getstarted again" href="/signup/">GET<span style="color:#ffc107">i</span>STARTED</a>
+      {% endif %}
       
 		</div>
   </div>

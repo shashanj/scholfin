@@ -154,7 +154,7 @@
               </div>
         {% else %}
               <div class="mdl-card__actions">
-                <a href="/" class="mdl-button">Login | signup to apply</a>
+                <a href="/home/next={{next}}/" class="mdl-button">Login | signup to apply</a>
               </div>
         {% endif %}
             </div>
@@ -186,7 +186,7 @@
                 {% if userid != -1 %}
                 <a href="{{ scholarship.apply_link }}" target="_blank" class="mdl-button">Apply</a>
                 {% else %}
-                <a href="/" class="mdl-button">Login | SignUp to Apply</a>
+                <a href="/home/next={{next}}/" class="mdl-button">Login | SignUp to Apply</a>
                 {% endif %}
               </div>
             </div>
@@ -219,7 +219,7 @@
      
         </div>
               <div class="mdl-card__actions">
-                <a href="/" class="mdl-button">Login | SignUp to Apply</a>
+                <a href="/home/next={{next}}/" class="mdl-button">Login | SignUp to Apply</a>
                 
               </div>
             </div>
@@ -239,7 +239,7 @@
                   <div class=" visible-lg visible-md section__circle-container__circle " style="background-color:#336699"></div>
                 </div>
                 <div  class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-                  <h5>Deadline</h5>
+                  <h5 >Deadline</h5>
                   {% if '<' in scholarship.deadline_details and '>' in scholarship.deadline_details %}
                     {{ scholarship.deadline_details| safe}}
                   {% else %}
@@ -253,7 +253,7 @@
                   <div class=" visible-lg visible-md section__circle-container__circle " style="background-color:#336699"></div>
                 </div>
                 <div  class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-                  <h5>Other Benifits</h5>                  
+                  <h5>Other Benefits</h5>                  
                   {% if '<' in scholarship.other_benefits and '>' in scholarship.other_benefits %}
                     {{ scholarship.other_benefits| safe}}
                   {% else %}
@@ -291,7 +291,7 @@
               </div>
           {% else %}
               <div class="mdl-card__actions">
-                <a href="/" class="mdl-button">Login | SignUp To Apply</a>
+                <a href="/home/next={{next}}/" class="mdl-button">Login | SignUp To Apply</a>
               </div>
           {% endif %}
             </div>
@@ -552,7 +552,7 @@
     {% if userid != -1 %}
     <a href="{{ scholarship.apply_link }}" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">Lets Apply</a>
     {% else %}
-    <a href="/signup/" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">SignUp To Apply</a>
+    <a href="/signup/next={{ next }}/" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">SignUp To Apply</a>
     {% endif %}
 
     <script src="{% static "scholarship/material.js" %}"></script>

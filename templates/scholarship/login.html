@@ -251,8 +251,12 @@ i.fa{
       <div class="btn-group">
         <button class="btn btn-danger" id="signinButton" >Sign in via Google</button>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="/fbsignup/"><button class="btn btn-primary" >Sign in via Facebook</button></a>
-      </div>
+        {% if next %}
+          <a href="/fbsignups/next={{next}}"><button class="btn btn-primary" >Sign up via Facebook</button></a>
+        {% else %}
+          <a href="/fbsignup/"><button class="btn btn-primary" >Sign up via Facebook</button></a>
+        {% endif %}      
+        </div>
       <script>
         $('#signinButton').click(function() {
           // signInCallback defined in step 6.
@@ -260,8 +264,8 @@ i.fa{
         });
       </script>
       <div id="result"></div>
-
-      <form action="/login/" method="post">{% csrf_token %}
+      {% if next %}
+      <form action="/logins/next={{next}}/" method="post" id='org'>{% csrf_token %}
                 <p style="color: black">{{ state }}</p>
         <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -273,47 +277,50 @@ i.fa{
           <input type="password" name="password" class="form-control" placeholder="Password">
         </div>
 
-        <button type="submit" class="float">Log In</button>{% csrf_token %}
+        <button type="submit" class="float" form='org'>Log In</button>
          </form>
+         {% else %}
+         <form action="/login/" method="post" id='not'>{% csrf_token %}
+                <p style="color: black">{{ state }}</p>
+        <div class="input-group input-group-lg">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input type="text" class="form-control" name="username" placeholder="Email">
+          </div>
+
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+          <input type="password" name="password" class="form-control" placeholder="Password">
+        </div>
+
+        <button type="submit" class="float" form='not'>Log In</button>{% csrf_token %}
+         </form>
+         {% endif %}
         </div>
         <div class="signup">
-          <h2>New to <span><a href="/">ScholFin</a></span> ? <a href="/signup/">&nbsp;Sign up</a></h2>
+        {% if next %}
+          <h2>New to <span><a href="/">ScholFin</a></span> ? <a href="/signup/next={{next}}/">&nbsp;Sign up</a></h2>
+        {% else %}
+        <h2>New to <span><a href="/">ScholFin</a></span> ? <a href="/signup/">&nbsp;Sign up</a></h2>
+        {% endif %}}
         </div>
      </div>
      <p><a href="/forgotpassword/"><u>Forgot your password ?</u></a></p>
 
-     <form id="code" action="/googlesignup_process/" method="POST">
-      <input type="hidden" name="codee" value="" />
-      </form>
-      <script>
+{% if next %}     
+<form id="code" action="/googlesignup_processs/next={{next}}/" method="POST">
+<input type="hidden" name="codee" value="" />
+</form>
+{% else %}
+<form id="code" action="/googlesignup_process/" method="POST">
+<input type="hidden" name="codee" value="" />
+</form>
+{% endif %}
       function signInCallback(authResult) {
         if (authResult['code']) {
           $("input[name=codee]").val(authResult['code']);
           $('#code').submit();
           }}
       </script>
-
-    <script type="text/javascript">
-      $(window).bind('beforeunload', function(){
-          $.ajax({
-                   type:"POST",
-                   url:"/reset/",
-                   data: {
-                          'val': 'test'
-                          },
-                   success: function(){}
-              });
-      })
-      $("#123").click(function(){
-          $(window).unbind("beforeunload");
-      })
-      $("#signinButton").click(function(){
-          $(window).unbind("beforeunload");
-      })
-      $("#fbunbind").click(function(){
-          $(window).unbind("beforeunload");
-      })
-</script>
      <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 

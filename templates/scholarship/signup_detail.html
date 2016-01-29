@@ -97,13 +97,10 @@ function handleBrowserCloseButton(event) {
 		<div id="progressbar"></div>
 		<div class="shadow"></div>
 	</div><!-- end top-wizard -->
-    
-	<form name="example-1" id="wrapped" action="/signupprocess/" method="post">{% csrf_token %}
-        {% if next_url == "/dashboard/" %}
-        {% else %}
+    {% if next %}
+	<form name="example-1" id="wrapped1" class='org' action="/signupdone/next={{next}}/" method="post">{% csrf_token %}
         <br></br>
             <h4 style="text-align:center"> Create a profile and you will be directed to your scholarship</h4>
-        {% endif %}
         <input type="hidden" name="username" value="{{ username }}"/>
         <input type="hidden" name="password" value="{{ password }}"/>
         <input type="hidden" name="email" value="{{ email }}"/>
@@ -287,11 +284,7 @@ function handleBrowserCloseButton(event) {
                     data-layout="button">
                 </div>
 			 			<h3>Your profile is created! Thank you for your time.</h3>
-						{% if next_url == "/dashboard/" or next_url == "/dashboard/_#_" %}
-                          <button type="submit" name="process" class="submit">Click here to see your scholarships</button>
-                        {% else %}
-                            <button type="submit" name="process" class="submit">Proceed To Your Search</button>
-                        {% endif %}
+                            <button type="submit" form='wrapped1' name="process" class="submit">Proceed To Your Search</button>
 			</div><!-- end submit step -->
 
 		</div><!-- end middle-wizard -->
@@ -301,6 +294,204 @@ function handleBrowserCloseButton(event) {
 			<button type="button" name="forward" class="forward">Forward </button>
 		</div><!-- end bottom-wizard -->
 	</form>
+    {% else %}
+    <form name="example-1" id="wrapped" class='not' action="/signupprocess/" method="post">{% csrf_token %}
+                <input type="hidden" name="username" value="{{ username }}"/>
+        <input type="hidden" name="password" value="{{ password }}"/>
+        <input type="hidden" name="email" value="{{ email }}"/>
+        <input type="hidden" name="auth_type" value="{{ auth_type }}"/>
+        <div id="middle-wizard">
+            <div class="step">
+                <div class="row">
+                    <div class="col-md-10">
+                        <ul class="data-list">
+              <input id="website" name="website" type="text" value=""><!-- Leave for security protection, read docs for details -->
+                        </ul>
+                    </div><!-- end col-md-6 -->
+          </div>
+                    <div class="row">
+                    <div class="col-md-12">
+                    <h3>Educational Detail</h3>
+                        <ul class="data-list">
+                            <li>
+                                <div class="styled-select">
+                                    <select class="form-control required" name="state">
+                                        <option value="" selected="">Select your state</option>
+                                        {% if states %}
+                                            {% for state in states %}
+                                                <option value="{{ state.state_id }}">{{ state.state_name }}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </li>
+                        </ul>
+                        <h3>Choose your Gender</h3>
+                        <ul class="data-list floated clearfix">
+                            <li><input name="gender" type="radio" class="required check_radio" value="0" checked><label class="label_gender"> Male</label></li>
+                            <li><input name="gender" type="radio" class="required check_radio" value="1"><label class="label_gender"> Female</label></li>
+                        </ul>
+                    <br>
+                        <h3>Do you want to study abroad ?</h3>
+                        <ul class="data-list floated clearfix">
+                            <li><input name="abroad" type="radio" class="required check_radio" value="2"><label class="label_gender">Yes</label></li>
+                            <li><input name="abroad" type="radio" class="required check_radio" value="1"><label class="label_gender">I'm not sure</label></li>
+                        </ul>
+                        <br>
+                    </div><!-- end col-md-6 -->
+                </div><!-- end row -->
+
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <ul class="data-list" id="terms">
+                            <li>
+                            <strong>Do you accept <a href="#" data-toggle="modal"               data-target="#myModal">terms and conditions</a> ?</strong>
+                            <label class="switch-light switch-ios ">
+                                    <input type="checkbox" name="terms" class="required fix_ie8" value="yes">
+                                    <span>
+                                        <span class="ie8_hide">No</span>
+                                        <span>Yes</span>
+                                    </span>
+                                    <a></a>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- end step-->
+            
+            <div class="step row">
+                <div class="col-md-12">
+                    <h3>Educational Detail</h3>
+                        <ul class="data-list">
+                            <li>
+                            <div class="styled-select">
+                                <select class="form-control required" name="level">
+                                        <option value="" selected="">Select your current education level</option>
+                                        {% if levels %}
+                                            {% for level in levels %}
+                                                <option value="{{ level.level_id }}">{{ level.level_name }}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                            </div>
+                            </li>
+                        </ul>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12">
+
+                <script type="text/javascript">
+                $(function() {
+                  $("#institutes").autocomplete({
+                    source: "/api/get_institutes/",
+                    minLength: 2,
+                  });
+                });
+                </script>
+                <div class="ui-widget">
+                <h3>College / School</h3>
+                    <input type="text" class="required form-control" name="college" placeholder="Name Of Your College / School" id="institutes" />
+                </div>
+                </div>
+                <div class="clearfix"></div>
+                <h3>Choose your caste</h3>
+                    <ul class="data-list floated caste clearfix ">
+                        {% if castes %}
+                            {% for caste in castes %}
+                                <li><input name="caste" type="radio" class=" required check_radio" value="{{ caste.caste_id }}"><label class="label_gender">{{ caste.caste_name }}</label></li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+            </div><!-- end step -->
+
+            <div class="step row">
+                <div class="col-md-12">
+                    <h3>Select an educational field which suits you the best</h3>
+                    <ul class="data-list">
+                        <li>
+                            <div class="styled-select">
+                                <select class="form-control required" name="field">
+                                    <option value="" selected="">Select your field of education </option>
+                                    {% if fields %}
+                                        {% for field in fields %}
+                                            <option value="{{ field.field_id }}">{{ field.field_name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </li>
+                    </ul>
+                    <h3>Pick areas of your interest</h3>
+                    <small>You may choose more than one entries</small>
+                    <br>
+                    <ul class="data-list interest floated clearfix">
+                        {% if interests %}
+                            {% for interest in interests %}
+                                <li><input class="icheck_checkbox" type="checkbox" name="interest" value="{{ interest.interest_id }}"/><label class="label_gender">{{ interest.interest_name }}</label></li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div><!-- end step -->
+
+            <div class="step row">
+                <div class="col-md-12">
+                    <select class="form-control required" name="religion">
+                        <option value="" selected="">Select your religion</option>
+                        {% if religions %}
+                            {% for religion in religions %}
+                                <option value="{{ religion.religion_id }}">{{ religion.religion_name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6">
+                    <input type="text" class="required form-control" placeholder="First Name" name="fname" value="{{ firstname }}"/>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="required form-control" placeholder="Last Name" name="lname" value="{{ lastname }}"/>
+                </div>
+                <div class="clearfix"></div>
+                <h3>Do you have any physical disability?</h3>
+                <div class="col-md-12">
+                    <ul class="data-list disability floated clearfix">
+                        <li><input name="disability" type="radio" class="required check_radio" value="1" ><label class="label_gender">Yes</label></li>
+                        <li><input name="disability" type="radio" class="required check_radio" value="0" checked><label class="label_gender">No</label></li>
+                    </ul>
+                </div>
+            </div>  
+            <div class="submit step" id="complete">
+            <h3>Like us on Facebook! </h3>
+                <br>
+            <!-- <div class="fb-page" data-href="https://www.facebook.com/SCHOLFIN" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true" data-show-posts="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/SCHOLFIN"><a href="https://www.facebook.com/SCHOLFIN">Scholfin</a></blockquote></div></div> -->
+                <div class="fb-like" 
+                    data-href="https://www.facebook.com/scholfin?_rdr" 
+                    data-width="500" 
+                    data-layout="button" 
+                    data-action="like" 
+                    data-show-faces="false" 
+                    data-share="true">
+                </div>
+                <div class="fb-share-button" 
+                    data-href="https://scholfin.com" 
+                    data-layout="button">
+                </div>
+                        <h3>Your profile is created! Thank you for your time.</h3>
+                
+                  <button type="submit" form='wrapped' name="process" class="submit">Click here to see your scholarships</button>
+                            
+            </div><!-- end submit step -->
+
+        </div><!-- end middle-wizard -->
+
+        <div id="bottom-wizard">
+            <button type="button" name="backward" class="backward" disabled="disabled">Backward</button>
+            <button type="button" name="forward" class="forward">Forward </button>
+        </div><!-- end bottom-wizard -->
+        </form>
+    {% endif %}
 </div><!-- end Survey container -->
  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
   <div class="modal-dialog" role="document">
@@ -332,22 +523,6 @@ function handleBrowserCloseButton(event) {
 <script src="{% static "signup/js/retina.js" %}" type="text/javascript"></script>
 <script src="{% static "signup/js/functions.js" %}" type="text/javascript"></script>
 <script src="{% static "signup/js/main.js" %}" type="text/javascript"></script>
-<script type="text/javascript">
-    $(window).bind('beforeunload', function(){
-        $.ajax({
-                 type:"POST",
-                 url:"/reset/",
-                 data: {
-                        'val': 'test'
-                        },
-                 success: function(){}
-            });
-    })
-    $("#123").click(function(){
-        $(window).unbind("beforeunload");
-    })
-// }
-</script>
 
 </body>
 </html>

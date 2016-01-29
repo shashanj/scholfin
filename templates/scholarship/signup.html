@@ -251,7 +251,11 @@ i.fa{
       <div class="btn-group">
         <button class="btn btn-danger" id="signinButton" >Sign up via Google</button>
         &nbsp;&nbsp;&nbsp;&nbsp;
+        {% if next %}
+        <a href="/fbsignups/next={{next}}"><button class="btn btn-primary" >Sign up via Facebook</button></a>
+        {% else %}
         <a href="/fbsignup/"><button class="btn btn-primary" >Sign up via Facebook</button></a>
+        {% endif %}
       </div>
       <script>
         $('#signinButton').click(function() {
@@ -260,8 +264,11 @@ i.fa{
         });
       </script>
       <div id="result"></div>
-
-        <form action="/signup-complete/" method="post">
+      {% if next %}
+        <form action="/signup-completes/next={{next}}/" method="post">{{csrf_token}}
+      {% else %}
+        <form action="/signup-complete/" method="post">{{csrf_token}}
+        {% endif %}
         <p style="color:red">{{error}}</p>
         <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -281,13 +288,22 @@ i.fa{
          </form>
         </div>
         <div class="signup">
+      {% if next %}
+          <h2>Already have a account? <a href="/logins/next={{next}}/">&nbsp;Log In</a></h2>
+      {% else %}
           <h2>Already have a account? <a href="/login/">&nbsp;Log In</a></h2>
+        {% endif %}
         </div>
      </div>
-     
+{% if next %}     
+<form id="code" action="/googlesignup_processs/next={{next}}/" method="POST">
+<input type="hidden" name="codee" value="" />
+</form>
+{% else %}
 <form id="code" action="/googlesignup_process/" method="POST">
 <input type="hidden" name="codee" value="" />
 </form>
+{% endif %}
 <script>
 function signInCallback(authResult) {
   if (authResult['code']) {
@@ -296,27 +312,6 @@ function signInCallback(authResult) {
     }}
 </script>
 <!-- Latest compiled and minified JavaScript -->
-<script type="text/javascript">
-    $(window).bind('beforeunload', function(){
-        $.ajax({
-                 type:"POST",
-                 url:"/reset/",
-                 data: {
-                        'val': 'test'
-                        },
-                 success: function(){}
-            });
-    })
-    $("#123").click(function(){
-        $(window).unbind("beforeunload");
-    })
-    $("#signinButton").click(function(){
-        $(window).unbind("beforeunload");
-    })
-    $("#fbunbind").click(function(){
-        $(window).unbind("beforeunload");
-    })
-</script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 </html>
