@@ -153,28 +153,31 @@ for u in user:
 
         message.set_from("thescholfin@gmail.com")
         message.set_subject("New Scholarships matching your profile !")
-        if len(mail_message) == 0:
-            mail_message = '<table border="2"><tr><td></td> <td></td></tr> </table>'
-        message.set_html(mail_message)
-        message.add_to(u.email)
-        # message.add_to('palanshagarwal@gmail.com')
-        # message.add_to('thescholfin@gmail.com')
+        if len(mail_message) != 0:
+            # mail_message = '<table border="2"><tr><td></td> <td></td></tr> </table>'
+            message.set_html(mail_message)
+            message.add_to(u.email)
+            # message.add_to('palanshagarwal@gmail.com')
+            # message.add_to('thescholfin@gmail.com')
 
-        filters = {
-            "templates": {
-                "settings": {
-                    "enable": 1,
-                    "template_id": "351fd81b-d419-4d87-80ef-9de020747724"
+            filters = {
+                "templates": {
+                    "settings": {
+                        "enable": 1,
+                        "template_id": "351fd81b-d419-4d87-80ef-9de020747724"
+                    }
                 }
             }
-        }
-        for app, contents in filters.iteritems():
-            for setting, value in contents['settings'].iteritems():
-                message.add_filter(app, setting, value)
-        try:
-            status, msg = sg.send(message)
-            print msg
-            print count
-        except:
-            print 'error'
-                    # pass
+            for app, contents in filters.iteritems():
+                for setting, value in contents['settings'].iteritems():
+                    message.add_filter(app, setting, value)
+            try:
+                status, msg = sg.send(message)
+                print msg
+                print count
+            except:
+                print 'error'
+                        # pass
+
+        else:
+            pass
