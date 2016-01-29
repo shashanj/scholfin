@@ -29,7 +29,7 @@ html{
   background-size: fill;
   height:100%;
   width:100%;
-  overflow:hidden;
+  /*overflow:hidden;*/
 }
 
 body {
@@ -42,7 +42,7 @@ body {
  /* background: radial-gradient(#55bbea, #7733cc, #9933cc);  Standard syntax */
 }
 body p{
-  margin-top:10px;
+  /*margin-top:-30px;*/
   text-align:center;
   color:#fff;
 }
@@ -300,11 +300,14 @@ i.fa{
         {% if next %}
           <h2>New to <span><a href="/">ScholFin</a></span> ? <a href="/signup/next={{next}}/">&nbsp;Sign up</a></h2>
         {% else %}
-        <h2>New to <span><a href="/">ScholFin</a></span> ? <a href="/signup/">&nbsp;Sign up</a></h2>
-        {% endif %}}
+        <h2>New to <span><a href="/">ScholFin</a></span> ? <a href="/signup/">&nbsp;Sign up</a>
+          <p><a href="/forgotpassword/" style='text-decoration:none'><u>Forgot your password?</u></a></p>
+
+        </h2>
+        {% endif %}
+
         </div>
      </div>
-     <p><a href="/forgotpassword/"><u>Forgot your password ?</u></a></p>
 
 {% if next %}     
 <form id="code" action="/googlesignup_processs/next={{next}}/" method="POST">
@@ -315,6 +318,7 @@ i.fa{
 <input type="hidden" name="codee" value="" />
 </form>
 {% endif %}
+<script >
       function signInCallback(authResult) {
         if (authResult['code']) {
           $("input[name=codee]").val(authResult['code']);
@@ -323,6 +327,15 @@ i.fa{
       </script>
      <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:141326,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
   </body>
 </html>
