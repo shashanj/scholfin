@@ -25,18 +25,19 @@ from datetime import datetime,timedelta
 # # if __name__ == '__main__': 
 
 user = User.objects.all().order_by('id')
-print user
-print [u.email for u in user]
+# print user
+# print [u.email for u in user]
 count = 0
 for u in user:
 
     count+=1
-    if u.is_superuser==1 or u.is_staff==1:
+    if u.is_superuser==0 or u.is_staff==0:
+        mail_message = ""
         # print 'user'
         # print u.email
         # print u.username
-        em = 'palanshagarwal@gmail.com'
-        user_d = UserProfile.objects.filter(user__email=em)
+        #em = 'palanshagarwal@gmail.com'
+        user_d = UserProfile.objects.filter(user__email=u.email)
         if len(user_d)!=0 :
             user_d = user_d[0]
 
@@ -118,9 +119,6 @@ for u in user:
             #add link to 4
             mail_body_5 = "\" style=\"font-size: 15px; font-family: Helvetica, Arial, sans-serif; font-weight: normal; color: #ffffff; text-decoration: none; background-color: #256F9C; border-top: 10px solid #256F9C; border-bottom: 10px solid #256F9C; border-left: 20px solid #256F9C; border-right: 20px solid #256F9C; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; display: inline-block;\" target=\"_blank\">Apply Now &rarr;</a></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr>"
                
-            mail_message = ""
-
-
             for sc in scholarship_d:
                 
                 root_url = "http://scholfin.com/scholarship-details/"
@@ -158,9 +156,9 @@ for u in user:
         if len(mail_message) == 0:
             mail_message = '<table border="2"><tr><td></td> <td></td></tr> </table>'
         message.set_html(mail_message)
-        # message.add_to(u.email)
-        message.add_to('palanshagarwal@gmail.com')
-        message.add_to('thescholfin@gmail.com')
+        message.add_to(u.email)
+        # message.add_to('palanshagarwal@gmail.com')
+        # message.add_to('thescholfin@gmail.com')
 
         filters = {
             "templates": {
