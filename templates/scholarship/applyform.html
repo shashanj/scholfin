@@ -51,7 +51,7 @@
             <div class="form-title-row">
                 <h1>{{sc.name}} - Application Form</h1>
             </div>
-
+        {% if sc.scholarship_type < 99 %}
             <div class="form-row ">
 
             {% if question %}
@@ -127,15 +127,22 @@
                 {% endfor %}
 
             {%endif%}
-            </div>
-
+            </div>  
             
             <div class="form-row">
 
                 <button type="submit">Submit Form</button>
 
             </div>
+        {% else %}
+            <h3 style="color:red">Application for 2016 is closed now. </h3>
+            <h4 style="margin-left:-30px !important;margin-right:-30px !important;"> There  are <span style='font-weight:900'>{{number}} </span> scholarships  worth  
+            <span style='font-weight:900;'>Rs{{amount}}</span> matching your profile .</h4>
+            <a href="/dashboard/">Click here to view them.</a>
 
+                     
+
+        {% endif %}
         </form>
 
     </div>

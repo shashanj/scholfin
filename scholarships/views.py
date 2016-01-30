@@ -1517,12 +1517,132 @@ def apply(request,scholarship_name):
     for ques in questions:
         if len(ques.expected_answers) != 0:
             option.append({'id': ques.question_id,'options' : ques.expected_answers.split('\n')})
+    amount = 0
+    number = ''
+    if scholarship_s.scholarship_type > 99 :
+        user_u = User.objects.filter(pk=request.user.id)
+        user_u=user_u[0]
+        user_d = UserProfile.objects.filter(user__username=request.user.username)
+        user_d= user_d[0]
+        # user dictionary for the searching
+        user_table = {
+            'state':user_d.user_state,
+            'level':user_d.user_level,
+            'religion':user_d.user_religion,
+            'caste':user_d.user_caste,
+            'field':user_d.user_field,
+            'abroad':user_d.user_abroad,
+            'gender':user_d.user_gender,
+        }
+
+        ss = []
+        scholarshipss = scholarship.objects.filter(education_state__state_name=user_table['state']).filter(
+            education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
+            education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
+        for schlrshp in scholarshipss:
+            if schlrshp.deadline_type == 1:
+                ss.append(schlrshp)
+
+            elif schlrshp.deadline_type == 2:
+                ss.append(schlrshp)
+
+        scholarships = scholarship.objects.all().filter(deadline__gte = timezone.now()).filter(education_state__state_name=user_table['state']).filter(
+            education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
+            education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
+        scholarship_l=[]
+
+        for s in scholarships:
+            matched=0;
+            interests=interest.objects.filter(scholarship=s)
+            interests_count=interest.objects.filter(scholarship=s).count()
+            user_interest=interest.objects.filter(userprofile=user_d)
+            if interests_count==0:
+                scholarship_l.append(s)
+            else :
+                for intrst in interests:
+                    for intrst_u in user_interest:
+                        if intrst==intrst_u:
+                            matched=1
+                if matched==1:
+                    scholarship_l.append(s)
+
+        for s in ss:
+            matched=0;
+            interests=interest.objects.filter(scholarship=s)
+            interests_count=interest.objects.filter(scholarship=s).count()
+            user_interest=interest.objects.filter(userprofile=user_d)
+            if interests_count==0:
+                scholarship_l.append(s)
+            else :
+                for intrst in interests:
+                    for intrst_u in user_interest:
+                        if intrst==intrst_u:
+                            matched=1
+                if matched==1:
+                    scholarship_l.append(s)
+        scholarship_g=[]
+        if user_d.user_gender ==1:
+            scholarship_g=scholarship_l
+        else :
+            for s in scholarship_l:
+                #print s.gender
+                if s.gender == 0:
+                    scholarship_g.append(s)
+
+        scholarship_a=[]
+        country = abroad.objects.filter(userprofile=user_d)
+        c=country[0]
+        c=str(c)
+
+        if c==("India"):
+            for s in scholarship_g:
+                country = abroad.objects.filter(scholarship=s)
+                country_count = abroad.objects.filter(scholarship=s).count()
+                if(country_count==1):
+                    if(str(country[0])== 'India'):
+                        scholarship_a.append(s)
+        else:
+            scholarship_a = scholarship_g
+
+        scholarship_d=[]
+        if user_d.user_disability == 0:
+            for s in scholarship_a:
+                if s.disability !=1:
+                    scholarship_d.append(s)
+        else:
+            scholarship_d=scholarship_a
+
+        number_of_scholarships = 0
+        amount = 0
+        sctype1={}
+        from django.core.exceptions import ObjectDoesNotExist
+        for sc in scholarship_d:
+            try:
+                temp = loggedcount.objects.get(scholarship__scholarship_id = sc.scholarship_id)
+                if not temp.user.filter(username = user_u.username).exists():
+                    temp.user.add(user_u)
+                    temp.user_count = temp.user.all().count()
+                    temp.save()
+
+            except ObjectDoesNotExist:
+                temp = loggedcount()
+                temp.scholarship = sc
+                temp.save()
+                temp.user.add(user_u)
+                temp.user_count = temp.user.all().count()
+                temp.save()
+            number_of_scholarships = number_of_scholarships + 1
+            amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
+        amount = int(amount)
+        amount = indianformat(amount)
+
     context = {
         'question':questions,
         'sc':scholarship_s,
         'option' : option,
+        'number' : number_of_scholarships,
+        'amount' : amount,
     }
-
     return render_to_response('scholarship/applyform.html',context,RequestContext(request))
 
 def submit(request):
@@ -1618,9 +1738,6 @@ def submit(request):
         TWILIO_ACCOUNT_SID = 'AC3b8fb5dae9e566b3ce8e5d183d740094'
         TWILIO_AUTH_TOKEN = 'a8cdd8ca582217f31593b093c6851045'
         client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-        message = client.messages.create(to="+919167333093", from_="+12516470722",
-                                body="You have successfully applied for " + scholarships.name )
-
         message = client.messages.create(to="+919503748792", from_="+12516470722",body="You have received applicantion from " +user.first_name +' for ' + scholarships.name + '\n' + 'Regards Scholfin ')
         return HttpResponseRedirect('/dashboard/')
 
