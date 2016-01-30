@@ -1518,7 +1518,7 @@ def apply(request,scholarship_name):
         if len(ques.expected_answers) != 0:
             option.append({'id': ques.question_id,'options' : ques.expected_answers.split('\n')})
     amount = 0
-    number = ''
+    number_of_scholarships = 0
     if scholarship_s.scholarship_type > 99 :
         user_u = User.objects.filter(pk=request.user.id)
         user_u=user_u[0]
