@@ -1302,14 +1302,14 @@ def form(request):
                             new_answer.save()
                             i += 1
                         break
-            # if not UserDocuments.objects.filter(user = UserProfile.objects.get(user = user)).filter(docs__in = document.objects.filter(scholarship = scholarships)).exists():
-            # if len(request.FILES.getlist('file')) > 0 :
-            #     for i in range (1, len(document.objects.filter(scholarship = scholarships))+1):
-            #         doc =  UserDocuments()
-            #         doc.user = UserProfile.objects.get(user = user)
-            #         doc.docs = document.objects.filter(scholarship = scholarships)[i-1]
-            #         doc.files = request.FILES.getlist('file')[i-1]
-            #         doc.save()
+            if not UserDocuments.objects.filter(user = UserProfile.objects.get(user = user)).filter(docs__in = document.objects.filter(scholarship = scholarships)).exists():
+            if len(request.FILES.getlist('file')) > 0 :
+                for i in range (1, len(document.objects.filter(scholarship = scholarships))+1):
+                    doc =  UserDocuments()
+                    doc.user = UserProfile.objects.get(user = user)
+                    doc.docs = document.objects.filter(scholarship = scholarships)[i-1]
+                    doc.files = request.FILES.getlist('file')[i-1]
+                    doc.save()
             
             try:
                 app = Applicant.objects.get(scholarship =  scholarships)
@@ -1353,7 +1353,7 @@ def form(request):
             message1.set_html(messag)
             message1.add_to(provider.user.email)
             message1.add_to('thescholfin@gmail.com')
-            # status, msg = sg.send(message1)
+            status, msg = sg.send(message1)
             return HttpResponseRedirect('/dashboard/')
 
         else:
