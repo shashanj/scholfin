@@ -35,6 +35,8 @@ urlpatterns = [
     url(r'^undo-reject/$', views.unreject , name='unreject'),
     url(r'^change-password/$', views.change_password , name='changepassword'),
     url(r'^download/$', views.genfiles , name='genfiles'),
+    url(r'^form-download/$', views.form , name='form'),
+
 
 
 ]

@@ -5,6 +5,7 @@ from django.db import models
 
 from .models import *
 
+
 class loggedcountAdmin(admin.ModelAdmin):
     list_display = ["scholarship","user_count",]
 

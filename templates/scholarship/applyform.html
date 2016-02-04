@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="{% static "scholarship/material.css" %}">
     <link rel="stylesheet" href="{% static "scholarship/styles.css" %}">
     <link rel="stylesheet" href="{% static "scholarship/css/bootstrap.css" %}">
+    <script src="{% static "scholarship/jquery.min.js" %}"></script>
+
+
 </head>
 
 <body>
@@ -44,6 +47,7 @@
     <div class="main-content">
 
         <!-- You only need this form and the form-validation.css -->
+    {% if sc.name != 'J.N. Tata Endowment for Higher Education' %}
 
         <form enctype="multipart/form-data" class="form-labels-on-top" method="POST" action="/submit-application/" >
         {% csrf_token %}
@@ -145,9 +149,136 @@
         {% endif %}
         </form>
 
+    {% else %}
+       
+        <form class="form-labels-on-top" method="POST" action="/provider/form-download/" >
+        {% csrf_token %}
+            <input type="hidden" name='sch' value='{{sc.name}}'>
+            <div class="form-title-row">
+                <h1>{{sc.name}} - Application Form Download</h1>
+            </div>
+            Download The Application Form Here
+        {% if sc.scholarship_type < 99 %}
+            <div class="form-row ">
+
+            {% if question %}
+                {% for ques in question %}
+                    {% if ques.question_type == 0 %}
+                        <label>
+                            <span>{{ques.question}}</span>
+                            <textarea name="{{ques.question_id}}" type='input' value='3uh'></textarea>
+                        </label>
+                    {% elif ques.question_type == 1 %}
+                        <label><span>{{ques.question}}</span></label>
+                        <div class="form-radio-buttons">
+                        {% for x in option %}
+                            {% if x.id == ques.question_id%}
+                                {% for op in x.options %}
+                                        <div>
+                                            <label>
+                                                <input type="radio" name="{{ques.question_id}}" value="{{op}}">
+                                                <span>{{op}}</span>
+                                            </label>
+                                        </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+
+
+                    {% elif ques.question_type == 2 %}
+                    <label>
+                    <span>{{ques.question}}</span>
+                    <select name="{{ques.question_id}}">
+                    <option>Choose an option</option>
+                    {% for x in option %}
+                            {% if x.id == ques.question_id%}
+                                {% for op in x.options %}
+                                        <option value="{{ op }}">{{op}}</option>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}       
+                    </select>
+                </label>
+
+                {% elif ques.question_type == 3 %}
+                <label class="form-checkbox">
+                    <span>{{ques.question}}</span>
+                    {% for x in option %}
+                            {% if x.id == ques.question_id%}
+                                {% for op in x.options %}
+                                    <input type="checkbox" name="{{ques.question_id}}" value="{{op}}">{{op}}
+                                    <br><br>
+                                    {% endfor %}
+                            {% endif %}
+                        {% endfor %}  
+                </label>
+                {% elif ques.question_type == 4 %}
+                        <label>
+                            <span>{{ques.question}}</span>
+                            <input name="{{ques.question_id}}" type='text' value=''>
+                        </label>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            </div>  
+            
+            <div class="form-row">
+
+                <button type="submit" formtarget="myWindow" onClick="redirect()">Download Form</button>
+                <script type="text/javascript">
+                    function redirect() {
+                        console.log('ihi')
+                        var myWindow = window.open(null, 'myName');
+                        myWindow.opener.document.write("<p>You have downloaded the application form pls fill the form and upload the filled application at scholfin</p><br><h3>For more queries Contact Scholfin at thescholfin@gmail.com</h3>");
+                        
+                        myWindow.close()
+                        // setTimeout(function(){
+                        //     console.log('i')
+                        //     window.location.reload();
+                        // },100);                    
+                        // window.location.reload(true)
+                        // window.close()
+                    }
+
+                </script>
+
+
+            </div>
+            </form>
+    <form enctype="multipart/form-data" class="form-labels-on-top" method="POST" action="/provider/form-download/" style="margin-top:-50px !important">{% csrf_token %}
+        <div class="form-title-row">
+                <h1>Upload Filled Applicaton</h1>
+            </div>
+        Already Downloaded the Form - Upload the filled application form with your LOR Here
+        {% if sc.docs %}
+            <br>
+            <br>
+                {% for doc in sc.docs %}
+                <label>
+                    <span style='align:left'>{{doc}} : </span>
+                    <input type="file" name="file" required>          
+                </label>
+                {% endfor %}
+
+            {%endif%}
+            <button type="submit" name="upload" value="upload">Upload Documents</button>
+        <p style="color:red">If not get the application form above. </p>
+        <hr>
+    </form>
+        {% else %}
+            <h3 style="color:red">Application for 2016 is closed now. </h3>
+            <h4 style="margin-left:-30px !important;margin-right:-30px !important;"> There  are <span style='font-weight:900'>{{number}} </span> scholarships  worth  
+            <span style='font-weight:900;'>Rs{{amount}}</span> matching your profile .</h4>
+            <a href="/dashboard/">Click here to view them.</a>
+
+                     
+
+        {% endif %}
+        
+    {% endif %}
     </div>
 
-    <script src="{% static "scholarship/jquery.min.js" %}"></script>
     <script src="{% static "scholarship/material.js" %}"></script>
 </body>
 

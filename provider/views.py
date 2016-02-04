@@ -1279,4 +1279,106 @@ def genfiles(request):
 
         # return response
 
+def form(request):
+    if request.POST:
+        if request.POST.get('upload') == 'upload' :
+            user = User.objects.get(id = request.session['userid'])
+            scholarships = scholarship.objects.get(name = 'J.N. Tata Endowment for Higher Education')
+            questions = question.objects.filter(scholarship = scholarships)
+            email = user.email
+            import csv
+            with open('static/download_tata.csv','rb') as csvfile:
+                spamreader = csv.reader(csvfile, quotechar='|')
+                for row in spamreader:
+                    if any(email in s for s in row):
+                        i=1
+                        print 'gotthe  match',len(row)
+                        for ques in questions:
+                            new_answer = answer()           
+                            new_answer.question = ques
+                            new_answer.user = user
+                            new_answer.save()
+                            new_answer.answer = row[i]          
+                            new_answer.save()
+                            i += 1
+                        break
+            # if not UserDocuments.objects.filter(user = UserProfile.objects.get(user = user)).filter(docs__in = document.objects.filter(scholarship = scholarships)).exists():
+            # if len(request.FILES.getlist('file')) > 0 :
+            #     for i in range (1, len(document.objects.filter(scholarship = scholarships))+1):
+            #         doc =  UserDocuments()
+            #         doc.user = UserProfile.objects.get(user = user)
+            #         doc.docs = document.objects.filter(scholarship = scholarships)[i-1]
+            #         doc.files = request.FILES.getlist('file')[i-1]
+            #         doc.save()
+            
+            try:
+                app = Applicant.objects.get(scholarship =  scholarships)
+                app.applicant.add(user)
+                app.count = app.count+1
+                app.save()
+            except Applicant.DoesNotExist:
+                new_app = Applicant()
+                new_app.scholarship = scholarships
+                new_app.save()
+                new_app.applicant.add(user)
+                new_app.count = 1
+                new_app.save()
+            subject = "Application for " +scholarships.name + ' is successfull'
+            messag = "Hi "+user.first_name+',<br>' + 'We have received your Application for ' + scholarships.name +'.<br>' + 'For further details you can contact ' +'<br>' + scholarships.contact_details
+
+            import sendgrid
+            sg_username = "scholfin"
+            sg_password = "sameer1234"
+
+            sg = sendgrid.SendGridClient(sg_username, sg_password)
+            message = sendgrid.Mail()
+
+            message.set_from("thescholfin@gmail.com")
+            message.set_subject(subject)
+            message.set_text("This is text body")
+            message.set_html(messag)
+            message.add_to(user.email)
+            try:
+                status, msg = sg.send(message)
+            except : 
+                print status
+
+            message1 = sendgrid.Mail()
+            provider = Provider.objects.filter(scholarship = scholarships)[0]
+            subject = "New Application for " +scholarships.name + 'from ' + user.first_name 
+            messag = "Hi "+provider.user.email+',<br><br>' + 'You have received new your Application for ' + scholarships.name +'.<br>' + 'For further tracking you should visit the Scholfin here www.scholfin.com/provider/ <br><br> Thanks, <br> Team Scholfin' 
+            message1.set_from("thescholfin@gmail.com")
+            message1.set_subject(subject)
+            message1.set_text("This is text body")
+            message1.set_html(messag)
+            message1.add_to(provider.user.email)
+            message1.add_to('thescholfin@gmail.com')
+            # status, msg = sg.send(message1)
+            return HttpResponseRedirect('/dashboard/')
+
+        else:
+            import csv
+            mylist = []
+            myfile = open('static/download_tata.csv','a')
+            wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+            scholarships = scholarship.objects.get(name = 'J.N. Tata Endowment for Higher Education')
+            questions = question.objects.filter(scholarship = scholarships)
+            user = User.objects.get(id = request.session['userid'])
+            mylist.append(user.email)
+            for ques in questions:
+                if ques.question_type < 3  or ques.question_type == 4:
+                    ans = request.POST.get(str(ques.question_id))
+                    mylist.append(ans)
+                else:
+                    ans = ''
+                    listt = request.POST.getlist(str(ques.question_id))
+                    for x in listt:
+                        ans = ans + str(x)
+                    mylist.append(ans)
+            
+            wr.writerow(mylist)
+            myfile.close()
+        # response = HttpResponse(content_type='application/vnd.ms-excel.sheet.macroEnabled.12')
+        # response['Content-Disposition'] = 'attachment; filename="ABC.xlsm"'
+            return HttpResponseRedirect('/static/Application Endownment-Form.xlsm')
 
