@@ -1323,6 +1323,17 @@ def form(request):
                 new_app.applicant.add(user)
                 new_app.count = 1
                 new_app.save()
+            acti = activity.objects.filter(scholarship=scholarships).filter(user=user).filter(activity=' just applied for your Scholarship')
+            if len(acti) > 0:
+                acti=acti[0]
+                acti.timestamp = timezone.now()
+            else:
+                act = activity()
+                act.user = user
+                act.scholarship = scholarships
+                act.activity = ' just applied for your Scholarship'
+                act.save()
+                    
             subject = "Application for " +scholarships.name + ' is successfull'
             messag = "Hi "+user.first_name+',<br>' + 'We have received your Application for ' + scholarships.name +'.<br>' + 'For further details you can contact ' +'<br>' + scholarships.contact_details
 
