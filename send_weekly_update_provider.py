@@ -50,44 +50,44 @@ for i in today_activity:
     else:
         provider_dict[curr_provider_email]=1
 
-# print provider_dict
+print provider_dict
 import sendgrid
 sg_username = "scholfin"
 sg_password = "sameer1234"
 
-for key in provider_dict:
-    mobile_no = scholarship.objects.values_list('provider_contact', flat=True).filter(provider_email=key)
-    # Prepare you post parameters
-    text_msg = str(provider_dict[key]) + message
-    values = {
-          'authkey' : auth_key,
-          'mobiles' : '918233992417',
-          'message' : text_msg,
-          'sender' : sender,
-          'route' : route
-          }
-    postdata = urllib.urlencode(values) # URL encoding the data here.
-    req = urllib2.Request(url, postdata)
-    response = urllib2.urlopen(req)
+# for key in provider_dict:
+#     mobile_no = scholarship.objects.values_list('provider_contact', flat=True).filter(provider_email=key)
+#     # Prepare you post parameters
+#     text_msg = str(provider_dict[key]) + message
+#     values = {
+#           'authkey' : auth_key,
+#           'mobiles' : '918233992417',
+#           'message' : text_msg,
+#           'sender' : sender,
+#           'route' : route
+#           }
+#     postdata = urllib.urlencode(values) # URL encoding the data here.
+#     req = urllib2.Request(url, postdata)
+#     response = urllib2.urlopen(req)
     
 
-    sg = sendgrid.SendGridClient(sg_username, sg_password)
-    message = sendgrid.Mail()
+#     sg = sendgrid.SendGridClient(sg_username, sg_password)
+#     message = sendgrid.Mail()
 
-    message.set_from("thescholfin@gmail.com")
-    message.set_subject("Today's Applicants on your Scholarship!")
-    # mail_message = '<table border="2"><tr><td></td> <td></td></tr> </table>'
-    message.set_text(text_msg)
-    #message.add_to(u.email)
-    message.add_to(key)
-    try:
-        status, msg = sg.send(message)
-        print msg
-        # print count
-    except:
-        print 'error'
-                # pass
+#     message.set_from("thescholfin@gmail.com")
+#     message.set_subject("Today's Applicants on your Scholarship!")
+#     # mail_message = '<table border="2"><tr><td></td> <td></td></tr> </table>'
+#     message.set_text(text_msg)
+#     #message.add_to(u.email)
+#     message.add_to(key)
+#     try:
+#         status, msg = sg.send(message)
+#         print msg
+#         # print count
+#     except:
+#         print 'error'
+#                 # pass
 
-output = response.read() # Get Response
+# output = response.read() # Get Response
 
-print output # Print Response
+# print output # Print Response
