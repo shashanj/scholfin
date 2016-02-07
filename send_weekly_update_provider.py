@@ -36,7 +36,7 @@ route = "default" # Define route
 url = "http://api.msg91.com/api/sendhttp.php" # API URL
 
 today_date = timezone.now()
-today_activity = activity.objects.filter(timestamp__lte=today_date)
+today_activity = activity.objects.filter(timestamp__lte=today_date).filter(text='just applied for your Scholarship')
 # print today_date
 
 print today_activity
