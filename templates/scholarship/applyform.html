@@ -216,7 +216,7 @@
                 {% elif ques.question_type == 4 %}
                         <label>
                             <span>{{ques.question}}</span>
-                            <input name="{{ques.question_id}}" type='text' value=''>
+                            <input name="{{ques.question_id}}" type='text' value='' required>
                         </label>
                     {% endif %}
                 {% endfor %}
@@ -225,7 +225,7 @@
             
             <div class="form-row">
 
-                <button type="submit" formtarget="myWindow" onClick="redirect()">Download Form</button>
+                <button type="submit" formtarget="_blank" onClick="redirect()">Download Form</button>
                 <script type="text/javascript">
                     function redirect() {
                         console.log('ihi')
