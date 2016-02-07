@@ -44,7 +44,7 @@ print today_activity
 provider_dict = {'key':0}
 
 for i in today_activity:
-    curr_provider_email = today_activity.scholarship.provider_email
+    curr_provider_email = i.scholarship.provider_email
     if provider_dict.has_key(curr_provider_email) == True:
         provider_dict[curr_provider_email] = provider_dict[curr_provider_email] +1
     else:
