@@ -157,7 +157,7 @@
             <div class="form-title-row">
                 <h1>{{sc.name}} - Application Form Download</h1>
             </div>
-            Download The Application Form Here
+            Fill the details and Download The Application Form
         {% if sc.scholarship_type < 99 %}
             <div class="form-row ">
 
@@ -215,6 +215,7 @@
                 </label>
                 {% elif ques.question_type == 4 %}
                         <label>
+                        {{state}}
                             <span>{{ques.question}}</span>
                             <input name="{{ques.question_id}}" type='text' value='' required>
                         </label>
@@ -225,32 +226,14 @@
             
             <div class="form-row">
 
-                <button type="submit" formtarget="_blank" onClick="redirect()">Download Form</button>
-                <script type="text/javascript">
-                    function redirect() {
-                        console.log('ihi')
-                        var myWindow = window.open(null, 'myName');
-                        myWindow.opener.document.write("<p>You have downloaded the application form pls fill the form and upload the filled application at scholfin</p><br><h3>For more queries Contact Scholfin at thescholfin@gmail.com</h3>");
-                        
-                        myWindow.close()
-                        // setTimeout(function(){
-                        //     console.log('i')
-                        //     window.location.reload();
-                        // },100);                    
-                        // window.location.reload(true)
-                        // window.close()
-                    }
-
-                </script>
-
-
+                <button type="submit" >Download Form</button>
             </div>
             </form>
     <form enctype="multipart/form-data" class="form-labels-on-top" method="POST" action="/provider/form-download/" style="margin-top:-50px !important">{% csrf_token %}
         <div class="form-title-row">
                 <h1>Upload Filled Applicaton</h1>
             </div>
-        Already Downloaded the Form - Upload the filled application form with your LOR Here
+        After Downloading the Form - Upload the filled application form with your LOR Here
         {% if sc.docs %}
             <br>
             <br>
@@ -262,7 +245,7 @@
                 {% endfor %}
 
             {%endif%}
-            <button type="submit" name="upload" value="upload">Upload Documents</button>
+            <button type="submit" name="upload" value="upload">Upload Documents And Submit</button>
         <p style="color:red">If not get the application form above. </p>
         <hr>
     </form>

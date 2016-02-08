@@ -1391,5 +1391,5 @@ def form(request):
             myfile.close()
         # response = HttpResponse(content_type='application/vnd.ms-excel.sheet.macroEnabled.12')
         # response['Content-Disposition'] = 'attachment; filename="ABC.xlsm"'
-            return HttpResponseRedirect('/static/Application Endownment-Form.xlsm')
+            return HttpResponseRedirect('/static/Application Endownment-Form.xlsm',{'state' : 'state'})
 
