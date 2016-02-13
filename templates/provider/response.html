@@ -130,7 +130,24 @@
 
             </div>
             
+            Test-For-Static
             {% if prof %}
+                {% for applicant in prof %}
+                 <form id="select_multi_action" method="POST" action="/provider/multi_action/">{% csrf_token %}
+                    <input type="hidden" name='applicant_{{forloop.counter}}' value="{{applicant.user.email}}">
+                    <input type="hidden" name='scholarship' value="{{scholarship.name}}">
+                    <input type="hidden" name='url' value="{{url}}">
+                    <input type="hidden" name='action' value="shortlist_selected">
+                    <button type='submit' class="btn btn-success"><i class="fa fa-edit "></i> Shortlist</button>
+                </form>
+                <form id="reject_multi_action" method="POST" action="/provider/multi_action/">{% csrf_token %}
+                    <input type="hidden" name='applicant_{{forloop.counter}}' value="{{applicant.user.email}}">
+                    <input type="hidden" name='scholarship' value="{{scholarship.name}}">
+                    <input type="hidden" name='url' value="{{url}}">
+                    <input type="hidden" name='action' value="reject">
+                    <button type='submit' class="btn btn-danger"><i class="fa fa-pencil"></i> Reject</button>
+                </form>
+              {% endfor %}
                 {% for applicant in prof %}
             <div class="row">
                 <div class="col-md-12">
@@ -138,8 +155,11 @@
                         <div class="panel-heading">
                             <ul class="row">
                             <li class="col-md-9">
-                                {{applicant.user.first_name |title}} {{applicant.user.last_name |title}} &nbsp;&nbsp;( Current Status : {{applicant.level}} )</li>
+                                {{applicant.user.first_name |title}} {{applicant.user.last_name |title}} &nbsp;&nbsp;( Current Status : {{applicant.level}} )</form></li>
                             <li class="col-md-3">
+                                <li class="col-md-9">
+                                    Test-Skat00sh                                
+                                  <li class="col-md-3">
                                 <form method="POST" action="/provider/action/">{% csrf_token %}
                                         <input type="hidden" name='applicant' value="{{applicant.user.email}}">
                                         <input type="hidden" name='scholarship' value="{{scholarship.name}}">
@@ -151,6 +171,8 @@
                                         {% if applicant.level != 'rejected' %}
                                         <button type='submit' form='reject_{{forloop.counter}}' class="btn btn-danger"><i class="fa fa-pencil"></i> Reject</button>
                                         {% endif %}
+                                        <input type="checkbox" name="multi_check" value='{{forloop.counter}}' form='select_multi_action' onclick="myonclickhandler(this);">
+                                        <input type="checkbox" id="reject_multi_{{forloop.counter}}" name="multi_check" value='{{forloop.counter}}' form='reject_multi_action' style="opacity:0">
                                 </form></li>
                             <form id='reject_{{forloop.counter}}' method="POST" action="/provider/action/">{% csrf_token %}
                                         <input type="hidden" name='applicant' value="{{applicant.user.email}}">
@@ -160,7 +182,22 @@
                                         
                                 </form>                         
                             </ul>
+                                <script type="text/javascript">
+                                        function myonclickhandler(t) {
+                                                if (t.checked) {
+                                                   //alert(t.value);
+                                                   document.getElementById("reject_multi_"+t.value).checked = true;
+                                                   // alert("reject_multi_"+t.value);
+                                                 }
+                                                else {
+                                                        //alert("unchecked");
+                                                        //hide();
+                                                        document.getElementById("reject_multi_"+t.value).checked = false;
+                                                }
+                                            }
+                                    </script>
                         </div>
+
                         <div class="panel-body">
                             <ul class="nav nav-tabs">
                             {% if applicant.act == 1 %}

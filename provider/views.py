@@ -739,6 +739,113 @@ def action(request):
         
     return HttpResponseRedirect('/provider/response/'+url+'/')
 
+
+@login_required(login_url='/provider/login/')
+def multi_action(request):
+    if request.POST:
+        app = request.POST.get('applicant')
+        sch = request.POST.get('scholarship')
+        url = request.POST.get('url')
+        scholarship_s = scholarship.objects.get(name = sch)
+        # app = User.objects.get(email = app)
+        action = request.POST.get('action')
+        multi_val = request.POST.getlist('multi_check')
+        
+        print multi_val
+        print action
+        # app = request.POST.get('applicant_'+multi_val[0])
+        print app
+        ###################################################################
+        for i in multi_val:
+            app = request.POST.get('applicant_'+'i')
+            if action == 'shortlist_selected' :            
+                try:
+                    shr = ShortList.objects.get(scholarship =  scholarship_s)
+                    shr.shortlist.add(app)
+                    shr.count = shr.count+1
+                    shr.save()
+                except ShortList.DoesNotExist:
+                    shr = ShortList()
+                    shr.scholarship = scholarship_s
+                    shr.save()
+                    shr.shortlist.add(app)
+                    shr.count = 1
+                    shr.save()
+                try:
+                    shr = Rejected.objects.get(scholarship =  scholarship_s)
+                    try:
+                        print 'ihi'
+                        shr.rejected.remove(app)
+                        shr.count = shr.count - 1
+                        shr.save()
+                    except:
+                        pass
+                except:
+                    pass
+
+                import sendgrid
+                sg_username = "scholfin"
+                sg_password = "sameer1234"
+
+                sg = sendgrid.SendGridClient(sg_username, sg_password)
+                message = sendgrid.Mail()
+                subject = request.POST.get('sub')
+                message.set_from("thescholfin@gmail.com")
+                message.set_subject('Congrats You ave been Shortlisted')
+                message.set_text("This is text body")
+                body = 'hi ' + app.first_name + ', You have been shortlisted for' + sch + ' For further process contact the scholarship provider'
+                messag = body
+                message.set_html(messag)
+                shr = ShortList.objects.filter(scholarship = scholarship_s)[0]
+                # message.add_to(app.email)
+                message.add_to('devfame@gmail.com')
+                message.add_to('thescholfin@gmail.com')
+                status, msg = sg.send(message)
+
+                
+                state = app.first_name + ' has been shortlisted'
+                active = 1
+            ####################################################################
+            elif action == 'reject':
+                state = app.first_name + ' has been rejected'
+                active = 1
+                try:
+                    rej = Rejected.objects.get(scholarship =  scholarship_s)
+                    rej.rejected.add(app)
+                    rej.count = rej.count+1
+                    rej.save()
+                except Rejected.DoesNotExist:
+                    rej = Rejected()
+                    rej.scholarship = scholarship_s
+                    rej.save()
+                    rej.rejected.add(app)
+                    rej.count = 1
+                    rej.save()
+                try:
+                    shr = ShortList.objects.get(scholarship =  scholarship_s)
+                    try:
+                        print 'ihi'
+                        shr.shortlist.remove(app)
+                        shr.count = shr.count - 1
+                        shr.save()
+                    except:
+                        pass
+                except:
+                    pass
+                try:
+                    shr = Selected.objects.get(scholarship =  scholarship_s)
+                    try:
+                        shr.selected.remove(app)
+                        shr.count = shr.count - 1
+                        shr.save()
+                    except:
+                        pass
+                except:
+                    pass
+            ####################################################################
+            
+    return HttpResponseRedirect('/provider/response/'+url+'/')
+    
 @login_required(login_url='/provider/login/')
 def shortlist(request,scholarship_name):
     url = scholarship_name

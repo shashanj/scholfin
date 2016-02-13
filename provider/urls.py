@@ -36,7 +36,5 @@ urlpatterns = [
     url(r'^change-password/$', views.change_password , name='changepassword'),
     url(r'^download/$', views.genfiles , name='genfiles'),
     url(r'^form-download/$', views.form , name='form'),
-
-
-
+    url(r'^multi_action/$', views.multi_action , name='multi_action'),
 ]
