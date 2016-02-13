@@ -616,7 +616,7 @@ def action(request):
 
             
             state = app.first_name + ' has been shortlisted'
-            active = 1
+            
         ####################################################################
         elif action == 'reject':
             state = app.first_name + ' has been rejected'
@@ -743,7 +743,7 @@ def action(request):
 @login_required(login_url='/provider/login/')
 def multi_action(request):
     if request.POST:
-        app = request.POST.get('applicant')
+        #app = request.POST.get('applicant')
         sch = request.POST.get('scholarship')
         url = request.POST.get('url')
         scholarship_s = scholarship.objects.get(name = sch)
@@ -754,10 +754,11 @@ def multi_action(request):
         print multi_val
         print action
         # app = request.POST.get('applicant_'+multi_val[0])
-        print app
+        #print app
         ###################################################################
         for i in multi_val:
-            app = request.POST.get('applicant_'+'i')
+            app = request.POST.get('applicant_'+str(i))
+            app = User.objects.get(email = app)
             if action == 'shortlist_selected' :            
                 try:
                     shr = ShortList.objects.get(scholarship =  scholarship_s)
@@ -844,7 +845,7 @@ def multi_action(request):
                     pass
             ####################################################################
             
-    return HttpResponseRedirect('/provider/response/'+url+'/')
+    return HttpResponseRedirect('/provider/dashboard')
     
 @login_required(login_url='/provider/login/')
 def shortlist(request,scholarship_name):

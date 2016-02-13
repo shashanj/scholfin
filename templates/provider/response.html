@@ -152,9 +152,10 @@
                 </form>
               
               <div style="display: inline-block;">
-              <button type='submit' class="btn btn-success" form='select_multi_action'><i class="fa fa-edit "></i> Shortlist</button>
-              <button type='submit' class="btn btn-danger" form='reject_multi_action'><i class="fa fa-pencil"></i> Reject</button>
+              <button type='submit' class="btn btn-success" form='select_multi_action'><i class="fa fa-edit "></i> Shortlist selected</button>
+              <button type='submit' class="btn btn-danger" form='reject_multi_action'><i class="fa fa-pencil"></i> Reject selected</button>
               </div>
+               <br>
                 {% for applicant in prof %}
             <div class="row">
                 <div class="col-md-12">
@@ -176,10 +177,9 @@
                                         {% endif %}
                                         {% if applicant.level != 'rejected' %}
                                         <button type='submit' form='reject_{{forloop.counter}}' class="btn btn-danger"><i class="fa fa-pencil"></i> Reject</button>
-                                        {% endif %}
-                                        <input type="checkbox" name="multi_check" value='{{forloop.counter}}' form='select_multi_action' onclick="myonclickhandler(this);">
+                                                                               <input type="checkbox" name="multi_check" value='{{forloop.counter}}' form='select_multi_action' onclick="myonclickhandler(this);">
                                         <input type="checkbox" id="reject_multi_{{forloop.counter}}" name="multi_check" value='{{forloop.counter}}' form='reject_multi_action' style="opacity:0">
-                                </form></li>
+                             {% endif %}   </form></li>
                             <form id='reject_{{forloop.counter}}' method="POST" action="/provider/action/">{% csrf_token %}
                                         <input type="hidden" name='applicant' value="{{applicant.user.email}}">
                                         <input type="hidden" name='scholarship' value="{{scholarship.name}}">
