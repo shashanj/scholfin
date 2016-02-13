@@ -130,24 +130,31 @@
 
             </div>
             
-            Test-For-Static
             {% if prof %}
-                {% for applicant in prof %}
+                
                  <form id="select_multi_action" method="POST" action="/provider/multi_action/">{% csrf_token %}
+                 {% for applicant in prof %}
                     <input type="hidden" name='applicant_{{forloop.counter}}' value="{{applicant.user.email}}">
+                {% endfor %}
                     <input type="hidden" name='scholarship' value="{{scholarship.name}}">
                     <input type="hidden" name='url' value="{{url}}">
                     <input type="hidden" name='action' value="shortlist_selected">
-                    <button type='submit' class="btn btn-success"><i class="fa fa-edit "></i> Shortlist</button>
+                
                 </form>
                 <form id="reject_multi_action" method="POST" action="/provider/multi_action/">{% csrf_token %}
+                 {% for applicant in prof %}
                     <input type="hidden" name='applicant_{{forloop.counter}}' value="{{applicant.user.email}}">
+                {% endfor %}
                     <input type="hidden" name='scholarship' value="{{scholarship.name}}">
                     <input type="hidden" name='url' value="{{url}}">
                     <input type="hidden" name='action' value="reject">
-                    <button type='submit' class="btn btn-danger"><i class="fa fa-pencil"></i> Reject</button>
+                
                 </form>
-              {% endfor %}
+              
+              <div style="display: inline-block;">
+              <button type='submit' class="btn btn-success" form='select_multi_action'><i class="fa fa-edit "></i> Shortlist</button>
+              <button type='submit' class="btn btn-danger" form='reject_multi_action'><i class="fa fa-pencil"></i> Reject</button>
+              </div>
                 {% for applicant in prof %}
             <div class="row">
                 <div class="col-md-12">
@@ -157,8 +164,7 @@
                             <li class="col-md-9">
                                 {{applicant.user.first_name |title}} {{applicant.user.last_name |title}} &nbsp;&nbsp;( Current Status : {{applicant.level}} )</form></li>
                             <li class="col-md-3">
-                                <li class="col-md-9">
-                                    Test-Skat00sh                                
+                                <li class="col-md-9">                              
                                   <li class="col-md-3">
                                 <form method="POST" action="/provider/action/">{% csrf_token %}
                                         <input type="hidden" name='applicant' value="{{applicant.user.email}}">
