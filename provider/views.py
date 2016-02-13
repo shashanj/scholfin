@@ -798,8 +798,7 @@ def multi_action(request):
                 messag = body
                 message.set_html(messag)
                 shr = ShortList.objects.filter(scholarship = scholarship_s)[0]
-                # message.add_to(app.email)
-                message.add_to('devfame@gmail.com')
+                message.add_to(app.email)
                 message.add_to('thescholfin@gmail.com')
                 status, msg = sg.send(message)
 
