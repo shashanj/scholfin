@@ -31,7 +31,7 @@
 </script>
 
 
-{% load staticfiles %}								  
+{% load staticfiles %}                  
 <!-- Schema.org markup for Google+ -->
 <meta itemprop="name" content="ScholFin | Scholarships in 3 Clicks!">
 <meta itemprop="description" content="Personalized matching to over 10 crores of scholarships from government,trusts & NGOs 
@@ -66,20 +66,18 @@
     <link  rel="stylesheet" href="{% static "scholarship/css/bootstrap.css" %}"/>
     <link href="{% static "scholarship/css/style.css" %}" rel="stylesheet">
     <link href="{% static "scholarship/css/zigzag.css" %}" rel="stylesheet">
-    <link href="{% static "scholarship/css/font-awesome" %}" rel="stylesheet">
+    <link href="{% static "scholarship/css/font-awesome.css" %}" rel="stylesheet">
     <link href="{% static "scholarship/css/socialize-bookmarks.css" %}" rel="stylesheet">
     <link href="{% static "scholarship/css/all.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:700,400&amp;subset=cyrillic,latin,greek,vietnamese">
+  <link rel="stylesheet" href="{% static "assets/bootstrap/css/bootstrap.min.css"%}">
+  <link rel="stylesheet" href="{% static "assets/mobirise/css/style.css"%}">
+  <link rel="stylesheet" href="{% static "assets/mobirise-slider/style.css"%}">
+  <link rel="stylesheet" href="{% static "assets/mobirise/css/mbr-additional.css"%}" type="text/css">
 
 <!-- Toggle Switch -->
 <script src="{% static "scholarship/js/jquery.js" %}"></script>
-<link rel="stylesheet" href="{% static "scholarship/css/jquery.switch.css" %}90
-
-
-
-
-
-
-.0">
+<link rel="stylesheet" href="{% static "scholarship/css/jquery.switch.css" %}">
 
 <!-- Google web font -->
 
@@ -109,13 +107,13 @@
 
 
 <style>
-	html , body{
-		height:100%;
-		width:100%;
-	}
-	.container-fluid{
-		margin:0px 30px 0px 30px ;
-	}
+  html , body{
+    height:100%;
+    width:100%;
+  }
+  .container-fluid{
+    margin:0px 30px 0px 30px ;
+  }
   
   .jtron .container{
      margin-top: 80px;
@@ -128,30 +126,30 @@
         margin-top:20px;
     } 
     .container-fluid .row .second-title{
-    	font-size: 36px;
-    	color:white;
-    	line-height:36px;
-    	text-align:left;
-    	font-weight:300;
-    	padding: 20px;
-    	margin-top:3%;
+      font-size: 36px;
+      color:white;
+      line-height:36px;
+      text-align:left;
+      font-weight:300;
+      padding: 20px;
+      margin-top:3%;
     }
-	.container-fluid .row .second-title p.st1{
-    	font-size: 43px;
-    	line-height:56px;
+  .container-fluid .row .second-title p.st1{
+      font-size: 43px;
+      line-height:56px;
     }    
     .second-title p span{
-    	color: #FFB300;
-    	font-weight: 700;
+      color: #FFB300;
+      font-weight: 700;
     }
     
     .container-fluid .row .second-title p:nth-child(1){
-    	font-size:28px;
+      font-size:28px;
     }
     #top-area{
     min-height:90%;
-    	height:auto;
-    	clear: both;
+      height:auto;
+      clear: both;
     }
 
 @import url(http://weloveiconfonts.com/api/?family=entypo);
@@ -172,7 +170,9 @@ button.entypo-right-open-big:before {
 body {
   background-color: #f2f2f2;
 }
-
+a{
+  text-decoration: none;
+}
 @import url(http://weloveiconfonts.com/api/?family=entypo);
 * {
   margin: 0;
@@ -199,24 +199,24 @@ body {
 }
 
 .center{
-	text-align:center;
+  text-align:center;
 }
 a.getstarted{
-	background: #FFC107;
-	color:#fff;
-	padding:10px 10px;
-	border-radius:0;
-	font-size: 52px;
-	width:683px;
-	margin-left: 25%;*/
-	margin-top: 300px !important;
-	font-weight:700;
-	border:2px solid white;
-	border-radius:10px;
-	text-align:center; 
+  background: #FFC107;
+  color:#fff;
+  padding:10px 10px;
+  border-radius:0;
+  font-size: 52px;
+  width:683px;
+  margin-left: 25%;*/
+  margin-top: 300px !important;
+  font-weight:700;
+  border:2px solid white;
+  border-radius:10px;
+  text-align:center; 
 }
 a.again{
-	margin-left:30vw;
+  margin-left:30vw;
 }
 .seperator{
     padding:40px;
@@ -225,29 +225,29 @@ a.again{
     padding:20px;
 }
 a.getstarted:hover{
-	background: rgb(255,200,20);
+  background: rgb(255,200,20);
 }
 @media only screen and (max-width: 768px) {
-	a.getstarted{
-		font-size:30px;
-		border-radius:10px;
-		margin-left:10%;
-		font-size:42px;
-		font-weight:400;
-		padding: 5px 5px;
+  a.getstarted{
+    font-size:30px;
+    border-radius:10px;
+    margin-left:10%;
+    font-size:42px;
+    font-weight:400;
+    padding: 5px 5px;
         margin-left:20%;
-		margin-top:0px;
-		top:60px;
-	}
-	a.again{
-		margin-left:30vw;
-	}
+    margin-top:0px;
+    top:60px;
+  }
+  a.again{
+    margin-left:30vw;
+  }
     .jtron .container{
      margin-top: -20px;
   }
     .container-fluid .row .second-title p.st1{
-    	font-size: 36px;
-    	line-height:36px;
+      font-size: 36px;
+      line-height:36px;
     }
     .seperator{
         padding:20px;
@@ -302,120 +302,170 @@ a.getstarted:hover{
 
 <body>
 
-<section id="top-area">
-	<header>
-         <div class="container">
-            <div class="row">
-        	<div class="col-md-4 col-xs-3 " id="logo"><a href="/">ScholFin</a></div>
-            
-            <div class="btn-responsive-menu"> <span class="bar"></span> <span class="bar"></span> <span class="bar"></span> </div>
-            <nav class="col-md-8 col-xs-9" id="top-nav">
-            	<ul>
-              {% if next %}
-                    <li><a href="/logins/next={{next}}">Login</a></li>
-                    <li><a href="/signup/next={{next}}" id="purchase">Sign Up</a></li>
-              {% else %}
-                    <li><a href="/login/">Login</a></li>
-                    <li><a href="/signup/" id="purchase">Sign Up</a></li>
-               </ul>
-              {% endif %}
-            </nav><!-- End Nav -->
-
-            
-         </div><!-- End row -->
-         </div><!-- End container -->
-        </header> <!-- End header -->
-        	
-            <div class="container-fluid jtron">
-		         <div class="row">
-		             <div class="col-md-12 col-lg-12 main-title">
-				         <h1 ><strong>Scholarship Search Engine</strong></h1>
-					</div>
-				</div>
-				<div class="row">
-		            <div class="col-md-6 col-lg-6 second-title">
-		            	<p>
-				        	<p class="st1 center"><span>10,00,00,456</span> Scholarships </p>
-				        	<p class="st1 center">worth <span>₹ 9,458</span> crores</p>
-		            	</p>
-						<br>
-						<br>
-					<div class="row ">
-            <div class="col-xs-12">
-            {% if next %}
-            <a class="getstarted" href="/signup/next={{next}}">GET<span style="color:#ffc107">i</span>STARTED</a>
-            {% else %}
-            <a class="getstarted" href="/signup/">GET<span style="color:#ffc107">i</span>STARTED</a>
-            {% endif %}
-          </div>
-          </div>
-					</div>
-					<div class="col-md-6 col-lg-6 second-title">
-						<img class="visible-lg visible-md" src="{% static "scholarship/images/comp.png" %}" width="80%" alt="ScholFin dashboard"/>
-		            </div>
-		        </div>
-				<br>
-				<div  style="seperator2"></div>
-		        </div>
-        <div  class="seperator"></div>
-		          </div>
+<section class="engine"><a rel="nofollow" href="/">Scholfin</a></section>
+<section class="mbr-navbar mbr-navbar--freeze mbr-navbar--absolute mbr-navbar--transparent mbr-navbar--sticky mbr-navbar--auto-collapse" id="menu-0">
+    <div class="mbr-navbar__section mbr-section">
+        <div class="mbr-section__container container">
+            <div class="mbr-navbar__container">
+                <div class="mbr-navbar__column mbr-navbar__column--s mbr-navbar__brand">
+                    <span class="mbr-navbar__brand-link mbr-brand mbr-brand--inline">
+                        <a class="mbr-brand__logo" href="/"><img class="mbr-navbar__brand-img mbr-brand__img" alt="scholfin" style="width:100%" src="{% static "provider/images/Scholfin1.png" %}"></a>
+                        
+                    </span>
+                </div>
+                <div class="mbr-navbar__hamburger mbr-hamburger text-white"><span class="mbr-hamburger__line"></span></div>
+                <div class="mbr-navbar__column mbr-navbar__menu">
+                    <nav class="mbr-navbar__menu-box mbr-navbar__menu-box--inline-right">
+                        <div class="mbr-navbar__column"><ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--freeze mbr-buttons--right btn-decorator mbr-buttons--active mbr-buttons--only-links"><li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="/about_us/">About Us</a></li><li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="/contact_us/">Contact Us</a></li>
+                        {% if next %}
+                          <li class="mbr-navbar__item">
+                            <a class="mbr-buttons__link btn text-white" href="/logins/next={{next}}">Login</a>
+                          </li>
+                          <li class="mbr-navbar__item">
+                            <a class="mbr-buttons__link btn text-white" href="/signup/next={{next}}">SignUp</a>
+                          </li>
+                        {% else %}
+                          <li class="mbr-navbar__item">
+                            <a class="mbr-buttons__link btn text-white" href="/logins/">Login</a>
+                          </li>
+                          <li class="mbr-navbar__item">
+                            <a class="mbr-buttons__link btn text-white" href="/signup/">SignUp</a>
+                          </li>
+                        {% endif %}
+                        </ul></div>
+                        
+                    </nav>
+                </div>
             </div>
- </section>
+        </div>
+    </div>
+</section>
 
-        <style>
-            #main{
-                margin-top:20px
-            }
-        </style>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               </style>
+<section class="mbr-slider mbr-section mbr-section--no-padding carousel slide" data-ride="carousel" data-wrap="true" data-interval="5000" id="slider-6" style="background-color: rgb(255, 255, 255);">
+    <div class="mbr-section__container">
+        <div>
+            <ol class="carousel-indicators">
+                <li data-app-prevent-settings="" data-target="#slider-6" class="active" data-slide-to="0"></li>
+                <li data-app-prevent-settings="" data-target="#slider-6" data-slide-to="1"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <div class="mbr-box mbr-section mbr-section--relative mbr-section--fixed-size mbr-section--bg-adapted item dark center mbr-section--full-height active" style="background-image: url('{% static "scholarship/images/ind.jpg" %}')">
+                    <div class="mbr-box__magnet mbr-box__magnet--sm-padding">
+                        <div class=" container">
+                            
+                            <div class="row">
+                              <div class="col-sm-8 col-sm-offset-2">
+                                <div class="mbr-hero">
+                                    <h1 class="mbr-hero__text"><strong>Scholarship Search Engine</strong></h1>
+                                    <p class="mbr-hero__subtext">
+                                      <span style="color:#FFB300">10,00,00,456</span> Scholarships <br>
+                                      worth <span style="color:#FFB300">₹ 9,458 </span>crores
+                                    </p>
+                                </div>
+                                <div class="mbr-buttons btn-inverse mbr-buttons--center">
+                                {% if next %}
+                                  <a class="mbr-buttons__btn btn btn-lg btn-danger"  href="/signup/next={{next}}/">Get Started</a>
+                                  <a class="mbr-buttons__btn btn btn-lg btn-default" href="/login/next={{next}}/">Login</a>
+                                {% else %}
+                                  <a class="mbr-buttons__btn btn btn-lg btn-danger"  href="/signup/">Get Started</a>
+                                  <a class="mbr-buttons__btn btn btn-lg btn-default" href="/login/">Login</a>
+                                {% endif %}
+                                </div>
+                            </div></div>
+                        </div>
+                    </div>
+                </div><div class="mbr-box mbr-section mbr-section--relative mbr-section--fixed-size mbr-section--bg-adapted item dark center mbr-section--full-height" style=" opacity: 1; background-image: url('http://blog.arcanemind.com/wp-content/uploads/2015/11/o-SCHOOL-facebook.jpg'); background-color: rgba(0, 0, 0, 0); background-position: 100% 100%; background-repeat: no-repeat;">
+                    <div class="mbr-box__magnet mbr-box__magnet--sm-padding">
+                        <div class=" container">
+                            
+                            <div class="row"><div class="col-sm-8 col-sm-offset-2 ">
+                                <div class="mbr-hero">
+                                    <h1 class="mbr-hero__text" style="margin-top:10%; color:#FFB300">THE J.N. TATA ENDOWMENT FOR THE HIGHER EDUCATION OF INDIANS</h1>
+                                   
+                                </div>
+                                <div class="mbr-buttons btn-inverse mbr-buttons--center"><a class="mbr-buttons__btn btn btn-lg btn-danger" href="/scholarship-details/J-N-Tata-Endowment-for-Higher-Education">View Details</a> <a class="mbr-buttons__btn btn btn-lg btn-default" href="/login/">Login</a></div>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                </div><!-- <div class="mbr-box mbr-section mbr-section--relative mbr-section--fixed-size mbr-section--bg-adapted item dark center mbr-section--full-height" style="background-image: url(http://www.caterer.com/careers-advice/training/~/media/ct/jobseekers/careers-advice/training/school_success2.ashx">
+                    <div class="mbr-box__magnet mbr-box__magnet--sm-padding">
+                        <div class=" container">
+                            
+                            <div class="row">
+                              <div class="col-sm-8 col-sm-offset-2">
+                                <div class="mbr-hero">
+                                    <h1 class="mbr-hero__text">Slide 3</h1>
+                                    <p class="mbr-hero__subtext">Choose from the large selection of latest pre-made blocks - jumbotrons, hero images, parallax scrolling, video backgrounds, hamburger menu, sticky header and more.</p>
+                                </div>
+                                <div class="mbr-buttons btn-inverse mbr-buttons--center"><a class="mbr-buttons__btn btn btn-lg btn-danger" href="/">View Details</a> <a class="mbr-buttons__btn btn btn-lg btn-default" href="/">Apply Now</a></div>
+                            </div></div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            
+            <a data-app-prevent-settings="" class="left carousel-control" role="button" data-slide="prev" href="#slider-6">
+                <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a data-app-prevent-settings="" class="right carousel-control" role="button" data-slide="next" href="#slider-6">
+                <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        </div>
+        </div></div>
+    </div>
+</section>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </style>
 
 <section class="container" id="main">
 <br>
 
 
     <div class="row">
-	<div class="col-md-12">
-		<h2>Scholarship in 3 Clicks!
-		</h2>
-		<br><br>
-	</div>
+  <div class="col-md-12">
+    <h2>Scholarship in 3 Clicks!
+    </h2>
+    <br><br>
+  </div>
 </div><!-- end row -->
 
 <div class="row">
 
-	<div class="col-md-4 col-sm-4 add_bottom_30 box">
-		<p><img src="{% static "scholarship/images/icon-1.png" %}" width="100%" alt="ScholFin Sign up"></p>
-		<h3>1. Sign up</h3>
-		<h4>
-			 Just provide the search engine with some basic information about you like academic qualifications, 
-			 interests etc. and get yourself registered on 1st click.   
-		</h4>
-		
-		
-	</div>
+  <div class="col-md-4 col-sm-4 add_bottom_30 box">
+    <p><img src="{% static "scholarship/images/icon-1.png" %}" width="100%" alt="ScholFin Sign up"></p>
+    <h3>1. Sign up</h3>
+    <h4>
+       Just provide the search engine with some basic information about you like academic qualifications, 
+       interests etc. and get yourself registered on 1st click.   
+    </h4>
     
-	<div class="col-md-4 col-sm-4 add_bottom_30 box">
-		<p><img src="{% static "scholarship/images/icon-2.jpg" %}" width="100%" alt="ScholFin Organise"></p>
-		<h3>2. Organise</h3>
+    
+  </div>
+    
+  <div class="col-md-4 col-sm-4 add_bottom_30 box">
+    <p><img src="{% static "scholarship/images/icon-2.jpg" %}" width="100%" alt="ScholFin Organise"></p>
+    <h3>2. Organise</h3>
 
-		<h4>
-			   The search engine analyses your data and displays only those scholarships in which you are eligible 
-			   providing a personalised dashboard on 2nd click.
-		</h4>
-		
-		
-	</div>
+    <h4>
+         The search engine analyses your data and displays only those scholarships in which you are eligible 
+         providing a personalised dashboard on 2nd click.
+    </h4>
     
-	<div class="col-md-4 col-sm-4 add_bottom_30 box">
-		<p><img src="{% static "scholarship/images/icon-3.jpg" %}" width="100%" alt="ScholFin Apply"></p>
-		<h3>3. Apply</h3>
-		<h4>
-				See complete and accurate details of the scholarship on your dashboard and apply directly to win a 
-				scholarship in simple 3 clicks.
-			
-		</h4>
-		
-	</div>
+    
+  </div>
+    
+  <div class="col-md-4 col-sm-4 add_bottom_30 box">
+    <p><img src="{% static "scholarship/images/icon-3.jpg" %}" width="100%" alt="ScholFin Apply"></p>
+    <h3>3. Apply</h3>
+    <h4>
+        See complete and accurate details of the scholarship on your dashboard and apply directly to win a 
+        scholarship in simple 3 clicks.
+      
+    </h4>
+    
+  </div>
     
 </div><!-- end row -->
 
@@ -429,13 +479,13 @@ a.getstarted:hover{
       </div>
       <div class="row">
         <div class="col-lg-4">
-      			<img src="{% static "scholarship/images/emailphone.png" %}" width="100%" style="margin: 0 auto;" alt="ScholFin Notifications" >
-      	</div>
-      	<div class="col-lg-8">
-      		<h3 style="text-align:left;margin-top:50px;font-size:36px;line-height:36px;color:#fff">"Never miss a deadline"</h3>
-      	 <p style="text-align:left;font-size:25px;line-height:42px;padding:10px;color:#fff">The search engine will identify the scholarships in which you are eligible and notify them to you through E-mail and SMS.
+            <img src="{% static "scholarship/images/emailphone.png" %}" width="100%" style="margin: 0 auto;" alt="ScholFin Notifications" >
+        </div>
+        <div class="col-lg-8">
+          <h3 style="text-align:left;margin-top:50px;font-size:36px;line-height:36px;color:#fff">"Never miss a deadline"</h3>
+         <p style="text-align:left;font-size:25px;line-height:42px;padding:10px;color:#fff">The search engine will identify the scholarships in which you are eligible and notify them to you through E-mail and SMS.
          </p>
-      	</div>
+        </div>
       </div>
     </div>
   </div>
@@ -444,33 +494,33 @@ a.getstarted:hover{
   <div class="container" style="padding:100px 0 ;">
     <h3 style="font-size:56px;line-height:70px;">Who wants a Scholarship?</h3>
     <br>
-	<br>
+  <br>
     <div class="row ">
       {% if next %}
-				<a class="getstarted again" href="/signup/next={{next}}">GET<span style="color:#ffc107">i</span>STARTED</a>
+        <a class="getstarted again" href="/signup/next={{next}}">GET<span style="color:#ffc107">i</span>STARTED</a>
       {% else %}
-      <a class="getstarted again" href="/signup/">GET<span style="color:#ffc107">i</span>STARTED</a>
+        <a class="getstarted again" href="/signup/">GET<span style="color:#ffc107">i</span>STARTED</a>
       {% endif %}
       
-		</div>
+    </div>
   </div>
 </div>
 <footer>
-	<section class="container">
-	<div class="row">
-    	<div class="col-md-4">
-        	<h3>Can you do us a favour?</h3>
+  <section class="container">
+  <div class="row">
+      <div class="col-md-4">
+          <h3>Can you do us a favour?</h3>
             <p>Dear User, your suggestions and reviews will be very helpful to ScholFin and we can use your feedback
-			to develop an amazing new change!<br>Please submit the feedback <a class="typeform-share link" href="https://scholfin.typeform.com/to/EgBAUf" data-mode="2" target="_blank"><b>Here!</b></a>
+      to develop an amazing new change!<br>Please submit the feedback <a class="typeform-share link" href="https://scholfin.typeform.com/to/EgBAUf" data-mode="2" target="_blank"><b>Here!</b></a>
 <script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}})()</script>
 .</p>
-			<p>We will really really appreciate your time to help us improve ScholFin. Thanks for being an awesome user!</p>
+      <p>We will really really appreciate your time to help us improve ScholFin. Thanks for being an awesome user!</p>
         </div>
         
         
         
         <div class="col-md-4" id="contact">
-        	<h3>Contact info</h3>
+          <h3>Contact info</h3>
             <p> Feel free to contact us for any query. We will be happy to help you. </p> 
                 <ul>
                         <li><i class="icon-home"></i> Center for Innovation (CIVN)
@@ -484,22 +534,21 @@ a.getstarted:hover{
                         
                     </ul>    
         </div>
-		 
+     
         
     </div><!-- end row -->
-  	</section>
+    </section>
     
     <section id="footer_2">
     <div class="container">
     <div class="row">
-    	<div class="col-md-6" style="margin-top:1%">	
+      <div class="col-md-6" style="margin-top:1%">  
                   <ul id="footer-nav">
                   <li>Copyright © ScholFin </li>
                   <li><a href="/about_us/">About Us</a></li>
                   <li><a href="/contact_us/" target="_blank">Contact Us</a></li>
                   <li><a href="/sitemap.xml" target="_blank">Sitemap</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#myModal">Privacy Policy</a></li>
-                    
+                  <li><a href="#" data-toggle="modal" data-target="#myModal">Privacy Policy</a></li> 
                 </ul>                
         </div>
             <div class="col-md-6" style="text-align:center">
@@ -507,7 +556,7 @@ a.getstarted:hover{
                             
               </div>
            <ul class="social-bookmarks clearfix">
-				     <a href="https://msg91.com/startups/?utm_source=startup-banner"><img src="https://msg91.com/images/startups/msg91Badge.png" width="100" height="80" title="MSG91 - SMS for Startups" alt="Bulk SMS - MSG91"></a>
+             <a href="https://msg91.com/startups/?utm_source=startup-banner"><img src="https://msg91.com/images/startups/msg91Badge.png" width="100" height="80" title="MSG91 - SMS for Startups" alt="Bulk SMS - MSG91"></a>
 
              <a href="https://www.facebook.com/SWNagpur/photos/a.816637611736022.1073741828.816364655096651/995876937145421/?type=3&theater" target="_blank"><li>
                     <img src="{% static "scholarship/images/sw.png" %}" width="160" height="200%" style="margin: 0 auto;" alt="scholfin google startup weekend">&nbsp;&nbsp;&nbsp;
@@ -522,7 +571,7 @@ a.getstarted:hover{
           </ul>
             </div>
         </div>
-		</div>
+    </div>
     </section>
 
 </footer> 
@@ -574,6 +623,9 @@ a.getstarted:hover{
 <script src="{% static "scholarship/js/bootstrap.min.js" %}"></script>
 <script src="{% static "scholarship/js/retina.js" %}"></script>
 <script src="{% static "scholarship/js/functions.js" %}"></script>
+<script src=" {% static "assets/smooth-scroll/SmoothScroll.js" %}"></script>
+<script src=" {% static "assets/bootstrap-carousel-swipe/bootstrap-carousel-swipe.js" %}"></script>
+<script src=" {% static "assets/mobirise/js/script.js" %}"></script>
 <script>
     (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
