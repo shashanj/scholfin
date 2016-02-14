@@ -49,6 +49,30 @@ def deadline_crossed(request):
     return render_to_response('custom_admin/index.html',context_list,context)
 
 @staff_member_required
+def deadline_open(request):
+    context = RequestContext(request)
+    page_title = ' The scholarships whose deadline are open (open ones)'
+    scholarships = scholarship.objects.filter(deadline_type = 0 ).filter(deadline__gte = timezone.now())
+
+    context_list = {
+            'scholarships': scholarships,
+            'page_title' : page_title,
+            }
+    return render_to_response('custom_admin/index.html',context_list,context)
+
+@staff_member_required
+def deadline_launch_and_closed(request):
+    context = RequestContext(request)
+    page_title = ' The scholarships that are launched and close'
+    scholarships = scholarship.objects.filter(deadline_type__gte = 100 )
+
+    context_list = {
+            'scholarships': scholarships,
+            'page_title' : page_title,
+            }
+    return render_to_response('custom_admin/index.html',context_list,context)
+
+@staff_member_required
 def deadline_type_1(request):
     context = RequestContext(request)
     page_title = ' The Scholarships whose deadline type is 1'
@@ -65,6 +89,18 @@ def deadline_type_2(request):
     context = RequestContext(request)
     page_title = ' The Scholarships whose deadline type is 2'
     scholarships = scholarship.objects.filter(deadline_type = 2 )
+
+    context_list = {
+            'scholarships': scholarships,
+            'page_title' : page_title,
+            }
+    return render_to_response('custom_admin/index.html',context_list,context)
+
+@staff_member_required
+def deadline_type_3(request):
+    context = RequestContext(request)
+    page_title = ' The Scholarships whose deadline type is 3'
+    scholarships = scholarship.objects.filter(deadline_type = 3 )
 
     context_list = {
             'scholarships': scholarships,

@@ -78,9 +78,15 @@
 
           <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/dc/">Scholarships(Deadline crossed)</a>
 
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/do/">Scholarships(Deadline live)</a>
+
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/dlc/">Scholarships(Launched and closed)</a>
+          
           <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/dt1/">Scholarships(Deadline type=1)</a>
 
           <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/dt2/">Scholarships(Deadline type=2)</a>
+
+          <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/dt3/">Scholarships(Deadline type=3)</a>
 
           <a class="mdl-navigation__link" style="text-decoration:none" href="/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/a0/">Scholarships(Amount=0 or blank)</a>
 
@@ -110,7 +116,7 @@
     {% for schol in scholarships %}
       <tr>
         <td>{{ schol.name }}</td>
-        <td><a href=" {{ schol.get_admin_url }} " target="_blank">Click Here</a></td>
+        <td><a href=" {% url 'edit_scholarship' schol.scholarship_id %} " target="_blank">Click Here</a></td>
         <td><a href=" {{ schol.get_absolute_url }} " target="_blank">Click Here</a></td>
       </tr>   
     {% endfor %}
