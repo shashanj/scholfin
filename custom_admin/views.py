@@ -64,7 +64,7 @@ def deadline_open(request):
 def deadline_launch_and_closed(request):
     context = RequestContext(request)
     page_title = ' The scholarships that are launched and close'
-    scholarships = scholarship.objects.filter(deadline_type__gte = 100 )
+    scholarships = scholarship.objects.filter(scholarship_type__gte = 100 )
 
     context_list = {
             'scholarships': scholarships,
