@@ -95,6 +95,8 @@ class scholarship(models.Model):
     income=models.IntegerField(default=0)
     display_income = models.CharField(max_length=200,default=' ')
 
+    #sorting
+    points = models.FloatField(default=0.0)
     #deadline details
 
     deadline=models.DateTimeField(blank=True,default=timezone.now())

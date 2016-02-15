@@ -226,3 +226,13 @@ def send_intro_mail(days):
                     message.add_filter(app, setting, value)
             status, msg = sg.send(message)
             print user
+
+def points():
+    for sch in scholarship.objects.all():
+        point = float(sch.education_caste.all().count())/len(caste.objects.all())
+        point += float(sch.education_interest.all().count())/len(interest.objects.all())
+        point += float(sch.education_field.all().count())/len(field.objects.all())
+        point += float(sch.education_religion.all().count())/len(religion.objects.all())
+        point += float(sch.education_level.all().count())/len(level.objects.all())
+        point += float(sch.education_state.all().count())/len(state.objects.all())
+        sch.points = point + len(Provider.objects.filter(scholarship = sch)) * 100

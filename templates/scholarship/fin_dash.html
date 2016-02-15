@@ -184,7 +184,7 @@
               </div> -->
 
     {% if scholarships %}
-    {% for scholarship in scholarships %}
+    {% for scholarship in scholarships|dictsort:"points" %}
       <li class="content-bucket secondary scholarship">
           <a href="/scholarship-details/{{ scholarship.url }}/">
               <div class="scholarshipWrap mdl-grid" >

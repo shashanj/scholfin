@@ -36,4 +36,5 @@ urlpatterns = [
     url(r'^scholarships/add/' , views.add_scholarship , name='add_scholarship'),
     url(r'^scholarships/view/' , views.view_scholarships , name='view_scholarships'),
     url(r'^scholarships/edit/(?P<scholarship_id>[0-9]+)' , views.edit_scholarship , name='edit_scholarship'),
+
 ]

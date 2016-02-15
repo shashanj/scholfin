@@ -427,3 +427,5 @@ def edit_scholarship(request, scholarship_id):
         return HttpResponseRedirect('/a78shfbwifhbiwh324b2r2kjvr3h4brl3hb4r13hbrl/custom_admin/scholarships/view/')
     data = {'form': form}
     return render_to_response('custom_admin/add_scholarship.html', data, context )
+
+
