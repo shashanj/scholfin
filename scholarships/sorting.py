@@ -69,7 +69,7 @@ def state_only(request , scholarship_state):
 
     scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
-        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field']).filter(deadline_type = 0)
+        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
     for s in scholarships:
         matched=0;
@@ -287,7 +287,7 @@ def interest_only(request):
             ss.append(schlrshp)
     scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
-        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field']).filter(deadline_type = 0)
+        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
     for s in scholarships:
         matched=0;
@@ -487,7 +487,7 @@ def india_only(request):
             ss.append(schlrshp)
     scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
-        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field']).filter(deadline_type = 0)
+        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
     for s in scholarships:
         matched=0;
@@ -689,10 +689,10 @@ def abroad_only(request):
             ss.append(schlrshp)
     scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
-        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field']).filter(deadline_type = 0)
+        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarships_count = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
-        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field']).filter(deadline_type = 0).count()
+        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field']).count()
     #print scholarships_count
     scholarship_interest=[]
     for s in scholarships:
@@ -891,7 +891,7 @@ def caste_only(request):
             ss.append(schlrshp)
     scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
-        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field']).filter(deadline_type = 0)
+        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
     for s in scholarships:
         matched=0;
@@ -1105,7 +1105,7 @@ def religion_only(request):
             ss.append(schlrshp)
     scholarships = scholarship.objects.all().filter(deadline__gte=datetime.now()).filter(education_state__state_name=user_table['state']).filter(
         education_level__level_name=user_table['level']).filter(education_religion__religion_name=user_table['religion']).filter(
-        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field']).filter(deadline_type = 0)
+        education_caste__caste_name=user_table['caste']).filter(education_field__field_name=user_table['field'])
     scholarship_interest=[]
     for s in scholarships:
         matched=0;
