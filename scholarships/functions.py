@@ -12,7 +12,7 @@ def amount_tot(currency,amount,frequency,period):
     elif currency==4:
         _amount=amount*0.055;
     elif currency==5:
-        _amount=amount*0.52;
+        _amount=amount*0.60;
     elif currency==6:
         _amount=amount*0.52
     elif currency==7:
