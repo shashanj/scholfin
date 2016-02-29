@@ -121,6 +121,7 @@ class scholarship(models.Model):
 
     application_mode=models.IntegerField(default=0)
 
+    important_point = models.CharField(max_length=200,blank=True)
     eligibility=models.TextField(default=' ')
     procedure=models.TextField(default=' ')
 
