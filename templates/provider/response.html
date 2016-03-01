@@ -157,6 +157,7 @@
               </div>
                <br>
                 {% for applicant in prof %}
+                {% if applicant.level == 'not decided yet' %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
@@ -343,6 +344,7 @@
                 </div>
 
             </div>
+            {% endif %}
                     {% endfor %}
                      {% else %}
                 <div class="alert alert-warning"> No Application Have Been received </div>

@@ -1110,6 +1110,7 @@ def select(request,scholarship_name):
             usr.notes = notes.get(of = usr.user).note
         except:
             usr.notes = ''
+    doclist = document.objects.filter(scholarship = scholarship_s)    
     for  usr in prof :
             usr.docs = UserDocuments.objects.filter(user = usr).filter(docs__in= doclist)
 
@@ -1213,7 +1214,7 @@ def selected(request):
                 usr.notes = notes.get(of = usr.user).note
             except:
                 usr.notes = ''
-
+        doclist = document.objects.filter(scholarship = scholarship_s)
         for  usr in prof :
             usr.docs = UserDocuments.objects.filter(user = usr).filter(docs__in= doclist)
             

@@ -142,6 +142,7 @@
                                 <div class="panel-body">
         {% if prof %}
            {% for applicant in prof %}
+                {% if applicant.level == 'shorlisted' %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
@@ -304,6 +305,7 @@
                 </div>
             </div>
             <br>
+            {% endif %}
                     {% endfor %}
                      {% else %}
                 <div class="alert alert-warning"> No Application Have Been shortlisted </div>
