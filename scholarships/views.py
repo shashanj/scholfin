@@ -1734,11 +1734,11 @@ def submit(request):
         # from_phone='+918983171548'
         # to='+918983171548'
         # sms(request,body, from_phone, to)
-        from twilio.rest import TwilioRestClient
-        TWILIO_ACCOUNT_SID = 'AC3b8fb5dae9e566b3ce8e5d183d740094'
-        TWILIO_AUTH_TOKEN = 'a8cdd8ca582217f31593b093c6851045'
-        client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-        message = client.messages.create(to="+919503748792", from_="+12516470722",body="You have received applicantion from " +user.first_name +' for ' + scholarships.name + '\n' + 'Regards Scholfin ')
+        # from twilio.rest import TwilioRestClient
+        # TWILIO_ACCOUNT_SID = 'AC3b8fb5dae9e566b3ce8e5d183d740094'
+        # TWILIO_AUTH_TOKEN = 'a8cdd8ca582217f31593b093c6851045'
+        # client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+        # message = client.messages.create(to="+919503748792", from_="+12516470722",body="You have received applicantion from " +user.first_name +' for ' + scholarships.name + '\n' + 'Regards Scholfin ')
         return HttpResponseRedirect('/dashboard/')
 
 def schresult(request):

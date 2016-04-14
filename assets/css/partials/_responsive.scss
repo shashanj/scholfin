@@ -1,0 +1,317 @@
+@media screen and (min-width: 1500px) {
+    .search-now {
+        height: 50%;
+        padding-top: 80px;
+    }
+    footer {
+        height: 50%;
+        padding-top: 100px;
+    }
+    .third-section p {
+        margin-top: 25px;
+        line-height: 30px;
+    }
+    .show-more.result-not-matching ul li {
+        margin: 50px 0px;
+    }
+    .organic-search .form-holder .card-panel {
+        margin-bottom: 40px;
+    }
+    ul.navigation-tabs li {
+        margin-top: -3px;
+    }
+    .reset .success-trans-btn li a {
+        line-height: 20px;
+    }
+    .organic-detailed-scholarship {
+        .featured-section {
+            min-height: 70vh;
+        }
+        .featured-table {
+            min-height: 70vh;
+        }
+    }
+    .main-holder-blue-bg {
+        .show-more .success-trans-btn li {
+            margin: 40px 0px;
+        }   
+    }
+}
+@media screen and (max-width: 1024px) {
+    .onepage-pagination {
+        display: none;
+    }
+    .body, .onepage-wrapper, html {
+        overflow: auto !important;
+        height: auto !important;
+    }
+    body {
+        overflow-y: auto !important;
+    }
+    .hide-on {
+        display: none;
+    }
+
+}
+@media only screen and (max-width: 992px){
+    nav .brand-logo {
+        left: 10%;
+        transform: translateX(-50%);
+        line-height: 10;
+    }
+}
+@media screen and (min-width: 768px) {
+    .no-padding-xs {
+        padding-left: 20px;
+        padding-right: 0px;
+    }
+    .page5 {
+        background-color: #273140;
+    }
+    .awards-heading {
+        display: none;
+    }
+    .no-padding-1 {
+        padding-left: 0px;
+        padding-right: 20px;
+    }
+    .hide-on-large-res {
+        display: none;
+    }
+}
+@media screen and (max-width: 767px) {
+    .search-button {
+        display: none;
+    }
+    .slide-up-2 {
+        padding: 0px 30px;
+    }
+    .reset {
+        padding: 0px 20px;
+        .success-trans-btn{
+            li {
+                width: 100px;
+            }
+        }
+    }
+    .social-media-links {
+        margin-bottom: 0px;
+    }
+    .modal-padding {
+        padding: 30px 0px !important;
+    }
+    .dropdown-content li > a, .dropdown-content li > span {
+        font-size: 12px;
+        padding: 14px 10px;
+    }
+    .hide-profile-pic {
+        display: none;
+    }
+    .row.saved-list-content.blog-details.contact-us {
+        padding: 30px;
+        padding-bottom: 0px;
+    }
+}
+@media screen and (max-width: 768px) {
+    /*header*/
+    a.brand-logo {
+        left: 0px;
+        transform: translateX(0);
+        top: 7px;
+    }
+    a.brand-logo img {
+        max-width: 130px;
+    }
+    /*header ends*/
+    /*--------------------------------------------------------*/
+    /*---------------------MULTI-LEVEL-MENU-------------------*/
+    /*--------------------------------------------------------*/
+    nav.grey-bg li .nav-dropdown-holder .menu-arrow-top{
+        right: 33px;
+    }
+    nav.grey-bg li .nav-dropdown-holder{
+        right: 10px;
+    }
+    ul#nav-mobile p{
+        text-align: left;
+    }
+    /*--------------------------------------------------------*/
+    /*------------------MULTI-LEVEL-MENU-ENDS-----------------*/
+    /*--------------------------------------------------------*/
+}
+@media screen and (max-width: 600px) {
+    /*--------------------------------------------------------*/
+    /*---------------------MULTI-LEVEL-MENU-------------------*/
+    /*--------------------------------------------------------*/
+    .hide-on-med-small-and-down-custom{
+        display: none;
+    }
+    .hide-on-med-small-and-down-custom1{
+        display: none !important;
+    }
+    nav.grey-bg ul#nav-mobile {
+        width: 100%;
+    }
+    nav.grey-bg li .nav-dropdown-holder, nav.grey-bg li .nav-dropdown-holder .menu-arrow-top{
+        left: 20px;
+        right: auto;
+    }
+    /*--------------------------------------------------------*/
+    /*------------------MULTI-LEVEL-MENU-ENDS-----------------*/
+    /*--------------------------------------------------------*/
+}
+@media screen and (max-width: 525px) {
+    .hide-on-small-and-down-custom{
+        display: none;
+    }
+    nav.grey-bg ul#nav-mobile > li {
+        width: 25% !important;
+        text-align: center !important;
+    }
+    nav.grey-bg.provider-nav ul#nav-mobile > li {
+        width: 50% !important;
+        text-align: center !important;
+    }
+}
+@media screen and (max-width: 425px) {
+    /*--------------------------------------------------------*/
+    /*---------------------MULTI-LEVEL-MENU-------------------*/
+    /*--------------------------------------------------------*/
+    nav.grey-bg li .nav-dropdown-holder.message-list-holder .dropdown-contents h5 {
+        color: #55bbea;
+        text-align: left;
+        font-size: 11px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.message-list-holder .dropdown-contents h6, nav.grey-bg li .nav-dropdown-holder .dropdown-contents h5, nav.grey-bg li .nav-dropdown-holder .dropdown-contents h6{
+        text-align: left;
+        font-size: 10px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.message-list-holder .dropdown-contents p{
+        font-size: 10px;
+    }
+    nav.grey-bg li .nav-dropdown-holder .menu-arrow-top{
+        left: 20px;
+    }
+    nav.grey-bg li .nav-dropdown-holder{
+        left: 0px;
+    }
+    nav.grey-bg li .nav-dropdown-holder h3{
+        text-align: left;
+        font-size: 11px;
+    }
+    nav.grey-bg li .nav-dropdown-holder{
+        width: 255px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.saved-scholership {
+        left: -62px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.saved-scholership .menu-arrow-top {
+        left: 94px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.my-profile-content {
+        left: -55px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.my-profile-content .menu-arrow-top {
+        left: 88px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.my-profile-content .dropdown-contents a{
+        text-align: left;
+        font-size: 11px !important;
+    }
+    /*--------------------------------------------------------*/
+    /*------------------MULTI-LEVEL-MENU-ENDS-----------------*/
+    /*--------------------------------------------------------*/
+}
+@media screen and (max-width: 375px) {
+
+    .reset h5 {
+        margin-bottom: 20px;
+    }
+    /*header*/
+    nav.white-bg{
+        padding: 1px 0px 0px 8px;
+    }
+    nav.white-bg{
+        height: 58px;
+    }
+    .light-red{
+        padding: 5px 5px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .right-content{
+        text-align: left;
+    }
+
+
+    /*header ends*/
+    .organic-search .content p {
+        font-size: 14px;
+    }
+    .organic-search .form-holder .card-panel {
+        padding: 30px;
+    }
+    .form-holder .card-panel h2 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    /*--------------------------------------------------------*/
+    /*---------------------MULTI-LEVEL-MENU-------------------*/
+    /*--------------------------------------------------------*/
+    nav.grey-bg li .nav-dropdown-holder {
+        left: -28px;
+    }
+    nav.grey-bg li .nav-dropdown-holder .menu-arrow-top {
+        left: 53px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.message-list-holder {
+        width: 350px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.message-list-holder .dropdown-contents div.right-div {
+        width: 80%;
+    }
+    nav.grey-bg li .nav-dropdown-holder.message-list-holder .menu-arrow-top {
+        left: 51px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.saved-scholership {
+        left: -81px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.saved-scholership .menu-arrow-top {
+        left: 107px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.my-profile-content {
+        left: -66px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.my-profile-content .menu-arrow-top {
+        left: 93px;
+    }
+    /*--------------------------------------------------------*/
+    /*------------------MULTI-LEVEL-MENU-ENDS-----------------*/
+    /*--------------------------------------------------------*/
+}
+@media screen and (max-width: 320px) {
+    /*--------------------------------------------------------*/
+    /*---------------------MULTI-LEVEL-MENU-------------------*/
+    /*--------------------------------------------------------*/
+    nav.grey-bg li .nav-dropdown-holder {
+        left: -36px;
+    }
+
+    nav.grey-bg li .nav-dropdown-holder.message-list-holder {
+        width: 315px;
+        left: -28px;
+    }
+
+    nav.grey-bg li .nav-dropdown-holder.saved-scholership {
+        left: -100px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.saved-scholership .menu-arrow-top {
+        left: 123px;
+    }
+    nav.grey-bg li .nav-dropdown-holder.my-profile-content {
+        left: -77px;
+    }
+    /*--------------------------------------------------------*/
+    /*------------------MULTI-LEVEL-MENU-ENDS-----------------*/
+    /*--------------------------------------------------------*/
+}

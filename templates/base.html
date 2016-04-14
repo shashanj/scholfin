@@ -1,0 +1,118 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+    	<link rel="shortcut icon" href="{% static 'blog/img/favicon.png' %}"/>
+    	
+        <link type="text/css" rel="stylesheet" href="{% static 'blog/css/master.css'%}"  media="screen,projection"/>
+        
+        <link href="{% static 'blog/font/kiro/stylesheet.css' %}" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        {%block title%}{% endblock %}
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+
+  
+    
+
+        
+      
+           
+      					  {% block content %}
+
+      				  {% endblock %}
+       			 
+       	
+<footer>
+            <div class="container">
+                <img src="{% static 'blog/img/footer-logo.png'%}" alt="hi">
+                <ul class="social-icons">
+                    <li><a href="http://www.fb.com/scholfin" target="blank"><span class="sprite fb"></span></a></li>
+                    <!-- <li><a href=""><span class="sprite twitter"></span></a></li>
+                    <li><a href=""><span class="sprite google-plus"></span></a></li> -->
+                </ul>
+               <!--  <ul class="terms">
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="blogs.html">Blogs</a></li>
+                    <li><a href="">Terms and conditions</a></li>
+                    <li><a href="">Privacy policy</a></li>
+                    <li><a href="contact-us.html">Contact us</a></li>
+                </ul> -->
+                <!-- <p>Copyright © ScholFin. Web presence by <a href="http://www.appinessworld.com/" target="_blank"><span>appiness</span></a></p> -->
+            </div>
+
+        </footer>
+                
+        
+       
+        <script type="blog/text/javascript" src="{% static 'plugin/js/jquery-2.2.1.min.js'%}"></script>
+        <script type="blog/text/javascript" src="{% static 'plugin/js/materialize.min.js'%}"></script>
+        <script src="{% static 'blog/plugin/owl-carousel/js/owl.carousel.min.js'%}" /></script>
+    <!--<script type="text/javascript">
+        $(document).ready(function () {
+            $('select').material_select();
+            var owl1 = $("#owl-demo-2");
+            owl1.owlCarousel({
+                items: 2, //10 items above 1000px browser width
+                itemsDesktop: [1000, 2], //5 items between 1000px and 901px
+                itemsDesktopSmall: [900, 2], // betweem 900px and 601px
+                itemsTablet: [600, 1], //2 items between 600 and 0
+                slideSpeed: 500,
+                itemsMobile: true // itemsMobile disabled - inherit from itemsTablet option
+            });
+            // Custom Navigation Events
+            $(".next").click(function () {
+                owl1.trigger('owl.next');
+            });
+            $(".prev").click(function () {
+                owl1.trigger('owl.prev');
+            });
+
+            $('.modal-trigger').leanModal();
+
+            $(".cross-symbol").click(function () {
+                $('#modal3').closeModal();
+            });
+            
+            $('.search-call').click(function(){
+                $('.search-data').focus();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $(".login-with-email").click(function () {
+                $('.or').hide();
+                $(".slide-up-1").slideUp(500);
+                $(".login-inputs").fadeIn();
+            });
+
+            $(".reset-password").click(function () {
+                $(".slide-up-2").slideUp(500);
+                $(".reset").fadeIn();
+            });
+
+            $("#cancel").click(function () {
+                $('#modal1').closeModal();
+            });
+
+            $(".login").click(function () {
+                $('.slide-up-1').show();
+                $(".slide-up-2").show();
+                $('.or').show();
+                $(".reset").hide();
+                $(".login-inputs").hide();
+            });
+            if ($(window).width() > 767) {
+                $(".searching-icon").click(function () {
+                    $('.search-text').fadeIn();
+                    $('#search-text').focus();
+                });
+            }
+        });
+
+    </script>-->
+    </body>
+</html>
