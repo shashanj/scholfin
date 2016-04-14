@@ -84,7 +84,8 @@ urlpatterns += [
     url(r'^blog/', include('blogs.urls'), name='blog'),
     url(r'^submit-application/', views.submit, name='submit'),
     url(r'^searchsch/', views.schresult, name='result'),
-
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    
 ]
 
 

@@ -28,7 +28,6 @@ sitemaps = {
 
 urlpatterns = [
     url(r'^$', 'blogs.views.index',name= 'home'),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^sitemap\.xml$','django.contrib.sitemaps.views.sitemap',{'sitemaps':sitemaps}),
   	url(r'^rssfeed/$', LatestEntriesFeed()),
     url(
