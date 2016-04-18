@@ -223,4 +223,40 @@
         width: 20px;
         height: 16px;
     }
+    &.cal {
+        background-position: -219px -819px;
+        width: 20px;
+        height: 18px;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
+    &.blue-cir{
+        background-position: -86px -821px;
+        width: 18px;
+        height: 16px;
+    }
+    &.grey-cir {
+        background-position: -109px -821px;
+        width: 18px;
+        height: 16px;
+    }
+    &.line {
+        background-position: -153px -829px;
+        width: 40px;
+        height: 6px;
+        position: absolute;
+        top: 10px;
+        left: 24px;
+    }
+    &.edit-ico {
+        background-position: -183px -205px;
+        width: 30px;
+        height: 31px;
+    }
+    &.del-ico {
+        background-position: -183px -246px;
+        width: 30px;
+        height: 31px;
+    }
 }

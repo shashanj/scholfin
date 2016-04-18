@@ -12,9 +12,9 @@ class Blog(models.Model):
     image = models.ImageField()
     #slug = models.SlugField(prepopulate_from=('title',))
     body = RichTextField()
-    desc = models.CharField(max_length=200)
+    desc = models.CharField(max_length=200, blank=True)
     posted = models.DateField(db_index=True, auto_now_add=True)
-    category = models.ForeignKey('blogs.Category')
+    category = models.ForeignKey('blogs.Category',blank=True)
     class Meta:
         ordering  = ['-posted']
     def __unicode__(self):
@@ -27,7 +27,7 @@ class Blog(models.Model):
 class Category(models.Model):
     title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
-    image = models.ImageField()
+    image = models.ImageField(blank=True)
 
     def __unicode__(self):
         return '%s' % self.title
