@@ -1,10 +1,11 @@
-{% load static/blog from staticfiles %}
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html>
     <head>
     	<link rel="shortcut icon" href="{% static 'blog/img/favicon.png' %}"/>
     	
         <link type="text/css" rel="stylesheet" href="{% static 'blog/css/master.css'%}"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="{% static 'blog/css/custom_scholfin.css'%}"/>
         
         <link href="{% static 'blog/font/kiro/stylesheet.css' %}" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -46,8 +47,8 @@
                 
         
        
-        <script type="blog/text/javascript" src="{% static 'blog/plugin/js/jquery-2.2.1.min.js'%}"></script>
-        <script type="blog/text/javascript" src="{% static 'blog/plugin/js/materialize.min.js'%}"></script>
+        <script type="text/javascript" src="{% static 'blog/plugin/js/jquery-2.2.1.min.js'%}"></script>
+        <script type="text/javascript" src="{% static 'blog/plugin/js/materialize.min.js'%}"></script>
         <script src="{% static 'blog/plugin/owl-carousel/js/owl.carousel.min.js'%}" /></script>
     <!--<script type="text/javascript">
         $(document).ready(function () {

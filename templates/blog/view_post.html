@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'blog/base.html' %} 
 {% load static from staticfiles %}
 		{%block title%}<title>{{ post.title }}  </title>
 			<meta name="description" content="{{ post.desc }}">
@@ -15,7 +15,7 @@
 
             <nav class="white-bg">
                 <div class="nav-wrapper">
-                    <a href="/" class="brand-logo"><img src="{% static 'blog/img/logo.png'%}" alt="Scholfin Logo"></a>
+                    <a href="/blog/" class="brand-logo"><img src="{% static 'blog/img/logo.png'%}" alt="Scholfin Logo"></a>
                     <!-- <ul id="nav-mobile" class="right">
                         <li class="searching-icon">
                             <a href="#modal3" class="hide-on-large-res modal-trigger search-call"><span class="sprite grey-search-icon"></span> </a>                           
@@ -35,7 +35,7 @@
             </nav> 
             <div class="container">
                 <div class="col s12 breadcrumb-holder">
-                    <a href="/" class="breadcrumb">HOME</a>
+                    <a href="/blog/" class="breadcrumb">HOME</a>
                     <a href="" class="breadcrumb">BLOG</a>
                 </div>
             </div>
@@ -44,8 +44,8 @@
                 <div class="row">
                     <div class="col s12 m12" style="padding: 0px;">
                         <div class="row saved-list-content blog-details">
-                            <div class="col l1 m1 s1" style="max-width: 20px;"><a href="/" class="back-arr"><img src="{% static 'blog/img/bck-arr.png'%}" alt="back-arrow"></a></div>
-                            <div class="col l11 m11 s11" style="width: 100%">
+                            <div class="col l1 m1 s1" style="max-width: 20px;"><a href="/blog/" class="back-arr"><img src="{% static 'blog/img/bck-arr.png'%}" alt="back-arrow"></a></div>
+                            <div class="col l11 m11 s11" >
                                 <h1>{{ post.title }}</h1>
                                 <h6> {{post.posted }}<span class="name">Scholfin</span> <br></h6>
                             </div>

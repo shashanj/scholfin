@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'blog/base.html' %}
 {% load static from staticfiles %}
 
 
         {%block title%}
         <link type="text/css" rel="stylesheet" href="{% static 'blog/css/custom.css' %}" />
         <link href="{% static 'blog/plugin/owl-carousel/css/owl.carousel.css" rel="stylesheet'%}">
-        <link href="{% static 'blog/blog/plugin/owl-carousel/css/owl.theme.css' %}" rel="stylesheet">
+        <link href="{% static 'blog/plugin/owl-carousel/css/owl.theme.css' %}" rel="stylesheet">
         <title>Scholarship Blog | ScholFin | Scholarships in India </title>
         <meta name="description" content="Personalized matching to over 10 crores of scholarships from government,trusts & NGOs worth ₹9,500 crores. Notifications so that you never miss a deadline">
         <!-- Alexa  -->
@@ -33,7 +33,7 @@
 <section>
             <nav class="white-bg">
                 <div class="nav-wrapper">
-                    <a href="/" class="brand-logo"><img src="{% static 'blog/img/logo.png' %}" alt="hi"></a>
+                    <a href="/blog/" class="brand-logo"><img src="{% static 'blog/img/logo.png' %}" alt="hi"></a>
                     <ul id="nav-mobile" class="right">
                         <li class="searching-icon">
                             <a href="#modal3" class="hide-on-large-res modal-trigger search-call"><span class="sprite grey-search-icon"></span> </a>                           
@@ -52,7 +52,7 @@
                 </div>
             </nav> 
         </section>
-
+<section>
 <div class="slider-sec">
                 <div class="container">
                     <h2>Scholarship Knowledge Bank</h2>
@@ -65,7 +65,7 @@
                                 <div class="col l4 m4 s12 padding0">
                                     <a href="{{post.get_absolute_url}}">
                                         <div class="blog-holder">
-                                        <img src="{{ post.image.url }}" alt="blog">
+                                        <img src="{{ post.image.url }}" alt="">
                                           <div class="overlay1"></div>
                                         <div class="blog-content">
                                         <h6> {{post.posted }}</h6>
@@ -75,24 +75,18 @@
                                     </a>
                                 </div>
                                 
+
                               
                     {% endfor %}
                     {% else %}
-                    </div>
-                       <h2>There are no posts.</h2>
+                                           <h2>There are no posts.</h2>
                      {% endif %}
-
+                     </div>
 
 
                 </div>
             </div>
-            <div class="show-more">
-                        <ul class="success-trans-btn">
-
-                            <li><!-- <a class="waves-effect waves-light btn trans" id="show-more">Show more</a> --></li> 
-
-                        </ul>
-                    </div>
+      </section>      
     <!-- <h2>Categories</h2>
     {% if categories %}
         <ul>
