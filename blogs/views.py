@@ -8,7 +8,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 def index(request):
     return render_to_response('blog/index.html', {
         'categories': Category.objects.all(),
-        'posts': Blog.objects.all()[:5]
+        'posts': Blog.objects.all()
     })
 
 def view_post(request, slug):   

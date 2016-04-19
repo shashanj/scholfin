@@ -31,11 +31,11 @@ urlpatterns = [
     url(r'^sitemap\.xml$','django.contrib.sitemaps.views.sitemap',{'sitemaps':sitemaps}),
   	url(r'^rssfeed/$', LatestEntriesFeed()),
     url(
-   		 r'^blog/view/(?P<slug>[^\.]+).html', 
+   		 r'^(?P<slug>[^\.]+)', 
    		 'blogs.views.view_post', 
   		  name='view_blog_post'),
 	url(
-   		 r'^blog/category/(?P<slug>[^\.]+).html', 
+   		 r'^(?P<slug>[^\.]+).html', 
     	'blogs.views.view_category', 
     	name='view_blog_category'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

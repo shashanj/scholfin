@@ -9,12 +9,12 @@ from ckeditor.fields import RichTextField
 class Blog(models.Model):
     title = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
-    image = models.ImageField()
+    image = models.ImageField(blank=True)
     #slug = models.SlugField(prepopulate_from=('title',))
     body = RichTextField()
     desc = models.CharField(max_length=200, blank=True)
     posted = models.DateField(db_index=True, auto_now_add=True)
-    category = models.ForeignKey('blogs.Category',blank=True)
+    category = models.ForeignKey('blogs.Category')
     class Meta:
         ordering  = ['-posted']
     def __unicode__(self):
