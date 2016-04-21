@@ -148,7 +148,7 @@ WSGI_APPLICATION = 'scholfin.wsgi.application'
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.mysql',
-         'NAME': 'scholfin2',
+         'NAME': 'scholfin1',
  	'USER': 'root',
  	# 'PASSWORD': '9308513225',
     'PASSWORD': 'mysql',

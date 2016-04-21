@@ -1513,6 +1513,14 @@ def apply(request,scholarship_name):
     scholarship_s.save()
     questions = question.objects.filter(scholarship=scholarship_s)
     scholarship_s.docs =  document.objects.filter(scholarship = scholarship_s)
+    cats =[]
+    category = questions.order_by('cat')
+    cats.append(category[0].cat)
+    for i in range(0,len(category)-1) :
+        if category[i].cat != category[i+1].cat :
+            cats.append(category[i+1].cat) 
+    print cats , questions
+    cats = cats[::-1]
     option=[]
     for ques in questions:
         if len(ques.expected_answers) != 0:
@@ -1642,8 +1650,9 @@ def apply(request,scholarship_name):
         'option' : option,
         'number' : number_of_scholarships,
         'amount' : amount,
+        'cats' : cats,
     }
-    return render_to_response('scholarship/applyform.html',context,RequestContext(request))
+    return render_to_response('scholarship/application.html',context,RequestContext(request))
 
 def submit(request):
     if request.POST:
@@ -1697,37 +1706,37 @@ def submit(request):
                     doc.files = request.FILES.getlist('file')[i-1]
                     doc.save()
 
-        subject = "Application for " +scholarships.name + ' is successfull'
-        messag = "Hi "+user.first_name+',<br>' + 'We have received your Application for ' + scholarships.name +'.<br>' + 'For further details you can contact ' +'<br>' + scholarships.contact_details
+        # subject = "Application for " +scholarships.name + ' is successfull'
+        # messag = "Hi "+user.first_name+',<br>' + 'We have received your Application for ' + scholarships.name +'.<br>' + 'For further details you can contact ' +'<br>' + scholarships.contact_details
 
-        import sendgrid
-        sg_username = "scholfin"
-        sg_password = "sameer1234"
+        # import sendgrid
+        # sg_username = "scholfin"
+        # sg_password = "sameer1234"
 
-        sg = sendgrid.SendGridClient(sg_username, sg_password)
-        message = sendgrid.Mail()
+        # sg = sendgrid.SendGridClient(sg_username, sg_password)
+        # message = sendgrid.Mail()
 
-        message.set_from("thescholfin@gmail.com")
-        message.set_subject(subject)
-        message.set_text("This is text body")
-        message.set_html(messag)
-        message.add_to(user.email)
-        try:
-            status, msg = sg.send(message)
-        except : 
-            print status
+        # message.set_from("thescholfin@gmail.com")
+        # message.set_subject(subject)
+        # message.set_text("This is text body")
+        # message.set_html(messag)
+        # message.add_to(user.email)
+        # try:
+        #     status, msg = sg.send(message)
+        # except : 
+        #     print status
 
-        message1 = sendgrid.Mail()
-        provider = Provider.objects.filter(scholarship = scholarships)[0]
-        subject = "New Application for " +scholarships.name + 'from ' + user.first_name 
-        messag = "Hi "+provider.user.email+',<br><br>' + 'You have received new your Application for ' + scholarships.name +'.<br>' + 'For further tracking you should visit the Scholfin here www.scholfin.com/provider/ <br><br> Thanks, <br> Team Scholfin' 
-        message1.set_from("thescholfin@gmail.com")
-        message1.set_subject(subject)
-        message1.set_text("This is text body")
-        message1.set_html(messag)
-        message1.add_to(provider.user.email)
-        message1.add_to('thescholfin@gmail.com')
-        status, msg = sg.send(message1)
+        # message1 = sendgrid.Mail()
+        # provider = Provider.objects.filter(scholarship = scholarships)[0]
+        # subject = "New Application for " +scholarships.name + 'from ' + user.first_name 
+        # messag = "Hi "+provider.user.email+',<br><br>' + 'You have received new your Application for ' + scholarships.name +'.<br>' + 'For further tracking you should visit the Scholfin here www.scholfin.com/provider/ <br><br> Thanks, <br> Team Scholfin' 
+        # message1.set_from("thescholfin@gmail.com")
+        # message1.set_subject(subject)
+        # message1.set_text("This is text body")
+        # message1.set_html(messag)
+        # message1.add_to(provider.user.email)
+        # message1.add_to('thescholfin@gmail.com')
+        # status, msg = sg.send(message1)
 
         ##### sms sending #####
         # from django_twilio.views import sms

@@ -218,12 +218,24 @@ class Provider(models.Model):
     def __unicode__ (self):
         return self.user.username
 
+class Question_Category(models.Model):
+    id = models.AutoField(primary_key=True)
+    cat_name=models.CharField(max_length=250,default=' ')
+
+    def __unicode__(self):
+        return self.cat_name
+
+
 class question(models.Model):
     question_id = models.AutoField(primary_key=True)
     question = models.CharField(max_length=1000,default=' ')
     question_type = models.IntegerField(default=0)
     expected_answers = models.TextField(blank=True)
     scholarship = models.ForeignKey(scholarship,related_name='scholarship')
+    order = models.IntegerField(default=0)
+    cat = models.ForeignKey(Question_Category,related_name='Question_Category',blank=True)
+    required = models.CharField(max_length=20,blank = True)
+    input_type = models.CharField(max_length=20,blank = True)
 
     def __unicode__(self):
         return self.question
