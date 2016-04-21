@@ -233,7 +233,7 @@ class question(models.Model):
     expected_answers = models.TextField(blank=True)
     scholarship = models.ForeignKey(scholarship,related_name='scholarship')
     order = models.IntegerField(default=0)
-    cat = models.ForeignKey(Question_Category,related_name='Question_Category',blank=True)
+    cat = models.ForeignKey(Question_Category,related_name='Question_Category',blank=True,null=True)
     required = models.CharField(max_length=20,blank = True)
     input_type = models.CharField(max_length=20,blank = True)
 
