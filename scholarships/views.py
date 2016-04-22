@@ -1497,7 +1497,8 @@ def apply_aa(request):
 def resetnexturl(request):
     if request.is_ajax:
         return HttpResponse(200)
-    
+
+@login_required(login_url='/login/')    
 def apply(request,scholarship_name):
     scholarship_name = scholarship_name.replace("-","")
     i=1
@@ -1520,7 +1521,6 @@ def apply(request,scholarship_name):
         if category[i].cat != category[i+1].cat :
             cats.append(category[i+1].cat) 
     print cats , questions
-    cats = cats[::-1]
     option=[]
     for ques in questions:
         if len(ques.expected_answers) != 0:
