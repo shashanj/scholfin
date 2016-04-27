@@ -174,7 +174,7 @@
                                 </ul>
 
                                 {% elif ques.question_type == 3 %}
-                                <div class="col-md-offset-1 col-md-5">
+                                <div class="col-md-offset-1 col-md-10">
                                 <h5>{{ques.question}}</h5>
 
                                 <ul class="data-list floated clearfix ">
@@ -333,23 +333,7 @@
                 </div><!-- end step -->
 
                 <hr>
-                {% endfor %}
-            {% if sc.docs %}
-            <br>
-            <br>
-            <h4 style="text-align: center;">Documents Upload</h4>
-            <div class="row ">
-                <div class="col-md-offset-1 col-md-3 ">
-                    {% for doc in sc.docs %}
-                    <h5>{{doc}} : </h5>
-                    <label class="custom-file-upload">
-                        <input type="file" name="file" >  
-                    </label>        
-                    {% endfor %}
-                </div>
-            </div>
-            <hr>
-            {% endif %}          
+                {% endfor %}          
             <div class="submit" id="complete"> 
                   <br> 
                   <br>             
