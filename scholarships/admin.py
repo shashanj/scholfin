@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.contrib import admin
 from django.forms import CheckboxSelectMultiple
 from django.db import models
@@ -25,6 +27,12 @@ class UserProfileAdmin(admin.ModelAdmin):
 	get_date_joined.admin_order_field  = 'user__date_joined'  #Allows column order sorting
 	get_date_joined.short_description = 'Date joined'
 
+
+class ActivityAdmin(admin.ModelAdmin):
+	search_fields = ['user__email','scholarship__name',]
+	list_display = ['user','activity', 'scholarship', 'timestamp',]
+	list_filter = ['scholarship', 'timestamp',]
+
 admin.site.register(scholarship,MyModelAdmin)
 admin.site.register(field)
 admin.site.register(caste)
@@ -41,11 +49,11 @@ admin.site.register(Provider)
 admin.site.register(Question_Category)
 admin.site.register(question)
 admin.site.register(answer)
-admin.site.register(activity)
+admin.site.register(activity,ActivityAdmin)
 admin.site.register(Applicant)
 admin.site.register(ShortList)
 admin.site.register(Selected)
 admin.site.register(Rejected)
 admin.site.register(Note)
 admin.site.register(UserDocuments)
-
+admin.site.register(Registered_User)

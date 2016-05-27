@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie ie9" lang="en"> <![endif]-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+
+<!-- Basic Page Needs -->
+<meta charset="utf-8">
+<META http-equiv="X-UA-Compatible"  Content="IE=9">
+<title>Application Form | ScholFin </title>
+<meta name="description" content="">
+<meta name="author" content="Scholfin">
+
+<!-- Favicons-->
+
+<!-- Mobile Specific Metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% load staticfiles %}
+<!-- CSS -->
+<link href="{% static "signup/css/bootstrap.css" %}" rel="stylesheet"/>
+<link href="{% static "signup/css/style.css" %}" rel="stylesheet"/>
+<link href="{% static "signup/css/style1.css" %}" rel="stylesheet"/>
+<link href="{% static "scholarship/css/font-awesome.css" %}" rel="stylesheet"/>
+<link href="{% static "signup/css/socialize-bookmarks.css" %}" rel="stylesheet"/>
+<link href="{% static "signup/css/aero.css" %}" rel="stylesheet"/>
+
+<!-- Toggle Switch -->
+<link rel="stylesheet" href="{% static "signup/css/jquery.switch.css" %}">
+
+	<!-- Google web font -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300' rel='stylesheet' type='text/css'>
+
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src={% static "signup/js/jquery-ui-1.8.22.min.js" %} type="text/javascript"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript">
+</script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+
+<!-- Wizard-->
+<script src="{% static "signup/js/jquery.wizard.js" %}" type="text/javascript"></script>
+
+<!-- Radio and checkbox styles -->
+<script src="{% static "signup/js/check.min.js" %}" type="text/javascript"></script>
+
+
+<!-- HTML5 and CSS3-in older browsers-->
+<script src="{% static "signup/js/modernizr.js" %}" type="text/javascript"></script>
+
+<!-- Support media queries for IE8 -->
+<script src="{% static "signup/js/respond.min.js" %}" type="text/javascript"></script>
+<!-- facebook-->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.4";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<style type="text/css">
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0; 
+    }
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+</style>
+
+</head>
+
+<body style="background-color: #55bbea">
+
+<section id="top-area">
+
+ </section>
+
+<section class="container" id="main">
+
+<!-- Start Survey container -->
+<div id="survey_container">
+
+	<div id="top-wizard">
+		<div class="shadow"></div>
+	</div><!-- end top-wizard -->
+     {% if sc.name != 'J.N. Tata Endowment for Higher Education' %}
+    	<form name="example-1" id="wrapped2" enctype="multipart/form-data" class="org" method="POST" action="/submit-application/" >
+            {% csrf_token %}
+            <br>
+        {% if sc.image_url %}
+        <div class="img img-responsive">
+            <div class="col-md-12">
+                <img src = {{sc.image_url}} style="height:100px;width: 140px;align: right" class="col-md-offset-1 col-md-2" />
+                <h3 style="text-align:left" class="col-md-9" id='heading'> {{sc.name}} - Application Form</h3>
+            </div>
+        </div>
+
+        {% else %}
+        <h3 style="text-align:center" id='heading'> {{sc.name}} - Application Form</h3>
+
+        {% endif %}
+        <input type="hidden" name='sch' value='{{sc.name}}'>
+        {% if sc.scholarship_type < 99 %}
+        <div id="middle-wizard">
+        <br>
+        <br>
+        <br>    
+            {% for cat in cats %}
+    			<div class="row ">
+                <h4 style="text-align: center;">{{cat}}</h4>
+                <br/>
+                    {% for ques in question|dictsort:"order"  %}
+                        {% if ques.cat == cat %}
+                                
+                                {% if ques.question_type == 0 %}
+                                <div class="col-md-offset-1 col-md-9">
+                                <h5> {{ques.question}}</h5>
+
+                                <ul class="data-list clearfix">
+                                <li>
+                                    <textarea class=" form-control" name="{{ques.question_id}}" style="height: 84px;" {{ques.required}}>
+                                    </textarea>
+                                </li>
+                                </ul>
+
+                                {% elif ques.question_type == 1 %}
+                                <div class="col-md-offset-1 col-md-5">
+                                <h5>{{ques.question}}</h5>
+
+                                    <ul class="data-list floated clearfix">
+                                    {% for x in option %}
+                                        {% if x.id == ques.question_id%}
+                                            {% for op in x.options %}
+                                                <li><input name="{{ques.question_id}}" type="radio" class=" {{ques.required}} check_radio floated" value="{{ op }}" {{ques.required}}><label class="label_gender" >{{ op }}</label></li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    </ul>
+
+                                {% elif ques.question_type == 2 %}
+                                <div class="col-md-offset-1 col-md-5">
+                                <h5>{{ques.question}}</h5>
+
+                                <ul class="data-list">
+                                    <li>
+                                        <div class="styled-select">
+                                            <select class="form-control {{ques.required}}" name="{{ques.question_id}}" {{ques.required}}>
+                                                <option value="" selected="">Select your option</option>
+                                                {% for x in option %}
+                                                    {% if x.id == ques.question_id%}
+                                                        {% for op in x.options %}
+                                                                <option value="{{ op }}">{{op}}</option>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}       
+                                            </select>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                {% elif ques.question_type == 3 %}
+                                <div class="col-md-offset-1 col-md-10">
+                                <h5>{{ques.question}}</h5>
+
+                                <ul class="data-list floated clearfix ">
+                                    {% for x in option %}
+                                        {% if x.id == ques.question_id%}
+                                            {% for op in x.options %}
+                                            <li><input class="icheck_checkbox" type="checkbox" name="{{ques.question_id}}" value="{{ op }}"/><label class="label_gender">{{ op }}</label></li>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>
+
+                                {% elif ques.question_type == 4 %}
+                                <div class="col-md-offset-1 col-md-5">
+                            <h5>{{ques.question}}</h5>
+                                {% if ques.input_type == 'number'%}
+                                <input type="number" step='any' class="{{ques.required}} form-control" name="{{ques.question_id}}" placeholder="" id="" {{ques.required}}/>
+                                {% else %}
+                                <input type="text" class="{{ques.required}} form-control" name="{{ques.question_id}}" placeholder="" id="{{ques.question_id}}" {{ques.required}}/>
+
+                                {% endif %}
+                                {% endif %}
+                                
+    						     </div>                        
+                        {% endif %}                        
+                    {% endfor %}
+
+                </div><!-- end step -->
+
+                <hr>
+                {% endfor %}
+            {% if sc.docs %}
+            <br>
+            <br>
+            <h4 style="text-align: center;">Documents Upload</h4>
+            <div class="row ">
+                <div class="col-md-offset-1 col-md-3 ">
+                    {% for doc in sc.docs %}
+                    <h5>{{doc}} : </h5>
+                    <label class="custom-file-upload">
+                        <input type="file" name="file" >  
+                    </label>        
+                    {% endfor %}
+                </div>
+            </div>
+            <hr>
+            {% endif %}          
+            <div class="submit" id="complete"> 
+                  <br> 
+                  <br>             
+                  <button type="submit" form='wrapped2' name="process" class="submit">Click here to apply for scholarship</button>                            
+            </div><!-- end submit step -->
+        </div><!-- end middle-wizard -->
+        
+        </form>
+        {% else %}
+            <h4 style="color:red;text-align: center">Application for 2016 is closed now. </h4>
+            <h5 style="margin-left:-30px !important;margin-right:-30px !important;text-align: center"> There  are <span style='font-weight:900'>{{number}} </span> scholarships  worth  
+            <span style='font-weight:900;'>Rs{{amount}}</span> matching your profile .</h5>
+            <h4 style="text-align: center"><a href="/dashboard/">Click here to view them.</a></h4>
+            <br>
+            
+        {% endif %}
+    
+    {% else %}
+    <form name="example-1" id="wrapped3" enctype="multipart/form-data" class="org" method="POST" action="/provider/form-download/" >
+            {% csrf_token %}
+            <br>
+        <h3 style="text-align:center"> {{sc.name}} - Application Form</h3>
+        <input type="hidden" name='sch' value='{{sc.name}}'>
+        <h4 style="text-align:center">Fill the details and Download The Application Form</h4>
+        {% if sc.scholarship_type < 99 %}
+        <div id="middle-wizard">
+            {% for cat in cats %}
+                <div class="row ">
+                <h4 style="text-align: center;">{{cat}}</h4>
+                <br/>
+                    {% for ques in question|dictsort:"order"  %}
+                        {% if ques.cat == cat %}
+                                
+                                {% if ques.question_type == 0 %}
+                                <div class="col-md-offset-1 col-md-9">
+                                <h5>{{ques.question}}</h5>
+
+                                <ul class="data-list clearfix">
+                                <li>
+                                    <textarea class=" form-control" name="{{ques.question_id}}" style="height: 84px;" {{ques.required}}>
+                                    </textarea>
+                                </li>
+                                </ul>
+
+                                {% elif ques.question_type == 1 %}
+                                <div class="col-md-offset-1 col-md-5">
+                                <h5>{{ques.question}}</h5>
+
+                                    <ul class="data-list floated clearfix">
+                                    {% for x in option %}
+                                        {% if x.id == ques.question_id%}
+                                            {% for op in x.options %}
+                                                <li><input name="{{ques.question_id}}" type="radio" class=" {{ques.required}} check_radio floated" value="{{ op }}" {{ques.required}}><label class="label_gender" >{{ op }}</label></li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    </ul>
+
+                                {% elif ques.question_type == 2 %}
+                                <div class="col-md-offset-1 col-md-5">
+                                <h5>{{ques.question}}</h5>
+
+                                <ul class="data-list">
+                                    <li>
+                                        <div class="styled-select">
+                                            <select class="form-control {{ques.required}}" name="{{ques.question_id}}" {{ques.required}}>
+                                                <option value="" selected="">Select your option</option>
+                                                {% for x in option %}
+                                                    {% if x.id == ques.question_id%}
+                                                        {% for op in x.options %}
+                                                                <option value="{{ op }}">{{op}}</option>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}       
+                                            </select>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                {% elif ques.question_type == 3 %}
+                                <div class="col-md-offset-1 col-md-5">
+                                <h5>{{ques.question}}</h5>
+
+                                <ul class="data-list floated clearfix ">
+                                    {% for x in option %}
+                                        {% if x.id == ques.question_id%}
+                                            {% for op in x.options %}
+                                            <li><input class="icheck_checkbox" type="checkbox" name="{{ques.question_id}}" value="{{ op }}"/><label class="label_gender">{{ op }}</label></li>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>
+
+                                {% elif ques.question_type == 4 %}
+                                <div class="col-md-offset-1 col-md-5">
+                            <h5>    {{ques.question}}</h5>
+                                {% if ques.input_type == 'number'%}
+                                <input type="number" step='any' class="{{ques.required}} form-control" name="{{ques.question_id}}" placeholder="" id="" {{ques.required}}/>
+                                {% else %}
+                                <input type="text" class="{{ques.required}} form-control" name="{{ques.question_id}}" placeholder="" id="" {{ques.required}}/>
+
+                                {% endif %}
+                                {% endif %}
+                                
+                                 </div>                        
+                        {% endif %}                        
+                    {% endfor %}
+
+                </div><!-- end step -->
+
+                <hr>
+                {% endfor %}          
+            <div class="submit" id="complete"> 
+                  <br> 
+                  <br>             
+                  <button type="submit" form='wrapped3' name="process" class="submit">Download Form</button>                            
+            </div><!-- end submit step -->
+        </div><!-- end middle-wizard -->
+        </form>
+        <hr style="color: blue">
+        <form name="example-1" id="wrapped4" enctype="multipart/form-data" class="org" method="POST" action="/provider/form-download/" >{% csrf_token %}
+            <h4 style="text-align: center;">Upload Filled Applicaton</h4>
+            <h4 style="text-align: center;">After Downloading the Form - Upload the filled application form with your LOR Here</h4>
+            <div class="row ">
+                <div class="col-md-offset-1 col-md-3 ">
+                    {% for doc in sc.docs %}
+                    <h5>{{doc}} : </h5>
+                    <label class="custom-file-upload">
+                        <input type="file" name="file" >  
+                    </label>        
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="submit" id="complete"> 
+                  <br> 
+                  <br>             
+                  <button type="submit" form='wrapped4' name="process" class="submit">Upload Documents And Submit</button>                            
+            </div>
+        <h4 style="color:red;text-align: center;">If not get the application form above. </h4>
+        <hr>
+    </form>
+        {% else %}
+           <h4 style="color:red;text-align: center">Application for 2016 is closed now. </h4>
+            <h5 style="margin-left:-30px !important;margin-right:-30px !important;text-align: center"> There  are <span style='font-weight:900'>{{number}} </span> scholarships  worth  
+            <span style='font-weight:900;'>Rs{{amount}}</span> matching your profile .</h5>
+            <h4 style="text-align: center"><a href="/dashboard/">Click here to view them.</a></h4>
+            <br>
+        {% endif %}
+    {% endif %}
+</div>            
+<!-- OTHER JS -->
+<script src="{% static "signup/js/jquery.validate.js"  %}" type="text/javascript"></script>
+<script src="{% static "signup/js/jquery.placeholder.js" %}" type="text/javascript"></script>
+<script src="{% static "signup/js/jquery.bxslider.min.js" %}" type="text/javascript"></script>
+<script src="{% static "signup/js/quantity-bt.js" %}" type="text/javascript"></script>
+<script src="{% static "signup/js/bootstrap.min.js" %}" type="text/javascript"></script>
+<script src="{% static "signup/js/retina.js" %}" type="text/javascript"></script>
+<script src="{% static "signup/js/functions.js" %}" type="text/javascript"></script>
+<script src="{% static "signup/js/main.js" %}" type="text/javascript"></script>
+{% if sc.scholarship_id == 454 %}
+<script src="{% static "signup/js/mesco.js" %}" type="text/javascript"></script>
+{% endif %}
+
+
+
+</body>
+</html>

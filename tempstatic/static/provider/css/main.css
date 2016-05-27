@@ -1,0 +1,7 @@
+@import url('preloader.css');
+@import url('bootstrap.css');
+@import url('theme.css');
+/* Start you custom CSS styling here 
+------------------------------------------*/
+
+.demo-banner{padding-bottom:60px;}

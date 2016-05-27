@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response,render
 from django.template import RequestContext
 from sorting import *
 from django.contrib.auth.models import User
@@ -201,11 +204,11 @@ def change_password(request):
 
 
 def signup(request):
-    return render_to_response('scholarship/signup.html')
+    return render_to_response('scholarship/signup.html',RequestContext(request))
 
 def signup_organic(request,next):
     print next
-    return render_to_response('scholarship/signup.html',{'next': next})
+    return render_to_response('scholarship/signup.html',{'next': next},RequestContext(request))
 
 def fbsignup(request):
     # Settings for Facebook API call
@@ -726,7 +729,7 @@ def signup_complete_organic(request,next):
                 'email': email,
                 'next' : next,   
             }
-            return render_to_response('scholarship/signup.html',context)
+            return render_to_response('scholarship/signup.html',context,RequestContext(request))
             
         auth_type = 'basic'
         option_caste = caste.objects.all
@@ -1150,7 +1153,7 @@ def dashboard(request):
             'sorted_by': '',
 
         }
-    return render_to_response('scholarship/fin_dash.html', context_list, context)
+    return render_to_response('scholarship/fin_dash.html', context_list, context,RequestContext(request))
 
 
 def logout_user(request):
@@ -1193,7 +1196,7 @@ def detail(request , scholarship_name):
             act.activity = ' just viewed your Scholarship'
             act.save()
     scholarship_s.url = scholarshipss
-    return render_to_response('scholarship/details.html' , {'scholarship':scholarship_s,'userid':userid,'next': xx })
+    return render_to_response('scholarship/details.html' , {'scholarship':scholarship_s,'userid':userid,'next': xx },RequestContext(request))
 
 @login_required(login_url='/login/')
 def profilepage(request):
@@ -1306,7 +1309,7 @@ def about_us(request) :
     context = {
         'userid' :  userid,
     }
-    return render_to_response('scholarship/about_us.html',context)
+    return render_to_response('scholarship/about_us.html',context,RequestContext(request))
 
 @login_required(login_url='/login/')
 def old_scholarship(request):
@@ -1484,7 +1487,7 @@ def old_scholarship(request):
             'sorted_by': '',
 
         }
-    return render_to_response('scholarship/fin_dash.html', context_list, context)
+    return render_to_response('scholarship/fin_dash.html', context_list, context,RequestContext(request))
 
 def internship(request):
     return HttpResponseRedirect('https://docs.google.com/forms/d/1ON0e_gzn4wUtd21my4axak04ozQ7H8Ko24ucZzA9Ojw/viewform')
@@ -1498,8 +1501,25 @@ def resetnexturl(request):
     if request.is_ajax:
         return HttpResponse(200)
 
-@login_required(login_url='/login/')    
+
+@login_required(login_url='/')
+@ensure_csrf_cookie 
 def apply(request,scholarship_name):
+
+    # if request.POST:
+    #     reg = request.POST.get('reg_no')
+    #     reg_users = Registered_User.objects.filter(registration_no=int(reg))
+    #     print reg_user
+    user_new = None
+    if request.POST:
+        reg = request.POST.get('reg_no')
+        reg_user = Registered_User.objects.filter(registration_no=reg)
+        for user in reg_user:
+            if user:
+                user_new = user        
+
+
+
     scholarship_name = scholarship_name.replace("-","")
     i=1
     for x in scholarship.objects.all():
@@ -1643,16 +1663,29 @@ def apply(request,scholarship_name):
             amount = amount + amount_tot(sc.currency, sc.amount, sc.amount_frequency, sc.amount_period)
         amount = int(amount)
         amount = indianformat(amount)
+    if user_new :
+        context = {
+            'question':questions,
+            'sc':scholarship_s,
+            'option' : option,
+            'number' : number_of_scholarships,
+            'amount' : amount,
+            'cats' : cats,
+            'user_new':user_new,
+        }
+        print user_new.first_name
+        return render_to_response('scholarship/application.html',context,context_instance = RequestContext(request))
+    else :
+        context = {
+            'question':questions,
+            'sc':scholarship_s,
+            'option' : option,
+            'number' : number_of_scholarships,
+            'amount' : amount,
+            'cats' : cats,
+        }
+        return render_to_response('scholarship/application.html',context,context_instance = RequestContext(request))
 
-    context = {
-        'question':questions,
-        'sc':scholarship_s,
-        'option' : option,
-        'number' : number_of_scholarships,
-        'amount' : amount,
-        'cats' : cats,
-    }
-    return render_to_response('scholarship/application.html',context,RequestContext(request))
 
 def submit(request):
     if request.POST:
@@ -1757,3 +1790,42 @@ def schresult(request):
     x = re.sub('[^A-Za-z0-9]+','-',x)
     
     return HttpResponseRedirect('/scholarship-details/'+x)
+
+def get_reg_no(request):
+    # t=loader.get_template('scholarship/register.html');
+    # return HttpResponse(t.render())
+    return render_to_response('scholarship/register.html',RequestContext(request))
+
+# def registration(request):
+#     if request.POST:
+#         reg = request.POST.get('reg_no')
+#        # return render_to_response('new_registration.html',RequestContext(request))
+#         reg_user = Registered_User.objects.all()
+#      #   user = Registered_User.objects.filter(registration_no__in=reg)
+#         for user in reg_user:
+#             if reg == user.registration_no:   # redirect to old user page
+#     #    if user:
+#                 return render_to_response('scholarship/registration1.html',{'user':user},RequestContext(request))
+#             #else :#redirect to new user page
+#              #   return render_to_response('scholarship/new_registration.html',{'reg':reg},RequestContext(request))
+#     #     #redirect to new user page
+#         return render_to_response('scholarship/new_registration.html',{'reg':reg},RequestContext(request))
+    
+#     else: # redirect to new user page
+#         return render_to_response('scholarship/new_registration.html',{'reg':reg},RequestContext(request))
+
+def registration(request):
+    if request.POST:
+        reg = request.POST.get('reg_no')
+        reg_users = Registered_User.objects.filter(registration_no=reg)
+        for reg_user in reg_users:
+            if reg_user:
+                return render_to_response('scholarship/applicantion.html',{'user':reg_user},RequestContext(request))
+        return render_to_response('scholarship/applicantion.html',{'reg':reg},RequestContext(request))
+    else:
+        return render_to_response('scholarship/applicantion.html',RequestContext(request)) 
+
+    #             return render_to_response('scholarship/registration1.html',{'user':user},RequestContext(request))
+    #     return render_to_response('scholarship/new_registration.html',{'reg':reg},RequestContext(request))
+    # else:
+    #     return render_to_response('scholarship/new_registration.html',RequestContext(request)) 

@@ -236,3 +236,4 @@ def points():
         point += float(sch.education_level.all().count())/len(level.objects.all())
         point += float(sch.education_state.all().count())/len(state.objects.all())
         sch.points = point + len(Provider.objects.filter(scholarship = sch)) * 100
+	sch.save()

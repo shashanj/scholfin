@@ -52,6 +52,8 @@
 
     <link rel="stylesheet" href="{% static "/static/viewdetail/material.min.css" %}">    
     <link rel="stylesheet" href="{% static "/static/viewdetail/styles.css" %}">
+    <link rel="stylesheet" href="{% static "elements.css" %}">
+    <script src="{% static "my_js.js" %}"></script>
     <style>
     #view-source {
       position: fixed;
@@ -88,6 +90,27 @@
     </style>
   </head>
   <body  itemscope itemtype="http://schema.org/CreativeWork" class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+
+  <div id="abc">
+<div id="popupContact"> 
+  <!-- contact us form -->
+    <form action = "/apply/MESCO-Education-Aid-College-Level-2016-17/" method = "POST">{% csrf_token %}
+      <img src="{% static "close-icon.png" %}" id="close" onclick ="div_hide()" />
+      <h6>If Renewable application</h6>
+      <input type="number" name="reg_no" id="reg_no" placeholder="Old Registration No"/>
+      <input type="submit" id="submit" value = "Renewable Application"/>{% csrf_token %}
+    </form>
+    <p><span>Note :</span> If you are Old Applicant Enter Registration No Else Click Below</p>
+      <a id="new_user" href="/apply/MESCO-Education-Aid-College-Level-2016-17/" >New Applicant</a>
+ </div> 
+ <!-- Popup div ends here -->
+ </div>
+
+
+
+
+
+
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" > 
       <header class="mdl-layout__header mdl-layout__header--scroll" style="background-color:#3399cc;">
         <div class="mdl-layout--large-screen mdl-layout__header-row" style="background-color:#55bbea">
@@ -549,8 +572,9 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
     {% if userid != -1 %}
-    <a href="{{ scholarship.apply_link }}" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">Lets Apply</a>
+    <a {% if  scholarship.name == 'MESCO - Education Aid College Level 2016-17' %} onclick ="div_show()" {% else %} href="{{ scholarship.apply_link }}" {% endif %}target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast" >Lets Apply</a>
     {% else %}
     <a href="/signup/next={{ next }}/" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">SignUp To Apply</a>
     {% endif %}

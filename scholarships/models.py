@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from datetime import *
@@ -304,3 +306,15 @@ class Note(models.Model):
 
     def __unicode__(self):
         return self.by.email + ' took note on ' + self.of.email +' for ' + self.scholarship.name 
+
+
+
+class Registered_User(models.Model):
+    register_user_id = models.AutoField(primary_key=True)
+    registration_no = models.IntegerField(default= 0)
+    first_name = models.CharField(max_length=25, default='')
+    last_name = models.CharField(max_length=25, default='')
+    father_name = models.CharField(max_length=25, default='')
+
+    def __unicode__(self):
+        return self.first_name +' ' + self.last_name

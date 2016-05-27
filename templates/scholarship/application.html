@@ -26,6 +26,7 @@
 <link href="{% static "signup/css/socialize-bookmarks.css" %}" rel="stylesheet"/>
 <link href="{% static "signup/css/aero.css" %}" rel="stylesheet"/>
 
+
 <!-- Toggle Switch -->
 <link rel="stylesheet" href="{% static "signup/css/jquery.switch.css" %}">
 
@@ -44,7 +45,6 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript">
 </script> 
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
-
 <!-- Wizard-->
 <script src="{% static "signup/js/jquery.wizard.js" %}" type="text/javascript"></script>
 
@@ -103,12 +103,19 @@
             {% csrf_token %}
             <br>
         {% if sc.image_url %}
-        <div class="img img-responsive">
-            <div class="col-md-12">
-                <img src = {{sc.image_url}} style="height:100px;width: 140px;align: right" class="col-md-offset-1 col-md-2" />
-                <h3 style="text-align:left" class="col-md-9" id='heading'> {{sc.name}} - Application Form</h3>
+        <div class="row">
+            <div class="col-md-4" >
+                <img src = {{sc.image_url}} style="height:auto;width: 220px;align: right" class="img-responsive pull-right" />
+                 </div>
+                <div class="col-md-8">
+                <h3 id='heading' style="text-align: left;margin: 2% 5%;"> {{sc.name}} - Application Form</h3> 
+                 {% if sc.name == 'MESCO - Education Aid College Level 2016-17' %}
+                    <h5 style="text-align:center;padding:3px;border:2px dotted black;margin-left: 10%;width: 65%;"><span>ACCEPTANCE OF APPLICATION DOES NOT GUARANTEE AID</span></h5>
+                 {% endif %}
+           
             </div>
         </div>
+        
 
         {% else %}
         <h3 style="text-align:center" id='heading'> {{sc.name}} - Application Form</h3>
@@ -155,21 +162,24 @@
                                 {% elif ques.question_type == 2 %}
                                 <div class="col-md-offset-1 col-md-5">
                                 <h5>{{ques.question}}</h5>
-
                                 <ul class="data-list">
                                     <li>
                                         <div class="styled-select">
-                                            <select class="form-control {{ques.required}}" name="{{ques.question_id}}" {{ques.required}}>
+                                            <select class="form-control {{ques.required}}" id= "{{ques.question_id}}" name="{{ques.question_id}}" {{ques.required}} {% if ques.question_id == 41 %} onchange="showfield(this.options[this.selectedIndex].value)"{% endif %}>
                                                 <option value="" selected="">Select your option</option>
                                                 {% for x in option %}
                                                     {% if x.id == ques.question_id%}
                                                         {% for op in x.options %}
-                                                                <option value="{{ op }}">{{op}}</option>
+                                                                <option id = "{{ op }}" value="{{ op }}">{{op}}</option>
                                                         {% endfor %}
                                                     {% endif %}
                                                 {% endfor %}       
                                             </select>
+
                                         </div>
+                                         {% if ques.question_id == 41 %}
+                                           <div id="div1"></div>
+                                            {% endif %}
                                     </li>
                                 </ul>
 
@@ -191,9 +201,10 @@
                                 <div class="col-md-offset-1 col-md-5">
                             <h5>{{ques.question}}</h5>
                                 {% if ques.input_type == 'number'%}
-                                <input type="number" step='any' class="{{ques.required}} form-control" name="{{ques.question_id}}" placeholder="" id="" {{ques.required}}/>
+                                <input type="number" step='any' class="{{ques.required}} form-control" {% if ques.question_id == 51 or ques.question_id ==  48 %} oninput="cal()" {% endif %}  {% if ques.question_id ==  53 or ques.question_id ==  54 or ques.question_id ==  55 %} oninput="cal_exp()" {% endif %} name="{{ques.question_id}}"  id="{{ques.question_id}}" {{ques.required}} {% if ques.question_id == 52 or ques.question_id == 56 %} readonly {% endif %} />
+
                                 {% else %}
-                                <input type="text" class="{{ques.required}} form-control" name="{{ques.question_id}}" placeholder="" id="{{ques.question_id}}" {{ques.required}}/>
+                                <input type="text" class="{{ques.required}} form-control" name="{{ques.question_id}}" placeholder=""{% if user_new %}  readonly {% if ques.question_id == 30 %} value="{{user_new.last_name}}" {% endif %} {% if ques.question_id == 31 %} value="{{user_new.first_name}}" {% endif %} {% if ques.question_id == 32 %} value="{{user_new.father_name}}" {% endif %} {% endif %} id="{{ques.question_id}}" {{ques.required}}/>
 
                                 {% endif %}
                                 {% endif %}
@@ -201,7 +212,7 @@
     						     </div>                        
                         {% endif %}                        
                     {% endfor %}
-
+                   
                 </div><!-- end step -->
 
                 <hr>
@@ -219,13 +230,14 @@
                     </label>        
                     {% endfor %}
                 </div>
-            </div>
+                
+            </div><p style="margin-left:10%"> *Please note: Above attachments have maximum limit of 5mb.</p>
             <hr>
             {% endif %}          
             <div class="submit" id="complete"> 
                   <br> 
                   <br>             
-                  <button type="submit" form='wrapped2' name="process" class="submit">Click here to apply for scholarship</button>                            
+                  <button type="submit" form='wrapped2' name="process"  class="submit">Click here to apply for scholarship</button>{% csrf_token %}                         
             </div><!-- end submit step -->
         </div><!-- end middle-wizard -->
         
@@ -319,7 +331,7 @@
                                 <div class="col-md-offset-1 col-md-5">
                             <h5>    {{ques.question}}</h5>
                                 {% if ques.input_type == 'number'%}
-                                <input type="number" step='any' class="{{ques.required}} form-control" name="{{ques.question_id}}" placeholder="" id="" {{ques.required}}/>
+                                <input type="number" step='any' class="{{ques.required}} form-control" name="{{ques.question_id}}" id="" {{ques.required}}   />
                                 {% else %}
                                 <input type="text" class="{{ques.required}} form-control" name="{{ques.question_id}}" placeholder="" id="" {{ques.required}}/>
 
@@ -337,7 +349,7 @@
             <div class="submit" id="complete"> 
                   <br> 
                   <br>             
-                  <button type="submit" form='wrapped3' name="process" class="submit">Download Form</button>                            
+                  <button type="submit" form='wrapped3' name="process" class="submit">Download Form</button>{% csrf_token %}                            
             </div><!-- end submit step -->
         </div><!-- end middle-wizard -->
         </form>
@@ -348,17 +360,19 @@
             <div class="row ">
                 <div class="col-md-offset-1 col-md-3 ">
                     {% for doc in sc.docs %}
-                    <h5>{{doc}} : </h5>
+                    <h5>{{doc}} : hello </h5>
                     <label class="custom-file-upload">
                         <input type="file" name="file" >  
                     </label>        
                     {% endfor %}
+                    
                 </div>
+
             </div>
             <div class="submit" id="complete"> 
                   <br> 
                   <br>             
-                  <button type="submit" form='wrapped4' name="process" class="submit">Upload Documents And Submit</button>                            
+                  <button type="submit" form='wrapped4' name="process" class="submit">Upload Documents And Submit</button>{% csrf_token %}                            
             </div>
         <h4 style="color:red;text-align: center;">If not get the application form above. </h4>
         <hr>
